@@ -1,0 +1,14 @@
+.Page2 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.pageContent_wrap {
+  flex: 1;
+}
+.leftSideBarWrap {
+  height: 100%;
+}
+.hfull {
+  height: 100%;
+}

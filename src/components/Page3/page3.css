@@ -1,0 +1,15 @@
+.viewbtn {
+  border: 1px solid #c1e6e5;
+  background-color: #c1e6e5;
+  color: black;
+  padding: 3px 26px;
+  font-weight: 500;
+}
+.dwnldbtn {
+  border: 1px solid #c1e6e5;
+  background-color: #c1e6e5;
+  color: black;
+  padding: 3px 9px;
+  font-weight: 500;
+  float: right;
+}
