@@ -9,6 +9,7 @@ import SignIn from "./components/Login/SignIn";
 import SignUp from "./components/Login/SignUp";
 import ResetPassword from "./components/Login/ResetPassword";
 import SetPassword from "./components/Login/SetPassword";
+import ResetPasswordForm from "./components/Login/ResetPasswordForm";
 
 export const FileContextManager = createContext();
 
@@ -37,8 +38,9 @@ function App() {
           <Route path="/processed-img" element={<Page3 />} />
           <Route path="/log-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/set-password" element={<SetPassword />} />
+          <Route  path="/resetpasswordform/"  element={<ResetPasswordForm />} />
+          <Route  path="/resetpassword/:token"  element={<ResetPassword />} />
+          <Route  path="/newuserconfirmation/:token" element={<SetPassword />} />
         </Routes>
       </div>
     </FileContextManager.Provider>
