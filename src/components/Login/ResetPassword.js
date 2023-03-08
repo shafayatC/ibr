@@ -32,7 +32,7 @@ const ResetPassword = () => {
                     </button>
 
                     <div className="text-right">
-                      <Link to="/sign-in">
+                      <Link to="/log-in">
                         <a href="#!" className="text-green-700">
                           Back to Login
                         </a>
