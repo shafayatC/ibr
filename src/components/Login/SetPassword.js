@@ -1,13 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const SetPassword = () => {
-  const showToastMessage = () => {
-    toast.success("Successfully set password", {
+
+  const [getPassword, setPassword] =  useState("");
+  const [getConfirmPass, setConfirmPass] = useState(""); 
+
+  let { token } = useParams();
+
+  const showToastMessage = (msg) => {
+    toast.success(msg, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
+  const showToastMessageWarning = (msg) => {
+    toast.warning(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const setPasswordFunc = async () => {
+
+    if(getPassword == getConfirmPass){
+
+      const passwordSet = {
+        "verified_token": token,
+        "password": getPassword,
+        "confirm_password": getConfirmPass
+      }
+      try {
+  
+        const rawResponse = await fetch('http://103.197.204.22:8007/api/2023-02/set-password', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(passwordSet)
+        });
+  
+        const res = await rawResponse.json();
+        console.log(res); 
+        res.status_code == 205 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
+  
+      } catch (error) {
+        showToastMessageWarning(error)
+      }
+    }else{
+      showToastMessageWarning("Password is not match")
+    }
+
+  }
+
+  /*
+    {
+      "results": {
+          "token": null,
+          "return_url": "http://retouched.ai/api/2023-02/system-sign-in"
+      },
+      "message": "User Info Updated Successfully",
+      "status": "success",
+      "status_code": 205
+  } 
+*/
   return (
     <div className="container mx-auto">
       <div class="px-6 mt-20 text-gray-800">
@@ -22,6 +79,7 @@ const SetPassword = () => {
 
               <div class="mb-6">
                 <input
+                  onChange={(e)=>setPassword(e.target.value)}
                   type="password"
                   class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   id="exampleFormControlInput1"
@@ -31,8 +89,9 @@ const SetPassword = () => {
 
               <div class="mb-6">
                 <input
+                  onChange={(e)=>setConfirmPass(e.target.value)}
                   type="password"
-                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  class={"form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none focus:border-blue-600"}
                   id="exampleFormControlInput2"
                   placeholder="Confirm Password"
                 />
@@ -40,7 +99,7 @@ const SetPassword = () => {
             </form>
             <div class="text-center">
               <button
-                onClick={showToastMessage}
+                onClick={setPasswordFunc}
                 className=" w-full mb-5 py-3 bg-theme-shade text-white font-medium rounded-md text-sm "
               >
                 CREATE PASSWORD
