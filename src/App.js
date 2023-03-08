@@ -1,11 +1,14 @@
 import Home from "./components/Home/Home";
 import Page2 from "./components/Page2/Page2";
 import Page3 from "./components/Page3/Page3";
-import Signup from "./components/Signup/Signup";
-import Login from "./components/Signup/Login";
+
 import { Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
 import PriceCard from "./components/PriceCard/PriceCard";
+import SignIn from "./components/Login/SignIn";
+import SignUp from "./components/Login/SignUp";
+import ResetPassword from "./components/Login/ResetPassword";
+import SetPassword from "./components/Login/SetPassword";
 
 export const FileContextManager = createContext();
 
@@ -32,9 +35,10 @@ function App() {
           <Route path="/price" element={<PriceCard />} />
           <Route path="/file-uploads" element={<Page2 />} />
           <Route path="/processed-img" element={<Page3 />} />
-          <Route path="/log-in" element={<Login />} />
-
-          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/set-password" element={<SetPassword />} />
         </Routes>
       </div>
     </FileContextManager.Provider>
