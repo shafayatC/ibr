@@ -9,17 +9,22 @@ const Leftsidebar = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://27.147.191.97:8008/bar-menu/173")
+    fetch("http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=7BF7163F-C476-4B07-989B-2652443BC84F&user_id=")
       .then((res) => res.json())
       .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result.side_bar_menu_items);
+        (data) => {
+          console.log(data)
+
+          if(data.status_code == 200){
+            setIsLoaded(true);
+            setItems(data.results.side_bar_list);
+          }
         },
 
         (error) => {
           setIsLoaded(true);
           setError(error);
+          console.log(error)
         }
       );
   }, []);
@@ -63,90 +68,91 @@ const Leftsidebar = () => {
               <div className="leftBarMenuWrap space-y-2 mt-16">
                 {items.map((item) => (
                   <>
-                    {item.Name == "Folder" && (
-                      <div key={item.ID}>
+                  {console.log(item)}
+                    {item.name == "Folder" && (
+                      <div key={item.id}>
                         <div
                           onClick={() =>
                             document.querySelector("#filepicker").click()
                           }
                           className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
                         >
-                          <i className={item.icon}></i> {item.Name}
+                          <i className={item.icon}></i> {item.name}
                         </div>
                       </div>
                     )}
 
-                    {item.Name == "File" && (
+                    {item.name == "File" && (
                       <div
                         onClick={() =>
                           document.querySelector("#singleImagePick").click()
                         }
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
 
-                    {item.Name == "URL" && (
+                    {item.name == "URL" && (
                       <div
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
 
-                    {item.Name == "FTP" && (
+                    {item.name == "FTP" && (
                       <div
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
 
-                    {item.Name == "AI/Manual" && (
+                    {item.name == "AI/Manual" && (
                       <div
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
-                    {item.Name == "Subscription" && (
+                    {item.name == "Subscription" && (
                       <div
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
-                    {item.Name == "Offer/Coupon" && (
+                    {item.name == "Offer/Coupon" && (
                       <div
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
-                      </div>
-                    )}
-
-                    {item.Name == "Filter" && (
-                      <div
-                        onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
-                      >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
 
-                    {item.Name == "Clear" && (
+                    {item.name == "Filter" && (
+                      <div
+                        onClick={() => document.querySelector("#").click()}
+                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                      >
+                        <i className={item.icon}></i> {item.name}
+                      </div>
+                    )}
+
+                    {item.name == "Clear" && (
                       <div
                         onClick={() =>
                           document.querySelector("#clearData").click()
                         }
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
-                        <i className={item.icon}></i> {item.Name}
+                        <i className={item.icon}></i> {item.name}
                       </div>
                     )}
                   </>

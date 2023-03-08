@@ -11,12 +11,12 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://27.147.191.97:8008/menu")
+    fetch("http://103.197.204.22:8007/api/2023-02/menu")
       .then((res) => res.json())
       .then(
-        (result) => {
+        (data) => {
           setIsLoaded(true);
-          setItems(result.menu_list);
+          setItems(data.results.menu_list);
         },
         (error) => {
           setIsLoaded(true);
@@ -67,20 +67,20 @@ const Navbar = () => {
         >
           <ul className="flex flex-col  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
             {items.map((item) =>
-              item.Type == "sign_up" ? (
+              item.type == "sign_up" ? (
                 <Link to="/log-in">
                   <button
                     id="btn-signup"
                     className="rounded-md text-white bg-light-black"
-                    key={item.ID}
+                    key={item.id}
                   >
-                    {item.Name}
+                    {item.name}
                   </button>
                 </Link>
               ) : (
-                <Link to={item.Url}>
+                <Link to={item.url}>
                   <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
-                    <div key={item.ID}>{item.Name}</div>
+                    <div key={item.id}>{item.name}</div>
                   </button>
                 </Link>
               )
