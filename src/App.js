@@ -35,7 +35,7 @@ function App() {
           <Route path="/price" element={<PriceCard />} />
           <Route path="/file-uploads" element={<Page2 />} />
           <Route path="/processed-img" element={<Page3 />} />
-          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/log-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/set-password" element={<SetPassword />} />
