@@ -11,6 +11,7 @@ import ResetPassword from "./components/Login/ResetPassword";
 import SetPassword from "./components/Login/SetPassword";
 import ResetPasswordForm from "./components/Login/ResetPasswordForm";
 import Navbar from "./components/Home/Navbar/Navbar";
+import QuestionAnswer from "./components/QuestionAnswer/QuestionAnswer";
 
 export const FileContextManager = createContext();
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
+          <Route path="/question-answer" element={<QuestionAnswer />} />
         </Routes>
       </div>
     </FileContextManager.Provider>
