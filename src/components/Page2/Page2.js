@@ -1,4 +1,4 @@
-import Navbar from "../Home/Navbar/Navbar";
+// import Navbar from "../Home/Navbar/Navbar";
 import Footer from "./Footer";
 import Imageupload from "./Imageupload/Imageupload";
 import Leftsidebar from "./Left-sidebar/Leftsidebar";
@@ -8,7 +8,7 @@ import "./style.css";
 function Page2() {
   return (
     <div className="Page2 bg-gray-shade">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="pageContent_wrap grid grid-cols-1 md:grid-cols-5 lg:grid-cols-8 gap-1">
         <div className="leftSideBarWrap">
           <Leftsidebar />
