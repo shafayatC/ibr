@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../Home/Navbar/Navbar";
+// import Navbar from "../Home/Navbar/Navbar";
 import { BiBox, BiCodeAlt, BiImage, BiUserVoice } from "react-icons/bi";
 import "./PriceCard.css";
 
 const PriceCard = () => {
   return (
     <div>
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       <div className="grid lg:grid lg:grid-cols-3 mt-10 justify-items-center">
         <div className="w-60 p-4 grid justify-center lg:ml-40 bg-white shadow-xl border-r-yellow-300 border-r-2 rounded-2xl dark:bg-gray-800">
           <p className="text-3xl  text-black text-center dark:text-white">
