@@ -65,20 +65,10 @@ const Navbar = () => {
           className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
           id="navbar-default"
         >
-          <ul className="flex flex-col  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
-            {items.map((item) =>
-              item.type == "sign_up" ? (
-                <Link to="/log-in">
-                  <button
-                    id="btn-signup"
-                    className="rounded-md text-white bg-light-black"
-                    key={item.id}
-                  >
-                    {item.name}
-                  </button>
-                </Link>
-              ) : (
-                <Link to={item.url}>
+          <ul className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
+            {items.map((item, index) =>
+              (
+                <Link style={{order: item.sequence_no, marginLeft:"0px", marginRight:"0px"}} className={item.type == "sign_up" && " bg-theme-shade rounded"} to={item.url}>
                   <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
                     <div key={item.id}>{item.name}</div>
                   </button>
