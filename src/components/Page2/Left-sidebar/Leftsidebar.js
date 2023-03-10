@@ -9,15 +9,11 @@ const Leftsidebar = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=190d7070-07f6-48b1-a1e3-174c19c88c9f&user_id="
-    )
+    fetch("http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=190d7070-07f6-48b1-a1e3-174c19c88c9f&user_id=")
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log(data);
-
-          if (data.status_code == 200) {
+          if(data.status_code == 200){
             setIsLoaded(true);
             setItems(data.results.side_bar_list);
           }

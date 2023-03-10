@@ -3,43 +3,43 @@ import "./style.css";
 
 const Rightsidebar = () => {
   const [checked, setChecked] = useState(true);
-  const [getAiService, setAiService] = useState({});
+  const [getServicMenu, setServiceMenu] = useState([]);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState({});
 
-  const aiServiceFun = () => {
-    fetch("http://27.147.191.97:8008/ai-service")
-      .then((res) => res.json())
-      .then((data) => {
-        setAiService(data);
+  const loadMenuServiceId =  () => {
+    fetch('http://103.197.204.22:8007/api/2023-02/service-types')
+      .then(response => response.json())
+      .then(res => {
+        const promises = res.results.service_type_list.map(data => {
+          const menuList = { ...data, "sub_menu": [] };
+          return fetch(`http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`)
+            .then(listRes => listRes.json())
+            .then(resultList => {
+              menuList.sub_menu = resultList.results.service_items;
+              return menuList;
+            });
+        });
+        Promise.all(promises).then(menuArray => {
+          setServiceMenu(menuArray);
+        });
       })
-      .catch((err) => console.log(err));
+      .catch(error => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      });
   };
 
-  const menualServiceFun = () => {
-    fetch("http://27.147.191.97:8008/manual-service")
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result);
-        },
-
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  };
   useEffect(() => {
-    aiServiceFun();
-    menualServiceFun();
+
+  loadMenuServiceId();
+
   }, []);
 
   return (
     <div className="hfull">
-      {console.log(getAiService && getAiService)}
       <button
         data-drawer-target="sidebar-multi-level-sidebar"
         data-drawer-toggle="sidebar-multi-level-sidebar"
@@ -72,43 +72,27 @@ const Rightsidebar = () => {
           className="hfull  w-36 shadow-2xl ml-24 bg-black-shade pb-4 overflow-y-auto "
         >
           <ul className="space-y-2">
-            {/* <p className="pl-4 bg-gray-200 py-1 font-semibold">
-              {getAiService && getAiService.Title}
-            </p> */}
-            {getAiService &&
-              getAiService.service_items != undefined &&
-              getAiService.service_items.map((data, index) => (
-                <li key={index}>
-                  {/* <a
-                    href="#"
-                    className="flex items-center p-2 text-base font-normal hover:border-r-2 hover:border-r-white text-white #e3f2f3:text-#e3f2f3 hover:bg-light-black #e3f2f3:hover:bg-gray-700 cursor-pointer"
-                  >
+            {getServicMenu.length > 0 && getServicMenu.map((data, index) =>
+
+              <li key={index}>
+                <p className="pl-4 bg-gray-200 py-1 font-semibold">{data.name}</p>
+                {data.sub_menu.length > 0 && data.sub_menu.map((subData, sIndex) =>
+                  <div key={sIndex} className="flex items-center p-2 text-base font-normal hover:border-r-2 hover:border-r-white text-white #e3f2f3:text-#e3f2f3 hover:bg-light-black #e3f2f3:hover:bg-gray-700 cursor-pointer">
                     <input
                       type="checkbox"
-                      defaultChecked={data.is_checked}
+                      defaultChecked={subData.is_checked}
                       onChange={() => setChecked(!checked)}
-                      id="1"
+                      id={"check_"+sIndex}
                     />
-                    <label htmlFor="1" className="ml-3">
-                      {data.Name}
+                    <label htmlFor={"check_"+sIndex} className="ml-3">
+                      {subData.name}
                     </label>
-                  </a> */}
-                </li>
-              ))}
-            {/* <p className="pl-4 bg-gray-200 py-1 font-semibold">
-              {" "}
-              {items && items.Title}
-            </p> */}
-            {items &&
-              items.service_items != undefined &&
-              items.service_items.map((item) => (
-                <div key={item.ID}>
-                  <li className="ml-2 text-sm text-white hover:border-r-2 hover:border-r-white cursor-pointer #e3f2f3:text-#e3f2f3 hover:bg-light-black">
-                    {/* <input type="checkbox" checked={item.is_checked} />{" "}
-                    {item.Name} */}
-                  </li>
-                </div>
-              ))}
+                  </div>
+                )
+               }
+              </li>
+
+            )}
           </ul>
         </div>
       </aside>
