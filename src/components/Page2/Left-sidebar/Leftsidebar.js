@@ -9,12 +9,10 @@ const Leftsidebar = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=7BF7163F-C476-4B07-989B-2652443BC84F&user_id=")
+    fetch("http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=190d7070-07f6-48b1-a1e3-174c19c88c9f&user_id=")
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log(data)
-
           if(data.status_code == 200){
             setIsLoaded(true);
             setItems(data.results.side_bar_list);
@@ -24,7 +22,7 @@ const Leftsidebar = () => {
         (error) => {
           setIsLoaded(true);
           setError(error);
-          console.log(error)
+          console.log(error);
         }
       );
   }, []);
@@ -68,7 +66,7 @@ const Leftsidebar = () => {
               <div className="leftBarMenuWrap space-y-2 mt-16">
                 {items.map((item) => (
                   <>
-                  {console.log(item)}
+                    {console.log(item)}
                     {item.name == "Folder" && (
                       <div key={item.id}>
                         <div
