@@ -12,6 +12,7 @@ import SetPassword from "./components/Login/SetPassword";
 import ResetPasswordForm from "./components/Login/ResetPasswordForm";
 import Navbar from "./components/Home/Navbar/Navbar";
 import QuestionAnswer from "./components/QuestionAnswer/QuestionAnswer";
+import MatchSort from "./components/MatchSort/MatchSort";
 
 export const FileContextManager = createContext();
 
@@ -32,6 +33,7 @@ function App() {
       ]}
     >
       <div className="App">
+        <MatchSort/>
         <Navbar></Navbar>
         <Routes>
           {/* <Route path="/" element={<Navigation />} /> */}
