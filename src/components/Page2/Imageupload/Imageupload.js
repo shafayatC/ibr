@@ -398,61 +398,61 @@ function Imageupload() {
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 relative">
               {currentImages.map((image, index) => (
                 <div key={index}>
-                  <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-300">
+                  <div
+                    className=" img-container hover:scale-110 transition duration-300 ease-in-out"
+                    onClick={() => viewImg(image)}
+                    style={{
+                      backgroundImage: `url(${image})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      width: "100%",
+                      cursor: "pointer",
+                      height: "80px",
+                    }}
+                  />
+                  {showImage && (
                     <div
-                      onClick={() => viewImg(image)}
+                      className="img-container"
                       style={{
-                        backgroundImage: `url(${image})`,
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        width: "100%",
-                        cursor: "pointer",
-                        height: "80px",
+                        position: " fixed",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 9,
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
-                    />
-                    {showImage && (
-                      <div
+                    >
+                      <img
+                        src={imgUrl}
                         style={{
-                          position: " fixed",
-                          top: 0,
-                          left: 0,
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                        }}
+                      />
+                      <div className="p-1 rounded-full cursor-pointer -mt-80 bg-white ">
+                        <i class="fa-regular fa-trash-can w-8 h-8  justify-center"></i>
+                      </div>
+                      <button
+                        onClick={handleClose}
+                        style={{
+                          position: "relative",
+                          top: "-43%",
                           right: 0,
-                          bottom: 0,
-                          zIndex: 9,
-                          background: "rgba(0, 0, 0, 0.5)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
+                          background: "white",
+                          border: "none",
+                          padding: "10px 15px",
+                          borderRadius: "50%",
+                          cursor: "pointer",
                         }}
                       >
-                        <img
-                          src={imgUrl}
-                          style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                          }}
-                        />
-                        <div className="p-1 rounded-full cursor-pointer -mt-80 bg-white ">
-                          <i class="fa-regular fa-trash-can w-8 h-8  justify-center"></i>
-                        </div>
-                        <button
-                          onClick={handleClose}
-                          style={{
-                            position: "relative",
-                            top: "-43%",
-                            right: 0,
-                            background: "white",
-                            border: "none",
-                            padding: "10px 15px",
-                            borderRadius: "50%",
-                            cursor: "pointer",
-                          }}
-                        >
-                          X
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                        X
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -22,7 +22,7 @@ const Leftsidebar = () => {
         (error) => {
           setIsLoaded(true);
           setError(error);
-          console.log(error)
+          console.log(error);
         }
       );
   }, []);
@@ -66,7 +66,7 @@ const Leftsidebar = () => {
               <div className="leftBarMenuWrap space-y-2 mt-16">
                 {items.map((item) => (
                   <>
-                  {console.log(item)}
+                    {console.log(item)}
                     {item.name == "Folder" && (
                       <div key={item.id}>
                         <div
