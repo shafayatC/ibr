@@ -33,7 +33,6 @@ function App() {
       ]}
     >
       <div className="App">
-        <MatchSort/>
         <Navbar></Navbar>
         <Routes>
           {/* <Route path="/" element={<Navigation />} /> */}

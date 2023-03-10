@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import UpdatedImage from "../../Page3/UpdatedImage";
 import processlogo from "./img/process.png";
+import { matchSorter } from "match-sorter";
 
 function Imageupload() {
 
@@ -17,6 +18,8 @@ function Imageupload() {
   const [showImage, setShowImage] = useState(false);
   const [getOrderInfo, setOrderInfo] = useState({});
   const [getFilterText, setFilterText] = useState("");
+  const [getSuggest, setSuggest] = useState([]); 
+  
   const [
     getMainFile,
     setMainFile,
@@ -311,14 +314,61 @@ function Imageupload() {
   const filterFunc = (e) => {
     e.preventDefault();
 
+    const listofFile = [
+      {
+          "file": {
+            "name": "bangladesh"
+          },
+          "imageUrl": "blob:http://localhost:3000/5c319ab8-d9b7-4d2d-a76b-55d3f00fec6b"
+      },
+      {
+        "file": {
+          "name": "bangladesh is our"
+        }, 
+        "imageUrl": "blob:http://localhost:3000/21d81d5a-31ac-4703-8dd8-83b2d1cd4c3f"
+      },
+      {
+        "file": {
+          "name": "bangladesh is our"
+        }, 
+         "imageUrl": "blob:http://localhost:3000/0cb09179-6b3e-4095-ad58-4e2d89b1d88d"
+      },
+      {
+        "file": {
+          "name": "bangladesh is our country"
+        }, 
+          "imageUrl": "blob:http://localhost:3000/5d25c8df-4efd-4b00-b93d-68b1d9cae5da"
+      },
+      {
+        "file": {
+          "name": "bangladesh is our"
+        }, 
+        "imageUrl": "blob:http://localhost:3000/f6e80372-43b8-491b-b00c-4b518e97f3f1"
+      }
+  ]; 
+    Promise.all(fileInfo).then(data => {
+      const suggestList = matchSorter(data, e.target.value, {keys:[data => data.file.webkitRelativePath]})
+      setSuggest(suggestList); 
+    })
+   // const suggestList = matchSorter(fileInfo, e.target.value, {keys: ['file.webkitRelativePath']})
+  //  console.log(suggestList); 
+    setFilterText(e.target.value)
     if (e.target.value.length > 0) {
-      console.log(e.target.value)
-      setFilterText(e.target.value)
       setActionStatus("filter")
     } else {
       setActionStatus("")
     }
 
+  }
+
+  const filterBysuggest =(txt)=>{
+
+    setFilterText(txt)
+    if (txt.length > 0) {
+      setActionStatus("filter")
+    } else {
+      setActionStatus("")
+    }
   }
 
   const clearData = () => {
@@ -376,18 +426,21 @@ function Imageupload() {
 
   return (
     <>
+    {console.log(fileInfo)}
       <div class="flex items-center justify-center mt-3">
         <i class="fa-solid fa-filter text-white mr-1"></i>
         <p class="text-white mr-4">Filter</p>
         <div class="relative">
 
           <input
+            value={getFilterText}
             onChange={filterFunc}
             maxLength={200}
             type="text"
             class="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-48 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Filter File or Folder"
           />
+
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
               class="w-4 h-4"
@@ -402,6 +455,14 @@ function Imageupload() {
               ></path>
             </svg>
           </div>
+
+          <div id="matchsort" className="absolute bg-white z-10">
+            {getSuggest.map(data=>
+
+                <button onClick={()=>filterBysuggest(data.file.webkitRelativePath)} className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]">{data.file.webkitRelativePath}</button>
+
+              )}
+        </div>
         </div>
       </div>
       <div id="middleImageWrap " className="mt-1">
@@ -553,7 +614,7 @@ function Imageupload() {
 
               {currentImages.map((image, index) => (
                 image.file.webkitRelativePath.indexOf(getFilterText) > 0 &&
-                
+
                 <div key={index}>
                   <div
                     className=" img-container hover:scale-110 transition duration-300 ease-in-out"
