@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Loading from "../../Loading/Loading";
 import Services from "../../NewService/Services/Services";
 import "./style.css";
 
@@ -14,7 +15,7 @@ const Home = () => {
           </Link>
         </div>
       </div>
-
+      <Loading></Loading>
       <Services></Services>
     </div>
   );
