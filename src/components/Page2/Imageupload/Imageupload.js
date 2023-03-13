@@ -8,7 +8,6 @@ import processlogo from "./img/process.png";
 import { matchSorter } from "match-sorter";
 
 function Imageupload() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [imageShow, setImageShow] = useState([]);
   const [imgUrl, setimgUrl] = useState();
@@ -27,7 +26,7 @@ function Imageupload() {
     getAfterBeforeImg,
     setAfterBeforeImg,
     getLockMenuBool,
-    setLockMenuBool
+    setLockMenuBool,
   ] = useContext(FileContextManager);
   const itemsPerPage = 8;
 
@@ -75,25 +74,25 @@ function Imageupload() {
       if (file.type == "image/jpeg" || file.type == "image/png") {
         if (fileInfo.length > 0) {
           // check if the images is already exits
-          const foundFile = fileInfo.find((fl) =>
-            fl.file.lastModified === file.lastModified &&
-            fl.file.name === file.name &&
-            fl.file.size === file.size &&
-            fl.file.type === file.type
+          const foundFile = fileInfo.find(
+            (fl) =>
+              fl.file.lastModified === file.lastModified &&
+              fl.file.name === file.name &&
+              fl.file.size === file.size &&
+              fl.file.type === file.type
           );
 
           if (foundFile) {
             console.log("The file already exists in the array.");
           } else {
-
-            const imageUrl = URL.createObjectURL(file)
-            const fileObject = { "file": file, "imageUrl": imageUrl }
+            const imageUrl = URL.createObjectURL(file);
+            const fileObject = { file: file, imageUrl: imageUrl };
             setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             console.log("The file does not exist in the array.");
           }
         } else {
-          const imageUrl = URL.createObjectURL(file)
-          const fileObject = { "file": file, "imageUrl": imageUrl }
+          const imageUrl = URL.createObjectURL(file);
+          const fileObject = { file: file, imageUrl: imageUrl };
           setFileInfo((fileInfo) => [...fileInfo, fileObject]);
         }
       }
@@ -116,11 +115,12 @@ function Imageupload() {
   const getFileType = (fileType) => {
     const fileTypeIs = fileType.type.split("/");
     return fileTypeIs[1];
-  }
+  };
 
   function testImage(url, callback, timeout) {
     timeout = timeout || 5000;
-    var timedOut = false, timer;
+    var timedOut = false,
+      timer;
     var img = new Image();
     img.onerror = img.onabort = function () {
       if (!timedOut) {
@@ -141,35 +141,27 @@ function Imageupload() {
     }, timeout);
   }
 
-
   const checkAiProccesDone = (getAfterBeforeImg) => {
-
     if (getAfterBeforeImg.length > 0) {
-
       getAfterBeforeImg.map((data, index) => {
         if (data.result[0].is_ai_processed == false) {
-
           const myCallback = (result) => {
             if (result == "success") {
               getAfterBeforeImg[index].result[0].is_ai_processed = true;
             }
-          }
+          };
 
           testImage(data.result[0].output_public_url, myCallback);
-
         } else {
         }
+      });
 
-      })
-
-      console.log("statusIs " + getAfterBeforeImg.length)
+      console.log("statusIs " + getAfterBeforeImg.length);
     } else {
     }
-
-  }
+  };
 
   const processImagesAi = () => {
-
     toast.success("Items Process Successfully!", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -178,7 +170,6 @@ function Imageupload() {
     let order_id = getOrderInfo && getOrderInfo.order_id;
     let unique_custom_code = getOrderInfo && getOrderInfo.unique_custom_code;
     fileInfo.map((img_file, index) => {
-
       const filePath = img_file.file.webkitRelativePath;
       const imgType = getFileType(img_file.file);
 
@@ -188,9 +179,7 @@ function Imageupload() {
       data.append("file", img_file.file);
       data.append("file_relative_path", "filePath/psdfspd");
 
-
       dataTransfer(data);
-
     });
   };
 
@@ -217,7 +206,6 @@ function Imageupload() {
       const img_file = fileInfo[p];
       const filePath = img_file.webkitRelativePath;
 
-
       const imgType = getFileType(img_file);
 
       let data = new FormData();
@@ -234,18 +222,20 @@ function Imageupload() {
       })
         .then((res) => res.json())
         .then((result) => {
-          setAfterBeforeImg(getAfterBeforeImg => [...getAfterBeforeImg, result]);
+          setAfterBeforeImg((getAfterBeforeImg) => [
+            ...getAfterBeforeImg,
+            result,
+          ]);
           console.log(result);
           console.log(p);
-          myOwnLoop(order_id, p + 1)
+          myOwnLoop(order_id, p + 1);
         })
         .catch((err) => {
           if (err) {
             console.log(err);
-            myOwnLoop(order_id, p + 1)
+            myOwnLoop(order_id, p + 1);
           }
         });
-
     } else {
       console.log("have no data avaialble");
     }
@@ -262,35 +252,33 @@ function Imageupload() {
     } catch (error) {
       console.error(error);
     }
-
   };
-
 
   const filterFunc = (e) => {
     e.preventDefault();
 
-    Promise.all(fileInfo).then(data => {
-      const suggestList = matchSorter(data, e.target.value, { keys: [data => data.file.webkitRelativePath] })
+    Promise.all(fileInfo).then((data) => {
+      const suggestList = matchSorter(data, e.target.value, {
+        keys: [(data) => data.file.webkitRelativePath],
+      });
       setSuggest(suggestList);
-    })
-    setFilterText(e.target.value)
+    });
+    setFilterText(e.target.value);
     if (e.target.value.length > 0) {
-      setActionStatus("filter")
+      setActionStatus("filter");
     } else {
-      setActionStatus("")
+      setActionStatus("");
     }
-
-  }
+  };
 
   const filterBysuggest = (txt) => {
-
-    setFilterText(txt)
+    setFilterText(txt);
     if (txt.length > 0) {
-      setActionStatus("filter")
+      setActionStatus("filter");
     } else {
-      setActionStatus("")
+      setActionStatus("");
     }
-  }
+  };
 
   const clearData = () => {
     setMainFile([]);
@@ -301,7 +289,7 @@ function Imageupload() {
     setActionStatus("");
     setCurrentPage(1);
     orderInfoFunc();
-    setLockMenuBool(false)
+    setLockMenuBool(false);
   };
 
   const handleClose = () => {
@@ -323,25 +311,20 @@ function Imageupload() {
 
   const deletImage = (dlImage) => {
     console.log(dlImage);
-    setFileInfo(fileInfo.filter(f => f.imageUrl !== dlImage));
+    setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
     handleClose();
   };
 
   var x = 0;
 
-
   useEffect(() => {
-
     setInterval(() => {
-
-      checkAiProccesDone(getAfterBeforeImg)
-
-    }, 20000)
+      checkAiProccesDone(getAfterBeforeImg);
+    }, 20000);
     x++;
 
-    x > 0 && orderInfoFunc()
-
-  })
+    x > 0 && orderInfoFunc();
+  });
 
   return (
     <>
@@ -349,8 +332,7 @@ function Imageupload() {
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
-        <div className="relative w-[395px]" >
-
+        <div className="relative w-[395px]">
           <input
             value={getFilterText}
             onChange={filterFunc}
@@ -365,14 +347,23 @@ function Imageupload() {
           </div>
 
           <div id="matchsort" className="absolute bg-white z-10">
-            {getSuggest.map((data, index) =>
-              index >= 4 && <button onClick={() => filterBysuggest(data.file.webkitRelativePath)} className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]">{data.file.webkitRelativePath}</button>
+            {getSuggest.map(
+              (data, index) =>
+                index >= 4 && (
+                  <button
+                    onClick={() =>
+                      filterBysuggest(data.file.webkitRelativePath)
+                    }
+                    className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
+                  >
+                    {data.file.webkitRelativePath}
+                  </button>
+                )
             )}
           </div>
         </div>
       </div>
       <div id="middleImageWrap " className="mt-1">
-
         <input
           onChange={uploadFile}
           type="file"
@@ -396,53 +387,60 @@ function Imageupload() {
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <>
-            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} gap-4`}>
-
+            <div
+              className={`grid sm:grid-cols-1 md:grid-cols-${
+                fileInfo.length > 3 ? "4" : fileInfo.length
+              } lg:grid-cols-${
+                fileInfo.length > 3 ? "4" : fileInfo.length
+              } gap-4`}
+            >
               {currentImages.map((image, index) => (
-
                 <div key={index}>
                   <div
-                    className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
+                    className={`img-container bg-cover bg-no-repeat w-full cursor-pointer  h-[180px] ${
+                      currentImages.length === 3 ? "h-[300px]" : "h-[180px]"
+                    } ${currentImages.length === 2 ? "h-[400px]" : "h-[180px]"}
+                    ${currentImages.length === 1 ? "h-[500px]" : "h-[180px]"}
+                    `}
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
-                      backgroundImage: `url(${image.imageUrl})`
+                      backgroundImage: `url(${image.imageUrl})`,
                     }}
                   />
                 </div>
-
               ))}
-
             </div>
           </>
         )}
 
         {fileInfo.length > 0 && actionStatus == "filter" && (
-
           <>
-            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} gap-4`}>
-
-              {currentImages.map((image, index) => (
-                image.file.webkitRelativePath.indexOf(getFilterText) > -1 &&
-
-                <div key={index}>
-                  <div
-                    className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
-                    onClick={() => viewImg(image.imageUrl)}
-                    style={{
-                      backgroundImage: `url(${image.imageUrl})`
-                    }}
-                  />
-                </div>
-                
-              ))}
+            <div
+              className={`grid sm:grid-cols-1 md:grid-cols-${
+                fileInfo.length > 3 ? "4" : fileInfo.length
+              } lg:grid-cols-${
+                fileInfo.length > 3 ? "4" : fileInfo.length
+              } gap-4`}
+            >
+              {currentImages.map(
+                (image, index) =>
+                  image.file.webkitRelativePath.indexOf(getFilterText) > -1 && (
+                    <div key={index}>
+                      <div
+                        className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
+                        onClick={() => viewImg(image.imageUrl)}
+                        style={{
+                          backgroundImage: `url(${image.imageUrl})`,
+                        }}
+                      />
+                    </div>
+                  )
+              )}
             </div>
           </>
         )}
 
-
-
-        {fileInfo.length > 0 &&
-
+        {fileInfo.length > 0 && (
           <div className="flex absolute bg-light-black w-3/4  bottom-0">
             {/* progress bar */}
             <div className=" mb-4 mr-40">
@@ -490,8 +488,7 @@ function Imageupload() {
               <p>Total Bill :</p>
             </div>
           </div>
-
-        }
+        )}
 
         {showImage && (
           <div
@@ -509,10 +506,7 @@ function Imageupload() {
               justifyContent: "center",
             }}
           >
-            <img
-              src={imgUrl}
-              className="max-w-full max-h-full w-96 h-96"
-            />
+            <img src={imgUrl} className="max-w-full max-h-full w-96 h-96" />
             <div className="absolute right-4 top-4 flex gap-2">
               <button
                 onClick={() => deletImage(imgUrl)}
@@ -527,10 +521,8 @@ function Imageupload() {
                 <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
-
           </div>
         )}
-
 
         <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-1">
           {getAfterBeforeImg.length > 0 &&

@@ -13,6 +13,7 @@ import ResetPasswordForm from "./components/Login/ResetPasswordForm";
 import Navbar from "./components/Home/Navbar/Navbar";
 import QuestionAnswer from "./components/QuestionAnswer/QuestionAnswer";
 import MatchSort from "./components/MatchSort/MatchSort";
+import UpgradeAccount from "./components/UpgradeAccount/UpgradeAccount";
 
 export const FileContextManager = createContext();
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
           <Route path="/question-answer" element={<QuestionAnswer />} />
+          <Route path="/upgrade-account" element={<UpgradeAccount />} />
         </Routes>
       </div>
     </FileContextManager.Provider>
