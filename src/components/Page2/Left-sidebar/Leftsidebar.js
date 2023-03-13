@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
+import { OrderContextManager } from "../../../App";
 
 const Leftsidebar = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [getMenuId, setMenuId] = useContext(OrderContextManager); 
+
 
   useEffect(() => {
-    fetch("http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=190d7070-07f6-48b1-a1e3-174c19c88c9f&user_id=")
+    fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`)
       .then((res) => res.json())
       .then(
         (data) => {
@@ -66,7 +69,6 @@ const Leftsidebar = () => {
               <div className="leftBarMenuWrap space-y-2 mt-16">
                 {items.map((item) => (
                   <>
-                    {console.log(item)}
                     {item.name == "Folder" && (
                       <div key={item.id}>
                         <div

@@ -8,7 +8,7 @@ const UpdatedImage = ({ afterBeforeImage }) => {
         <a href="#">
           <img
             className="rounded-t-lg"
-            src={afterBeforeImage.result[0].compressed_public_url}
+            src={afterBeforeImage.output_urls[0].compressed_raw_image_public_url}
             alt=""
           />
         </a>

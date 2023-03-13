@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FileContextManager } from "../../../App";
+import { FileContextManager, OrderContextManager } from "../../../App";
 import "./style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +18,6 @@ function Imageupload() {
   const [getOrderInfo, setOrderInfo] = useState({});
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
-
   const [
     getMainFile,
     setMainFile,
@@ -29,6 +28,8 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool
   ] = useContext(FileContextManager);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager); 
+
   const itemsPerPage = 8;
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -40,19 +41,23 @@ function Imageupload() {
   const api_send = "http://27.147.191.97:8008/upload-file";
 
   const orderInfoFunc = () => {
-    const myOrdre = {
-      menu_id: uniqueIdGenerate(20),
-      operation_type_id: uniqueIdGenerate(25),
-    };
 
-    fetch("http://27.147.191.97:8008/custom-code", {
+    const myOrdre = {
+      menu_id: getMenuId,
+      service_type_id: getServiceTypeId,
+      user_id: null
+    };
+    console.log("service id : "+ getServiceTypeId);
+    fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(myOrdre),
     })
       .then((res) => res.json())
       .then((data) => {
-        setOrderInfo(data);
+        console.log("my order master info : ")
+        console.log(data.results.order_master_info)
+       setOrderInfo(data.results.order_master_info);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -147,15 +152,15 @@ function Imageupload() {
     if (getAfterBeforeImg.length > 0) {
 
       getAfterBeforeImg.map((data, index) => {
-        if (data.result[0].is_ai_processed == false) {
+        if (data.output_urls[0].is_ai_processed == false) {
 
           const myCallback = (result) => {
             if (result == "success") {
-              getAfterBeforeImg[index].result[0].is_ai_processed = true;
+              getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
             }
           }
 
-          testImage(data.result[0].output_public_url, myCallback);
+          testImage(data.output_urls[0].default_compressed_output_public_url, myCallback);
 
         } else {
         }
@@ -175,25 +180,24 @@ function Imageupload() {
     });
     setActionStatus("process");
     setLockMenuBool(true);
-    let order_id = getOrderInfo && getOrderInfo.order_id;
-    let unique_custom_code = getOrderInfo && getOrderInfo.unique_custom_code;
+    let order_id = getOrderInfo.order_id;
     fileInfo.map((img_file, index) => {
 
       const filePath = img_file.file.webkitRelativePath;
       const imgType = getFileType(img_file.file);
 
       let data = new FormData();
-      data.append("order_id", order_id);
-      data.append("unique_custom_code", unique_custom_code);
+      data.append("order_master_id", order_id);
+      data.append("service_type_id", getServiceTypeId);
       data.append("file", img_file.file);
       data.append("file_relative_path", "filePath/psdfspd");
-
-
+      console.log("order: "+ order_id + " service_type : "+ getServiceTypeId)
       dataTransfer(data);
 
     });
   };
 
+  
   const dataTransferMyPython = async (data) => {
     let formData = new FormData();
 
@@ -252,13 +256,16 @@ function Imageupload() {
   };
 
   const dataTransfer = async (formData) => {
+    console.log("formData")
+    console.log(formData)
     try {
-      const response = await fetch("http://27.147.191.97:8008/upload-file", {
+      const response = await fetch("http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing", {
         method: "POST",
         body: formData,
       });
       const data = await response.json();
-      setAfterBeforeImg((getAfterBeforeImg) => [...getAfterBeforeImg, data]);
+      console.log(data)
+      setAfterBeforeImg((getAfterBeforeImg) => [...getAfterBeforeImg, data.results]);
     } catch (error) {
       console.error(error);
     }
@@ -345,7 +352,6 @@ function Imageupload() {
 
   return (
     <>
-      {console.log(fileInfo)}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
@@ -536,7 +542,10 @@ function Imageupload() {
           {getAfterBeforeImg.length > 0 &&
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
-              <UpdatedImage afterBeforeImage={data} key={index} />
+              <>
+             {typeof data.output_urls[0]  !== 'undefined' && <UpdatedImage afterBeforeImage={data} key={index} />}  
+
+              </>
             ))}
         </div>
       </div>

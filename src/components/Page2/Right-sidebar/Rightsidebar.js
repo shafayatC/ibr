@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { OrderContextManager } from "../../../App";
 import "./style.css";
 
 const Rightsidebar = () => {
@@ -6,6 +7,7 @@ const Rightsidebar = () => {
   const [getServicMenu, setServiceMenu] = useState([]);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager); 
 
   const loadMenuServiceId =  () => {
     fetch('http://103.197.204.22:8007/api/2023-02/service-types')
@@ -13,6 +15,7 @@ const Rightsidebar = () => {
       .then(res => {
         const promises = res.results.service_type_list.map(data => {
           const menuList = { ...data, "sub_menu": [] };
+          data.is_default == true && setServiceTypeId(data.id); 
           return fetch(`http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`)
             .then(listRes => listRes.json())
             .then(resultList => {

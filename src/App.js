@@ -3,7 +3,7 @@ import Page2 from "./components/Page2/Page2";
 import Page3 from "./components/Page3/Page3";
 
 import { Routes, Route } from "react-router-dom";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PriceCard from "./components/PriceCard/PriceCard";
 import SignIn from "./components/Login/SignIn";
 import SignUp from "./components/Login/SignUp";
@@ -13,13 +13,36 @@ import ResetPasswordForm from "./components/Login/ResetPasswordForm";
 import Navbar from "./components/Home/Navbar/Navbar";
 import QuestionAnswer from "./components/QuestionAnswer/QuestionAnswer";
 import MatchSort from "./components/MatchSort/MatchSort";
+import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
 
 export const FileContextManager = createContext();
+export const OrderContextManager = createContext(); 
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
   const [fileInfo, setFileInfo] = useState([]);
   const [getAfterBeforeImg, setAfterBeforeImg] = useState([]);
+  const [getMenuId, setMenuId] = useState("")
+  const [getLockMenuBool, setLockMenuBool] = useState(false);
+  const [getServiceTypeId, setServiceTypeId] = useState("")
+  const [getMenu, setMenu] = useState([]); 
+
+  const menuFunc = () =>{
+    fetch("http://103.197.204.22:8007/api/2023-02/menu")
+    .then((res) => res.json())
+    .then(
+      (data) => {
+        setMenu(data.results.menu_list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  useEffect(() => {
+    menuFunc()
+  }, []);
 
   return (
     <FileContextManager.Provider
@@ -30,10 +53,14 @@ function App() {
         setFileInfo,
         getAfterBeforeImg,
         setAfterBeforeImg,
+        getLockMenuBool,
+        setLockMenuBool
       ]}
     >
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu]}>
       <div className="App">
-        <Navbar></Navbar>
+        <InitialDataLoad/>
+        <Navbar items={getMenu}></Navbar>
         <Routes>
           {/* <Route path="/" element={<Navigation />} /> */}
           <Route path="/" element={<Home />} />
@@ -48,6 +75,7 @@ function App() {
           <Route path="/question-answer" element={<QuestionAnswer />} />
         </Routes>
       </div>
+      </OrderContextManager.Provider>
     </FileContextManager.Provider>
   );
 }
