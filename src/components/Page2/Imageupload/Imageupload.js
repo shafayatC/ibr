@@ -3,7 +3,6 @@ import { FileContextManager } from "../../../App";
 import "./style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
 import UpdatedImage from "../../Page3/UpdatedImage";
 import processlogo from "./img/process.png";
 import { matchSorter } from "match-sorter";
@@ -18,8 +17,8 @@ function Imageupload() {
   const [showImage, setShowImage] = useState(false);
   const [getOrderInfo, setOrderInfo] = useState({});
   const [getFilterText, setFilterText] = useState("");
-  const [getSuggest, setSuggest] = useState([]); 
-  
+  const [getSuggest, setSuggest] = useState([]);
+
   const [
     getMainFile,
     setMainFile,
@@ -30,7 +29,7 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool
   ] = useContext(FileContextManager);
-  const itemsPerPage = 32;
+  const itemsPerPage = 8;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -62,11 +61,8 @@ function Imageupload() {
 
   const uploadFile = (e) => {
     const newFile = e.target.files;
-    //console.log(newFile);
 
     setMainFile(newFile);
-    //setFileInfo([]);
-    // setImageShow([]);
     setLoadProgress(0);
     setActionStatus("");
 
@@ -74,10 +70,8 @@ function Imageupload() {
     for (const file of newFile) {
       i++;
 
-      // console.log(file);
       setLoadProgress(Math.round((100 / newFile.length) * i));
 
-      // check file type
       if (file.type == "image/jpeg" || file.type == "image/png") {
         if (fileInfo.length > 0) {
           // check if the images is already exits
@@ -95,14 +89,12 @@ function Imageupload() {
             const imageUrl = URL.createObjectURL(file)
             const fileObject = { "file": file, "imageUrl": imageUrl }
             setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-            // setImageShow((imageShow) => [...imageShow, imageUrl]);
             console.log("The file does not exist in the array.");
           }
         } else {
           const imageUrl = URL.createObjectURL(file)
           const fileObject = { "file": file, "imageUrl": imageUrl }
           setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-          // setImageShow((imageShow) => [...imageShow, imageUrl]);
         }
       }
     }
@@ -159,7 +151,6 @@ function Imageupload() {
 
           const myCallback = (result) => {
             if (result == "success") {
-              // console.log(result); 
               getAfterBeforeImg[index].result[0].is_ai_processed = true;
             }
           }
@@ -167,14 +158,12 @@ function Imageupload() {
           testImage(data.result[0].output_public_url, myCallback);
 
         } else {
-          //  console.log("true")
         }
 
       })
 
       console.log("statusIs " + getAfterBeforeImg.length)
     } else {
-      //console.log("none")
     }
 
   }
@@ -186,16 +175,9 @@ function Imageupload() {
     });
     setActionStatus("process");
     setLockMenuBool(true);
-    // let input = fileInfo;
     let order_id = getOrderInfo && getOrderInfo.order_id;
     let unique_custom_code = getOrderInfo && getOrderInfo.unique_custom_code;
-    // console.log(order_id);
-    // console.log(unique_custom_code);
-    //dataTransferMyPython(fileInfo)
-    // myOwnLoop(order_id)
-
     fileInfo.map((img_file, index) => {
-      //console.log(img_file)
 
       const filePath = img_file.file.webkitRelativePath;
       const imgType = getFileType(img_file.file);
@@ -205,33 +187,10 @@ function Imageupload() {
       data.append("unique_custom_code", unique_custom_code);
       data.append("file", img_file.file);
       data.append("file_relative_path", "filePath/psdfspd");
-      /*
-      data.append("file_path", "filePath/psdfspd");
-      data.append("api_key", "Agfd11384HSOTITYH@84584DHFDgsdg3746$$FGDSF7hgdh");
-      data.append("file", img_file);
-      data.append("return_public_url", "True");
-      data.append("output_format", "png");
-    */
+
 
       dataTransfer(data);
-      //checkAiProccesDone()
 
-      /*
-      fetch("http://27.147.191.97:8008/upload", {
-        method: "POST",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          setAfterBeforeImg(getAfterBeforeImg => [...getAfterBeforeImg, result]);
-          console.log(result);
-        })
-        .catch((err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-          */
     });
   };
 
@@ -248,8 +207,6 @@ function Imageupload() {
         body: formData,
       });
       const data = await response.json();
-      //setAfterBeforeImg(getAfterBeforeImg => [...getAfterBeforeImg, data]);
-      //console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -301,8 +258,6 @@ function Imageupload() {
         body: formData,
       });
       const data = await response.json();
-      //console.log(data.result[0]);
-      //testImage(data.result[0].output_public_url);
       setAfterBeforeImg((getAfterBeforeImg) => [...getAfterBeforeImg, data]);
     } catch (error) {
       console.error(error);
@@ -314,44 +269,10 @@ function Imageupload() {
   const filterFunc = (e) => {
     e.preventDefault();
 
-    const listofFile = [
-      {
-          "file": {
-            "name": "bangladesh"
-          },
-          "imageUrl": "blob:http://localhost:3000/5c319ab8-d9b7-4d2d-a76b-55d3f00fec6b"
-      },
-      {
-        "file": {
-          "name": "bangladesh is our"
-        }, 
-        "imageUrl": "blob:http://localhost:3000/21d81d5a-31ac-4703-8dd8-83b2d1cd4c3f"
-      },
-      {
-        "file": {
-          "name": "bangladesh is our"
-        }, 
-         "imageUrl": "blob:http://localhost:3000/0cb09179-6b3e-4095-ad58-4e2d89b1d88d"
-      },
-      {
-        "file": {
-          "name": "bangladesh is our country"
-        }, 
-          "imageUrl": "blob:http://localhost:3000/5d25c8df-4efd-4b00-b93d-68b1d9cae5da"
-      },
-      {
-        "file": {
-          "name": "bangladesh is our"
-        }, 
-        "imageUrl": "blob:http://localhost:3000/f6e80372-43b8-491b-b00c-4b518e97f3f1"
-      }
-  ]; 
     Promise.all(fileInfo).then(data => {
-      const suggestList = matchSorter(data, e.target.value, {keys:[data => data.file.webkitRelativePath]})
-      setSuggest(suggestList); 
+      const suggestList = matchSorter(data, e.target.value, { keys: [data => data.file.webkitRelativePath] })
+      setSuggest(suggestList);
     })
-   // const suggestList = matchSorter(fileInfo, e.target.value, {keys: ['file.webkitRelativePath']})
-  //  console.log(suggestList); 
     setFilterText(e.target.value)
     if (e.target.value.length > 0) {
       setActionStatus("filter")
@@ -361,7 +282,7 @@ function Imageupload() {
 
   }
 
-  const filterBysuggest =(txt)=>{
+  const filterBysuggest = (txt) => {
 
     setFilterText(txt)
     if (txt.length > 0) {
@@ -416,59 +337,42 @@ function Imageupload() {
       checkAiProccesDone(getAfterBeforeImg)
 
     }, 20000)
-    //checkAiProccesDone()
     x++;
 
     x > 0 && orderInfoFunc()
 
-    //return () => clearInterval(interval)
   })
 
   return (
     <>
-    {console.log(fileInfo)}
-      <div class="flex items-center justify-center mt-3">
-        <i class="fa-solid fa-filter text-white mr-1"></i>
-        <p class="text-white mr-4">Filter</p>
-        <div class="relative">
+      {console.log(fileInfo)}
+      <div className="flex items-center justify-center mt-3">
+        <i className="fa-solid fa-filter text-white mr-1"></i>
+        <p className="text-white mr-4">Filter</p>
+        <div className="relative w-[395px]" >
 
           <input
             value={getFilterText}
             onChange={filterFunc}
             maxLength={200}
             type="text"
-            class="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-48 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            className="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-10 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Filter File or Folder"
           />
 
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg
-              class="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 3a6 6 0 1 1-4.24 1.76A6 6 0 0 1 9 3zm11.71 16.29a1 1 0 0 1-1.42 0l-4.17-4.17a8 8 0 1 1 1.42-1.42l4.17 4.17a1 1 0 0 1 0 1.42z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <i class="fa-solid fa-magnifying-glass"></i>
           </div>
 
           <div id="matchsort" className="absolute bg-white z-10">
-            {getSuggest.map(data=>
-
-                <button onClick={()=>filterBysuggest(data.file.webkitRelativePath)} className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]">{data.file.webkitRelativePath}</button>
-
-              )}
-        </div>
+            {getSuggest.map((data, index) =>
+              index >= 4 && <button onClick={() => filterBysuggest(data.file.webkitRelativePath)} className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]">{data.file.webkitRelativePath}</button>
+            )}
+          </div>
         </div>
       </div>
       <div id="middleImageWrap " className="mt-1">
-        {
-          //  console.log(getAfterBeforeImg)
-        }
+
         <input
           onChange={uploadFile}
           type="file"
@@ -492,117 +396,22 @@ function Imageupload() {
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <>
-            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 7 ? "8" : fileInfo.length} lg:grid-cols-${fileInfo.length > 7 ? "8" : fileInfo.length} gap-4`}>
+            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} gap-4`}>
 
               {currentImages.map((image, index) => (
 
                 <div key={index}>
                   <div
-                    className=" img-container "
+                    className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
-                      backgroundImage: `url(${image.imageUrl})`,
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      width: "100%",
-                      cursor: "pointer",
-                      height: fileInfo.length < 5 ? "380px" : "180px",
+                      backgroundImage: `url(${image.imageUrl})`
                     }}
                   />
-                  {showImage && (
-                    <div
-                      className="img-container"
-                      style={{
-                        position: " fixed",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        zIndex: 9,
-                        background: "rgba(0, 0, 0, 0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img
-                        src={imgUrl}
-                        style={{
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                        }}
-                      />
-                      <div onClick={() => deletImage(imgUrl)} className="p-1 rounded-full cursor-pointer -mt-80 bg-white ">
-                        <i class="fa-regular fa-trash-can w-8 h-8  justify-center"></i>
-                      </div>
-                      <button
-                        onClick={handleClose}
-                        style={{
-                          position: "relative",
-                          top: "-43%",
-                          right: 0,
-                          background: "white",
-                          border: "none",
-                          padding: "10px 15px",
-                          borderRadius: "50%",
-                          cursor: "pointer",
-                        }}
-                      >
-                        X
-                      </button>
-                    </div>
-                  )}
                 </div>
+
               ))}
 
-            </div>
-
-            <div className="flex absolute bg-light-black w-3/4  bottom-0">
-              {/* progress bar */}
-              <div className=" mb-4 mr-40">
-                <div className=" w-32 h-4 ml-10 mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div
-                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                    style={{ width: `${LoadProgress}%` }}
-                  >
-                    {LoadProgress}%
-                  </div>
-                  <p className="text-white text-center text-xs">Complete</p>
-                </div>
-              </div>
-              {/* Previous button */}
-              <button
-                disabled={currentPage === 1}
-                className="cursor-pointer text-white"
-                onClick={previousPage}
-              >
-                <i class="fa-solid fa-arrow-left mr-2"></i>
-              </button>
-              {/* Process */}
-              <div className="">
-                <img
-                  src={processlogo}
-                  onClick={processImagesAi}
-                  className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-                />
-
-                <ToastContainer />
-              </div>
-              {/* Next Button */}
-              <button
-                disabled={
-                  currentPage === Math.ceil(imageShow.length / itemsPerPage)
-                }
-                className="cursor-pointer text-white"
-                onClick={nextPage}
-              >
-                <i className="fa-solid fa-arrow-right ml-2"></i>
-              </button>
-              {/* Image/total count */}
-              <div className="text-white ml-60 text-sm mt-2">
-                <p>Image Count :</p>
-                <p>Total Bill :</p>
-              </div>
             </div>
           </>
         )}
@@ -610,129 +419,118 @@ function Imageupload() {
         {fileInfo.length > 0 && actionStatus == "filter" && (
 
           <>
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4">
+            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length} gap-4`}>
 
               {currentImages.map((image, index) => (
-                image.file.webkitRelativePath.indexOf(getFilterText) > 0 &&
+                image.file.webkitRelativePath.indexOf(getFilterText) > -1 &&
 
                 <div key={index}>
                   <div
-                    className=" img-container hover:scale-110 transition duration-300 ease-in-out"
+                    className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
-                      backgroundImage: `url(${image.imageUrl})`,
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      width: "100%",
-                      cursor: "pointer",
-                      height: "80px",
+                      backgroundImage: `url(${image.imageUrl})`
                     }}
                   />
-                  {showImage && (
-                    <div
-                      className="img-container"
-                      style={{
-                        position: " fixed",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        zIndex: 9,
-                        background: "rgba(0, 0, 0, 0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img
-                        src={imgUrl}
-                        style={{
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                        }}
-                      />
-                      <div onClick={() => deletImage(imgUrl)} className="p-1 rounded-full cursor-pointer -mt-80 bg-white ">
-                        <i class="fa-regular fa-trash-can w-8 h-8  justify-center"></i>
-                      </div>
-                      <button
-                        onClick={handleClose}
-                        style={{
-                          position: "relative",
-                          top: "-43%",
-                          right: 0,
-                          background: "white",
-                          border: "none",
-                          padding: "10px 15px",
-                          borderRadius: "50%",
-                          cursor: "pointer",
-                        }}
-                      >
-                        X
-                      </button>
-                    </div>
-                  )}
                 </div>
+                
               ))}
             </div>
-
-            <div className="flex absolute bg-light-black w-3/4  bottom-0">
-              {/* progress bar */}
-              <div className=" mb-4 mr-40">
-                <div className=" w-32 h-4 ml-10 mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div
-                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                    style={{ width: `${LoadProgress}%` }}
-                  >
-                    {LoadProgress}%
-                  </div>
-                  <p className="text-white text-center text-xs">Complete</p>
-                </div>
-              </div>
-              {/* Previous button */}
-              <button
-                disabled={currentPage === 1}
-                className="cursor-pointer text-white"
-                onClick={previousPage}
-              >
-                <i class="fa-solid fa-arrow-left mr-2"></i>
-              </button>
-              {/* Process */}
-              <div className="">
-                <img
-                  src={processlogo}
-                  onClick={processImagesAi}
-                  className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-                />
-
-                <ToastContainer />
-              </div>
-              {/* Next Button */}
-              <button
-                disabled={
-                  currentPage === Math.ceil(imageShow.length / itemsPerPage)
-                }
-                className="cursor-pointer text-white"
-                onClick={nextPage}
-              >
-                <i className="fa-solid fa-arrow-right ml-2"></i>
-              </button>
-              {/* Image/total count */}
-              <div className="text-white ml-60 text-sm mt-2">
-                <p>Image Count :</p>
-                <p>Total Bill :</p>
-              </div>
-            </div>
-
           </>
         )}
 
-        {
-          /*
-          getAfterBeforeImg.length > 0 &&
-          actionStatus == "filter" &&
-          <FilterFile/>
-          */
+
+
+        {fileInfo.length > 0 &&
+
+          <div className="flex absolute bg-light-black w-3/4  bottom-0">
+            {/* progress bar */}
+            <div className=" mb-4 mr-40">
+              <div className=" w-32 h-4 ml-10 mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
+                <div
+                  className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                  style={{ width: `${LoadProgress}%` }}
+                >
+                  {LoadProgress}%
+                </div>
+                <p className="text-white text-center text-xs">Complete</p>
+              </div>
+            </div>
+            {/* Previous button */}
+            <button
+              disabled={currentPage === 1}
+              className="cursor-pointer text-white"
+              onClick={previousPage}
+            >
+              <i className="fa-solid fa-arrow-left mr-2"></i>
+            </button>
+            {/* Process */}
+            <div className="">
+              <img
+                src={processlogo}
+                onClick={processImagesAi}
+                className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
+              />
+
+              <ToastContainer />
+            </div>
+            {/* Next Button */}
+            <button
+              disabled={
+                currentPage === Math.ceil(imageShow.length / itemsPerPage)
+              }
+              className="cursor-pointer text-white"
+              onClick={nextPage}
+            >
+              <i className="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+            {/* Image/total count */}
+            <div className="text-white ml-60 text-sm mt-2">
+              <p>Image Count :</p>
+              <p>Total Bill :</p>
+            </div>
+          </div>
+
         }
+
+        {showImage && (
+          <div
+            className="img-container"
+            style={{
+              position: " fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 99,
+              background: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={imgUrl}
+              className="max-w-full max-h-full w-96 h-96"
+            />
+            <div className="absolute right-4 top-4 flex gap-2">
+              <button
+                onClick={() => deletImage(imgUrl)}
+                className="bg-white w-10 h-10 rounded-full"
+              >
+                <i className="fa-regular fa-trash-can"></i>
+              </button>
+              <button
+                onClick={handleClose}
+                className="bg-white w-10 h-10 rounded-full"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+          </div>
+        )}
+
 
         <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-1">
           {getAfterBeforeImg.length > 0 &&
