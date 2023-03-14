@@ -6,9 +6,9 @@ import "./page3.css";
 
 const ViewDwnld = ({ imagesBeforeAfter }) => {
   const [isImageVisible, setImageVisibility] = useState(false);
-  const before = imagesBeforeAfter.result[0].compressed_public_url;
-  const after = imagesBeforeAfter.result[0].output_public_url;
-  const isProcess = imagesBeforeAfter.result[0].is_ai_processed;
+  const before = imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
+  const after = imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
+  const isProcess = imagesBeforeAfter.output_urls[0].is_ai_processed;
 
   const handleViewClick = () => {
     setImageVisibility(true);
