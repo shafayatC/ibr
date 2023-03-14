@@ -8,34 +8,47 @@ const Leftsidebar = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [getMenuId, setMenuId] = useContext(OrderContextManager);
+  const [id_of_menu, set_id_of_menu]  = useState(""); 
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] = useContext(OrderContextManager);
 
-  useEffect(() => {
-    fetch(
-      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`
-    )
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          if (data.status_code == 200) {
-            setIsLoaded(true);
-            setItems(data.results.side_bar_list);
-          }
-        },
+  const menuList = ()=> {
 
-        (error) => {
+    if(getMenuId.length > 0){
+
+      set_id_of_menu(getMenuId) 
+
+    }else {
+        getMenu.map(data=>
+          data.type == "upload" &&
+          set_id_of_menu(data.id)
+        )
+    }
+    
+    fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${id_of_menu}&user_id=`)
+    .then((res) => res.json())
+    .then(
+      (data) => {
+        if(data.status_code == 200){
           setIsLoaded(true);
-          setError(error);
-          console.log(error);
+          setItems(data.results.side_bar_list);
         }
-      );
-  }, []);
+      },
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
+      (error) => {
+        setIsLoaded(true);
+        setError(error);
+        console.log(error);
+      }
+    );
+
+  }
+  useEffect(() => {
+    
+    menuList(); 
+
+  }, [id_of_menu, getMenu]);
+
+
     return (
       <>
         <div className="hfull">
@@ -68,92 +81,108 @@ const Leftsidebar = () => {
           >
             <div className="w-40  hfull pb-4  overflow-y-auto shadow-2xl bg-black-shade">
               <div className="leftBarMenuWrap space-y-2 mt-16">
-                {items.map((item) => (
+                {items.length > 0 && items.map((item) => (
                   <>
                     {item.name == "Folder" && (
-                      <div key={item.id}>
-                        <div
+                        <div  
+                          key={item.id}
                           onClick={() =>
                             document.querySelector("#filepicker").click()
                           }
                           className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
                         >
                           <i className={item.icon}></i> {item.name}
+                          {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                         </div>
-                      </div>
                     )}
 
                     {item.name == "File" && (
                       <div
+                      key={item.id}
                         onClick={() =>
                           document.querySelector("#singleImagePick").click()
                         }
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
 
                     {item.name == "URL" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                       {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
 
                     {item.name == "FTP" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
 
                     {item.name == "AI/Manual" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
                     {item.name == "Subscription" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
                     {item.name == "Offer/Coupon" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
 
                     {item.name == "Filter" && (
                       <div
+                      key={item.id}
                         onClick={() => document.querySelector("#").click()}
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
 
                     {item.name == "Clear" && (
                       <div
+                      key={item.id}
                         onClick={() =>
                           document.querySelector("#clearData").click()
                         }
                         className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
                       >
                         <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && <span>{item.highlight}</span>} 
                       </div>
                     )}
                   </>
@@ -165,5 +194,4 @@ const Leftsidebar = () => {
       </>
     );
   }
-};
 export default Leftsidebar;
