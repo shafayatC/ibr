@@ -19,7 +19,7 @@ function Page2() {
           {/* <Footer /> */}
         </div>
         <div className="leftSideBarWrap">
-          <Rightsidebar />
+        {/* <Rightsidebar /> */}  
         </div>
       </div>
     </div>

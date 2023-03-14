@@ -1,29 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import imgTrain from "./img/train.svg";
 import logo from "../../../images/makeup.png";
 import "./navbar.css";
+import { OrderContextManager } from "../../../App";
 
-const Navbar = () => {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+const Navbar = ({items}) => {
+  //const [error, setError] = useState(null);
+ // const [isLoaded, setIsLoaded] = useState(false);
+ // const [items, setItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    fetch("http://103.197.204.22:8007/api/2023-02/menu")
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          setIsLoaded(true);
-          setItems(data.results.menu_list);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  }, []);
+  const [getMenuId, setMenuId] = useContext(OrderContextManager); 
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -68,7 +55,7 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
             {items.map((item, index) =>
               (
-                <Link style={{order: item.sequence_no, marginLeft:"0px", marginRight:"0px"}} className={item.type == "sign_up" && " bg-theme-shade rounded"} to={item.url}>
+                <Link onClick={()=>setMenuId(item.id)} style={{order: item.sequence_no, marginLeft:"0px", marginRight:"0px"}} className={item.type == "sign_up" && " bg-theme-shade rounded"} to={item.url}>
                   <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
                     <div key={item.id}>{item.name}</div>
                   </button>
