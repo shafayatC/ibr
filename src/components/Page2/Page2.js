@@ -14,13 +14,11 @@ function Page2() {
           <Leftsidebar />
         </div>
 
-        <div className="md:col-span-3 lg:col-span-6  leftSideBarWrap">
+        <div className="md:col-span-3 lg:col-span-7  leftSideBarWrap">
           <Imageupload />
           {/* <Footer /> */}
         </div>
-        <div className="leftSideBarWrap">
-        {/* <Rightsidebar /> */}  
-        </div>
+        <div className="leftSideBarWrap">{/* <Rightsidebar /> */}</div>
       </div>
     </div>
   );
