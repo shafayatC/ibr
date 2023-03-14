@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-function UpgradeAccount() {
-  const [getClose, setClose] = useState(false);
+function UpgradeAccount({upgradCallBack}) {
 
   const HandleClose = () => {
-    setClose(true);
+    upgradCallBack(false);
   };
   return (
     <>
-      {getClose == false && (
         <div className="container mx-auto">
           <div className=" h-68 w-[620px] rounded-md text-white m-auto mt-40 bg-[#202123]">
             <div className="flex justify-between ">
@@ -68,7 +66,6 @@ function UpgradeAccount() {
             </div>
           </div>
         </div>
-      )}
     </>
   );
 }

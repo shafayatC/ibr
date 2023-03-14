@@ -31,7 +31,9 @@ function Imageupload() {
   ] = useContext(FileContextManager);
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
+
   const UpdatePlan = () => {
+    console.log("change me ")
     setUpdatePlan(true);
   };
 
@@ -347,6 +349,9 @@ function Imageupload() {
     handleClose();
   };
 
+  const upgradCallBack = (bl) =>{
+    setUpdatePlan(bl)
+  }
   var x = 0;
 
   useEffect(() => {
@@ -582,7 +587,7 @@ function Imageupload() {
         </div>
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
-            <UpgradeAccount></UpgradeAccount>
+            <UpgradeAccount upgradCallBack={upgradCallBack}/>
           </div>
         )}
       </div>
