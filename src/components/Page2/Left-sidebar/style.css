@@ -1,3 +1,14 @@
 .leftBarMenu {
     cursor: pointer;
+    position: relative;
+    font-size: 13px;
+}
+.leftBarMenu span {
+    position: absolute;
+    right: 10px;
+    background: #fae69e;
+    padding: 0 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #272727;
 }
