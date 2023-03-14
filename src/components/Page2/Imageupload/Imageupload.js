@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import UpdatedImage from "../../Page3/UpdatedImage";
 import processlogo from "./img/process.png";
 import { matchSorter } from "match-sorter";
+import UpgradeAccount from "../../UpgradeAccount/UpgradeAccount";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +18,7 @@ function Imageupload() {
   const [getOrderInfo, setOrderInfo] = useState({});
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
-  const [getSuggestBool, setSuggestBool] = useState(false); 
+  const [getSuggestBool, setSuggestBool] = useState(false);
   const [
     getMainFile,
     setMainFile,
@@ -29,13 +30,21 @@ function Imageupload() {
     setLockMenuBool,
   ] = useContext(FileContextManager);
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager);
+  const [getUpdatePlan, setUpdatePlan] = useState(false);
+
+  const UpdatePlan = () => {
+    console.log("change me ")
+    setUpdatePlan(true);
+  };
+
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] =
+    useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentImages = fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages = actionStatus == 'filter' ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) :  fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -148,26 +157,22 @@ function Imageupload() {
   const checkAiProccesDone = (getAfterBeforeImg) => {
     if (getAfterBeforeImg.length > 0) {
       getAfterBeforeImg.map((data, index) => {
-
-        if (typeof data.output_urls[0] !== 'undefined') {
-
+        if (typeof data.output_urls[0] !== "undefined") {
           if (data.output_urls[0].is_ai_processed == false) {
-
             const myCallback = (result) => {
               if (result == "success") {
                 getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
               }
             };
 
-            testImage(data.output_urls[0].default_compressed_output_public_url, myCallback);
-
+            testImage(
+              data.output_urls[0].default_compressed_output_public_url,
+              myCallback
+            );
           } else {
           }
         }
       });
-
-      console.log("statusIs " + getAfterBeforeImg.length);
-    } else {
     }
   };
 
@@ -280,19 +285,21 @@ function Imageupload() {
       });
       setSuggest(suggestList);
     });
+
     setFilterText(e.target.value);
     if (e.target.value.length > 0) {
       setActionStatus("filter");
       setSuggestBool(true);
+      setCurrentPage(1)
     } else {
       setActionStatus("");
-      setSuggestBool(false); 
+      setSuggestBool(false);
     }
   };
 
   const filterBysuggest = (txt) => {
     setFilterText(txt);
-    setSuggestBool(false); 
+    setSuggestBool(false);
     if (txt.length > -1) {
       setActionStatus("filter");
     } else {
@@ -300,9 +307,11 @@ function Imageupload() {
     }
   };
 
+
   const clearFilterText = ()=> {
-    setFilterText(" ");
+    setFilterText("");
     setSuggestBool(false); 
+    setActionStatus("");
   }
 
   const clearData = () => {
@@ -340,6 +349,9 @@ function Imageupload() {
     handleClose();
   };
 
+  const upgradCallBack = (bl) =>{
+    setUpdatePlan(bl)
+  }
   var x = 0;
 
   useEffect(() => {
@@ -366,25 +378,29 @@ function Imageupload() {
             placeholder="Filter File or Folder"
           />
 
-          {getFilterText.length > 0 &&
-          <button onClick={clearFilterText}  className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer">
-          <i className="fa-sharp fa-solid fa-xmark"></i>
-          </button>
-          }
+          {getFilterText.length > 0 && (
+            <button
+              onClick={clearFilterText}
+              className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer"
+            >
+              <i className="fa-sharp fa-solid fa-xmark"></i>
+            </button>
+          )}
           <div id="matchsort" className="absolute bg-white z-10">
-            {getSuggestBool == true && getSuggest.map(
-              (data, index) =>
-                index < 2 && (
-                  <button
-                    onClick={() =>
-                      filterBysuggest(data.file.webkitRelativePath)
-                    }
-                    className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
-                  >
-                    {data.file.webkitRelativePath}
-                  </button>
-                )
-            )}
+            {getSuggestBool == true &&
+              getSuggest.map(
+                (data, index) =>
+                  index < 2 && (
+                    <button
+                      onClick={() =>
+                        filterBysuggest(data.file.webkitRelativePath)
+                      }
+                      className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
+                    >
+                      {data.file.webkitRelativePath}
+                    </button>
+                  )
+              )}
           </div>
         </div>
       </div>
@@ -407,6 +423,11 @@ function Imageupload() {
           accept="image/*"
           multiple
         />
+        <button
+          className="hidden"
+          id="updatePlan"
+          onClick={UpdatePlan}
+        ></button>
 
         <button className="hidden" id="clearData" onClick={clearData}></button>
 
@@ -418,7 +439,6 @@ function Imageupload() {
               } lg:grid-cols-${
                 fileInfo.length > 3 ? "4" : fileInfo.length
               } gap-4 pt-5 pr-3`}
-
             >
               {currentImages.map((image, index) => (
                 <div key={index}>
@@ -426,7 +446,6 @@ function Imageupload() {
                     className={`img-container bg-cover bg-no-repeat  cursor-pointer img-bag
                      ${currentImages.length == 1 ? "h-[410px]" : "img-bag"}
                      `}
-
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
@@ -560,11 +579,17 @@ function Imageupload() {
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
               <>
-                {typeof data.output_urls[0] !== 'undefined' && <UpdatedImage afterBeforeImage={data} key={index} />}
-
+                {typeof data.output_urls[0] !== "undefined" && (
+                  <UpdatedImage afterBeforeImage={data} key={index} />
+                )}
               </>
             ))}
         </div>
+        {getUpdatePlan && (
+          <div className=" absolute top-0 left-96 ">
+            <UpgradeAccount upgradCallBack={upgradCallBack}/>
+          </div>
+        )}
       </div>
     </>
   );
