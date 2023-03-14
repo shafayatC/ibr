@@ -27,7 +27,8 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool,
   ] = useContext(FileContextManager);
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager); 
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] =
+    useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -40,13 +41,12 @@ function Imageupload() {
   const api_send = "http://27.147.191.97:8008/upload-file";
 
   const orderInfoFunc = () => {
-
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
-      user_id: null
+      user_id: null,
     };
-    console.log("service id : "+ getServiceTypeId);
+    console.log("service id : " + getServiceTypeId);
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
       headers: { "Content-Type": "application/json" },
@@ -54,9 +54,9 @@ function Imageupload() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("my order master info : ")
-        console.log(data.results.order_master_info)
-       setOrderInfo(data.results.order_master_info);
+        console.log("my order master info : ");
+        console.log(data.results.order_master_info);
+        setOrderInfo(data.results.order_master_info);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -149,18 +149,17 @@ function Imageupload() {
   const checkAiProccesDone = (getAfterBeforeImg) => {
     if (getAfterBeforeImg.length > 0) {
       getAfterBeforeImg.map((data, index) => {
-
         if (data.output_urls[0].is_ai_processed == false) {
-
           const myCallback = (result) => {
             if (result == "success") {
               getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
             }
           };
 
-
-          testImage(data.output_urls[0].default_compressed_output_public_url, myCallback);
-
+          testImage(
+            data.output_urls[0].default_compressed_output_public_url,
+            myCallback
+          );
         } else {
         }
       });
@@ -190,7 +189,6 @@ function Imageupload() {
     });
   };
 
-  
   const dataTransferMyPython = async (data) => {
     let formData = new FormData();
 
@@ -250,16 +248,22 @@ function Imageupload() {
   };
 
   const dataTransfer = async (formData) => {
-    console.log("formData")
-    console.log(formData)
+    console.log("formData");
+    console.log(formData);
     try {
-      const response = await fetch("http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const data = await response.json();
-      console.log(data)
-      setAfterBeforeImg((getAfterBeforeImg) => [...getAfterBeforeImg, data.results]);
+      console.log(data);
+      setAfterBeforeImg((getAfterBeforeImg) => [
+        ...getAfterBeforeImg,
+        data.results,
+      ]);
     } catch (error) {
       console.error(error);
     }
@@ -402,16 +406,14 @@ function Imageupload() {
                 fileInfo.length > 3 ? "4" : fileInfo.length
               } lg:grid-cols-${
                 fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4`}
+              } gap-4 pt-5 pr-3`}
             >
               {currentImages.map((image, index) => (
                 <div key={index}>
                   <div
-                    className={`img-container bg-cover bg-no-repeat w-full cursor-pointer  h-[180px] ${
-                      currentImages.length === 3 ? "h-[300px]" : "h-[180px]"
-                    } ${currentImages.length === 2 ? "h-[400px]" : "h-[180px]"}
-                    ${currentImages.length === 1 ? "h-[500px]" : "h-[180px]"}
-                    `}
+                    className={`img-container bg-cover bg-no-repeat  cursor-pointer img-bag
+                     ${currentImages.length == 1 ? "h-[410px]" : "img-bag"}
+                     `}
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
@@ -430,14 +432,14 @@ function Imageupload() {
                 fileInfo.length > 3 ? "4" : fileInfo.length
               } lg:grid-cols-${
                 fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4`}
+              } gap-4 pt-5 pr-3`}
             >
               {currentImages.map(
                 (image, index) =>
                   image.file.webkitRelativePath.indexOf(getFilterText) > -1 && (
                     <div key={index}>
                       <div
-                        className="img-container bg-cover bg-no-repeat w-full cursor-pointer h-[180px]"
+                        className="img-container bg-cover bg-no-repeat w-full cursor-pointer img-bag"
                         onClick={() => viewImg(image.imageUrl)}
                         style={{
                           backgroundImage: `url(${image.imageUrl})`,
@@ -451,19 +453,7 @@ function Imageupload() {
         )}
 
         {fileInfo.length > 0 && (
-          <div className="flex absolute bg-light-black w-3/4  bottom-0">
-            {/* progress bar */}
-            <div className=" mb-4 mr-40">
-              <div className=" w-32 h-4 ml-10 mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
-                <div
-                  className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                  style={{ width: `${LoadProgress}%` }}
-                >
-                  {LoadProgress}%
-                </div>
-                <p className="text-white text-center text-xs">Complete</p>
-              </div>
-            </div>
+          <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
             {/* Previous button */}
             <button
               disabled={currentPage === 1}
@@ -510,13 +500,31 @@ function Imageupload() {
               right: 0,
               bottom: 0,
               zIndex: 99,
-              background: "rgba(0, 0, 0, 0.5)",
+              background: "white",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <img src={imgUrl} className="max-w-full max-h-full w-96 h-96" />
+            <div className="flex gap-4">
+              <div>
+                <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
+                  Download
+                </button>
+                <p className="text-sm text-center mt-1">
+                  Preview Image 100/200
+                </p>
+              </div>
+              <div>
+                <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800">
+                  Download HD
+                </button>
+                <p className="text-sm text-center mt-1">Full Image 2000/3000</p>
+              </div>
+            </div>
+
             <div className="absolute right-4 top-4 flex gap-2">
               <button
                 onClick={() => deletImage(imgUrl)}
@@ -539,8 +547,9 @@ function Imageupload() {
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
               <>
-             {typeof data.output_urls[0]  !== 'undefined' && <UpdatedImage afterBeforeImage={data} key={index} />}  
-
+                {typeof data.output_urls[0] !== "undefined" && (
+                  <UpdatedImage afterBeforeImage={data} key={index} />
+                )}
               </>
             ))}
         </div>

@@ -8,15 +8,16 @@ const Leftsidebar = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [getMenuId, setMenuId] = useContext(OrderContextManager); 
-
+  const [getMenuId, setMenuId] = useContext(OrderContextManager);
 
   useEffect(() => {
-    fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`)
+    fetch(
+      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`
+    )
       .then((res) => res.json())
       .then(
         (data) => {
-          if(data.status_code == 200){
+          if (data.status_code == 200) {
             setIsLoaded(true);
             setItems(data.results.side_bar_list);
           }
