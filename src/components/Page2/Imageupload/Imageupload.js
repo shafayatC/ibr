@@ -17,6 +17,7 @@ function Imageupload() {
   const [getOrderInfo, setOrderInfo] = useState({});
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
+  const [getSuggestBool, setSuggestBool] = useState(false); 
   const [
     getMainFile,
     setMainFile,
@@ -27,7 +28,7 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool,
   ] = useContext(FileContextManager);
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager); 
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -46,7 +47,7 @@ function Imageupload() {
       service_type_id: getServiceTypeId,
       user_id: null
     };
-    console.log("service id : "+ getServiceTypeId);
+    //   console.log("service id : "+ getServiceTypeId);
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
       headers: { "Content-Type": "application/json" },
@@ -54,9 +55,9 @@ function Imageupload() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("my order master info : ")
-        console.log(data.results.order_master_info)
-       setOrderInfo(data.results.order_master_info);
+        // console.log("my order master info : ")
+        // console.log(data.results.order_master_info)
+        setOrderInfo(data.results.order_master_info);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -150,18 +151,20 @@ function Imageupload() {
     if (getAfterBeforeImg.length > 0) {
       getAfterBeforeImg.map((data, index) => {
 
-        if (data.output_urls[0].is_ai_processed == false) {
+        if (typeof data.output_urls[0] !== 'undefined') {
 
-          const myCallback = (result) => {
-            if (result == "success") {
-              getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
-            }
-          };
+          if (data.output_urls[0].is_ai_processed == false) {
 
+            const myCallback = (result) => {
+              if (result == "success") {
+                getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
+              }
+            };
 
-          testImage(data.output_urls[0].default_compressed_output_public_url, myCallback);
+            testImage(data.output_urls[0].default_compressed_output_public_url, myCallback);
 
-        } else {
+          } else {
+          }
         }
       });
 
@@ -190,7 +193,7 @@ function Imageupload() {
     });
   };
 
-  
+
   const dataTransferMyPython = async (data) => {
     let formData = new FormData();
 
@@ -277,19 +280,27 @@ function Imageupload() {
     setFilterText(e.target.value);
     if (e.target.value.length > 0) {
       setActionStatus("filter");
+      setSuggestBool(true);
     } else {
       setActionStatus("");
+      setSuggestBool(false); 
     }
   };
 
   const filterBysuggest = (txt) => {
     setFilterText(txt);
-    if (txt.length > 0) {
+    setSuggestBool(false); 
+    if (txt.length > -1) {
       setActionStatus("filter");
     } else {
       setActionStatus("");
     }
   };
+
+  const clearFilterText = ()=> {
+    setFilterText(" ");
+    setSuggestBool(false); 
+  }
 
   const clearData = () => {
     setMainFile([]);
@@ -352,14 +363,15 @@ function Imageupload() {
             placeholder="Filter File or Folder"
           />
 
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </div>
-
+          {getFilterText.length > 0 &&
+          <button onClick={clearFilterText}  className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer">
+          <i className="fa-sharp fa-solid fa-xmark"></i>
+          </button>
+          }
           <div id="matchsort" className="absolute bg-white z-10">
-            {getSuggest.map(
+            {getSuggestBool == true && getSuggest.map(
               (data, index) =>
-                index >= 4 && (
+                index < 2 && (
                   <button
                     onClick={() =>
                       filterBysuggest(data.file.webkitRelativePath)
@@ -398,18 +410,15 @@ function Imageupload() {
         {fileInfo.length > 0 && actionStatus == "" && (
           <>
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } lg:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4`}
+              className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } gap-4`}
             >
               {currentImages.map((image, index) => (
                 <div key={index}>
                   <div
-                    className={`img-container bg-cover bg-no-repeat w-full cursor-pointer  h-[180px] ${
-                      currentImages.length === 3 ? "h-[300px]" : "h-[180px]"
-                    } ${currentImages.length === 2 ? "h-[400px]" : "h-[180px]"}
+                    className={`img-container bg-cover bg-no-repeat w-full cursor-pointer  h-[180px] ${currentImages.length === 3 ? "h-[300px]" : "h-[180px]"
+                      } ${currentImages.length === 2 ? "h-[400px]" : "h-[180px]"}
                     ${currentImages.length === 1 ? "h-[500px]" : "h-[180px]"}
                     `}
                     onClick={() => viewImg(image.imageUrl)}
@@ -426,11 +435,9 @@ function Imageupload() {
         {fileInfo.length > 0 && actionStatus == "filter" && (
           <>
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } lg:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4`}
+              className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } gap-4`}
             >
               {currentImages.map(
                 (image, index) =>
@@ -539,7 +546,7 @@ function Imageupload() {
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
               <>
-             {typeof data.output_urls[0]  !== 'undefined' && <UpdatedImage afterBeforeImage={data} key={index} />}  
+                {typeof data.output_urls[0] !== 'undefined' && <UpdatedImage afterBeforeImage={data} key={index} />}
 
               </>
             ))}
