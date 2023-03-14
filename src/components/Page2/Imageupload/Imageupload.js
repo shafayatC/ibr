@@ -42,7 +42,7 @@ function Imageupload() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentImages = fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages = actionStatus == 'filter' ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) :  fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -171,9 +171,6 @@ function Imageupload() {
           }
         }
       });
-
-      console.log("statusIs " + getAfterBeforeImg.length);
-    } else {
     }
   };
 
@@ -286,10 +283,12 @@ function Imageupload() {
       });
       setSuggest(suggestList);
     });
+
     setFilterText(e.target.value);
     if (e.target.value.length > 0) {
       setActionStatus("filter");
       setSuggestBool(true);
+      setCurrentPage(1)
     } else {
       setActionStatus("");
       setSuggestBool(false);
@@ -306,10 +305,12 @@ function Imageupload() {
     }
   };
 
-  const clearFilterText = () => {
-    setFilterText(" ");
-    setSuggestBool(false);
-  };
+
+  const clearFilterText = ()=> {
+    setFilterText("");
+    setSuggestBool(false); 
+    setActionStatus("");
+  }
 
   const clearData = () => {
     setMainFile([]);
