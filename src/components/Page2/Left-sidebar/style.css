@@ -2,6 +2,8 @@
     cursor: pointer;
     position: relative;
     font-size: 13px;
+    display: flex;
+    grid-gap: 5px;
 }
 .leftBarMenu span {
     position: absolute;
@@ -9,6 +11,7 @@
     background: #fae69e;
     padding: 0 8px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 10px;
     color: #272727;
+    line-height: 19px;
 }
