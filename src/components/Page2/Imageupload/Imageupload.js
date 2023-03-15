@@ -341,9 +341,9 @@ function Imageupload() {
   };
 
   const clearData = () => {
-    document.getElementById("filepicker").value = ""; 
-    document.getElementById("singleImagePick").value = ""; 
-    
+    document.getElementById("filepicker").value = "";
+    document.getElementById("singleImagePick").value = "";
+
     setMainFile([]);
     setFileInfo([]);
     setImageShow([]);
@@ -463,13 +463,13 @@ function Imageupload() {
                 fileInfo.length > 3 ? "4" : fileInfo.length
               } lg:grid-cols-${
                 fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4 pt-5 pr-3`}
+              } gap-4 pt-5  pr-3`}
             >
               {currentImages.map((image, index) => (
                 <div key={index}>
                   <div
-                    className={`img-container bg-cover bg-no-repeat  cursor-pointer img-bag
-                     ${currentImages.length === 1 ? "h-[200px]" : "img-bag"}
+                    className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                     ${currentImages.length === 1 ? "h-[400px]" : "img-bag"}
                      `}
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
@@ -569,7 +569,7 @@ function Imageupload() {
               src={imgUrl}
               className="max-w-full max-h-full w-[600px] h-[400px]"
             />
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>
                 <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
                   Download
@@ -584,7 +584,7 @@ function Imageupload() {
                 </button>
                 <p className="text-sm text-center mt-1">Full Image 2000/3000</p>
               </div>
-            </div>
+            </div> */}
 
             <div className="absolute right-4 top-4 flex gap-2">
               <button
@@ -603,7 +603,7 @@ function Imageupload() {
           </div>
         )}
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-1">
+        <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5">
           {getAfterBeforeImg.length > 0 &&
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
