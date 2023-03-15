@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { OrderContextManager } from "../../../App";
 import Loading from "../../Loading/Loading";
 import Services from "../../NewService/Services/Services";
+import Service_2 from "../../NewService/Service_2";
 import video from "../VideoViewer/Video/demo.mp4";
 import "./style.css";
 
@@ -43,6 +44,7 @@ const Home = () => {
       </div>
       <Loading></Loading>
       <Services></Services>
+      <Service_2></Service_2>
     </div>
   );
 };
