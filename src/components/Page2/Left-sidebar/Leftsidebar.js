@@ -2,25 +2,36 @@ import { useState, useEffect, useContext } from "react";
 import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
-import { OrderContextManager } from "../../../App";
+import { FileContextManager, OrderContextManager } from "../../../App";
 
 const Leftsidebar = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [id_of_menu, set_id_of_menu] = useState("");
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] =
-    useContext(OrderContextManager);
+  const [
+    getMainFile,
+    setMainFile,
+    fileInfo,
+    setFileInfo,
+    getAfterBeforeImg,
+    setAfterBeforeImg,
+    getLockMenuBool,
+    setLockMenuBool,
+  ] = useContext(FileContextManager);
+
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] = useContext(OrderContextManager);
 
   const menuList = () => {
-    if (getMenuId.length > 0) {
+{/*    if (getMenuId.length > 0) {
       set_id_of_menu(getMenuId);
     } else {
       getMenu.map((data) => data.type == "upload" && set_id_of_menu(data.id));
     }
+  */}
 
     fetch(
-      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${id_of_menu}&user_id=`
+      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`
     )
       .then((res) => res.json())
       .then(
@@ -39,7 +50,7 @@ const Leftsidebar = () => {
       );
   };
   useEffect(() => {
-    menuList();
+     getMenuId.length > 0 &&   menuList();
   }, [id_of_menu, getMenu]);
 
   return (
@@ -83,7 +94,7 @@ const Leftsidebar = () => {
                         onClick={() =>
                           document.querySelector("#filepicker").click()
                         }
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -98,7 +109,7 @@ const Leftsidebar = () => {
                         onClick={() =>
                           document.querySelector("#singleImagePick").click()
                         }
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white"
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -111,7 +122,7 @@ const Leftsidebar = () => {
                       <div
                         key={item.id}
                         onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -124,7 +135,7 @@ const Leftsidebar = () => {
                       <div
                         key={item.id}
                         onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -139,7 +150,7 @@ const Leftsidebar = () => {
                         onClick={() =>
                           document.querySelector("#updatePlan").click()
                         }
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -151,7 +162,7 @@ const Leftsidebar = () => {
                       <div
                         key={item.id}
                         onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -163,7 +174,7 @@ const Leftsidebar = () => {
                       <div
                         key={item.id}
                         onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -176,7 +187,7 @@ const Leftsidebar = () => {
                       <div
                         key={item.id}
                         onClick={() => document.querySelector("#").click()}
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -191,7 +202,7 @@ const Leftsidebar = () => {
                         onClick={() =>
                           document.querySelector("#clearData").click()
                         }
-                        className="leftBarMenu  items-center p-2 text-base font-normal text-white hover:border-r-2 hover:border-r-white hover:bg-light-black "
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (

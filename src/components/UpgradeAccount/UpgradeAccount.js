@@ -24,17 +24,17 @@ function UpgradeAccount({upgradCallBack}) {
                   Your Current Plan
                 </button>
                 <p>
-                  <i class="fa-solid fa-circle-check"></i> AI Based Services
+                  <i className="fa-solid fa-circle-check"></i> AI Based Services
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check"></i> Low Resolution Output
+                  <i className="fa-solid fa-circle-check"></i> Low Resolution Output
                   Image
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check"></i> No Editing Services
+                  <i className="fa-solid fa-circle-check"></i> No Editing Services
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check"></i> No Adjustmnet
+                  <i className="fa-solid fa-circle-check"></i> No Adjustmnet
                   Supports
                 </p>
               </div>
@@ -47,19 +47,19 @@ function UpgradeAccount({upgradCallBack}) {
                   Upgrade Plan
                 </button>
                 <p>
-                  <i class="fa-solid fa-circle-check text-green-600"></i>{" "}
+                  <i className="fa-solid fa-circle-check text-green-600"></i>{" "}
                   AI-Professional Collaboration
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check text-green-600"></i> HD
+                  <i className="fa-solid fa-circle-check text-green-600"></i> HD
                   Quality Output Image
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check text-green-600"></i>{" "}
+                  <i className="fa-solid fa-circle-check text-green-600"></i>{" "}
                   Supports Other Editing Services
                 </p>
                 <p>
-                  <i class="fa-solid fa-circle-check text-green-600"></i>{" "}
+                  <i className="fa-solid fa-circle-check text-green-600"></i>{" "}
                   Unlimited No. of Adjustments
                 </p>
               </div>

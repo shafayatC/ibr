@@ -18,7 +18,7 @@ function Page2() {
           <Imageupload />
           {/* <Footer /> */}
         </div>
-        <div className="leftSideBarWrap">{/* <Rightsidebar /> */}</div>
+        {/*<div className="leftSideBarWrap"><Rightsidebar /> </div> */}
       </div>
     </div>
   );
