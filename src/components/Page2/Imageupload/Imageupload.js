@@ -33,7 +33,7 @@ function Imageupload() {
   const [getUpdatePlan, setUpdatePlan] = useState(false);
 
   const UpdatePlan = () => {
-    console.log("change me ")
+    console.log("change me ");
     setUpdatePlan(true);
   };
 
@@ -44,7 +44,10 @@ function Imageupload() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentImages = actionStatus == 'filter' ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) :  fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages =
+    actionStatus == "filter"
+      ? getSuggest.slice(indexOfFirstItem, indexOfLastItem)
+      : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -290,7 +293,7 @@ function Imageupload() {
     if (e.target.value.length > 0) {
       setActionStatus("filter");
       setSuggestBool(true);
-      setCurrentPage(1)
+      setCurrentPage(1);
     } else {
       setActionStatus("");
       setSuggestBool(false);
@@ -307,12 +310,11 @@ function Imageupload() {
     }
   };
 
-
-  const clearFilterText = ()=> {
+  const clearFilterText = () => {
     setFilterText("");
-    setSuggestBool(false); 
+    setSuggestBool(false);
     setActionStatus("");
-  }
+  };
 
   const clearData = () => {
     setMainFile([]);
@@ -349,9 +351,9 @@ function Imageupload() {
     handleClose();
   };
 
-  const upgradCallBack = (bl) =>{
-    setUpdatePlan(bl)
-  }
+  const upgradCallBack = (bl) => {
+    setUpdatePlan(bl);
+  };
   var x = 0;
 
   useEffect(() => {
@@ -444,7 +446,7 @@ function Imageupload() {
                 <div key={index}>
                   <div
                     className={`img-container bg-cover bg-no-repeat  cursor-pointer img-bag
-                     ${currentImages.length == 1 ? "h-[410px]" : "img-bag"}
+                     ${currentImages.length === 1 ? "h-[200px]" : "img-bag"}
                      `}
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
@@ -492,7 +494,7 @@ function Imageupload() {
               className="cursor-pointer text-white"
               onClick={previousPage}
             >
-              <i className="fa-solid fa-arrow-left mr-2"></i>
+              <i className="fa-solid fa-arrow-left mr-4"></i>
             </button>
             {/* Process */}
             <div className="">
@@ -512,7 +514,7 @@ function Imageupload() {
               className="cursor-pointer text-white"
               onClick={nextPage}
             >
-              <i className="fa-solid fa-arrow-right ml-2"></i>
+              <i className="fa-solid fa-arrow-right ml-4"></i>
             </button>
             {/* Image/total count */}
             <div className="text-white ml-60 text-sm mt-2">
@@ -532,6 +534,7 @@ function Imageupload() {
               right: 0,
               bottom: 0,
               zIndex: 99,
+
               background: "white",
               display: "flex",
               flexDirection: "column",
@@ -539,7 +542,10 @@ function Imageupload() {
               justifyContent: "center",
             }}
           >
-            <img src={imgUrl} className="max-w-full max-h-full w-96 h-96" />
+            <img
+              src={imgUrl}
+              className="max-w-full max-h-full w-[600px] h-[400px]"
+            />
             <div className="flex gap-4">
               <div>
                 <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
@@ -560,13 +566,13 @@ function Imageupload() {
             <div className="absolute right-4 top-4 flex gap-2">
               <button
                 onClick={() => deletImage(imgUrl)}
-                className="bg-white w-10 h-10 rounded-full"
+                className="bg-white w-10 h-10 rounded-full border border-theme-shade"
               >
                 <i className="fa-regular fa-trash-can"></i>
               </button>
               <button
                 onClick={handleClose}
-                className="bg-white w-10 h-10 rounded-full"
+                className="bg-white w-10 h-10 border border-theme-shade rounded-full"
               >
                 <i class="fa-solid fa-xmark"></i>
               </button>
@@ -587,7 +593,7 @@ function Imageupload() {
         </div>
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
-            <UpgradeAccount upgradCallBack={upgradCallBack}/>
+            <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
       </div>
