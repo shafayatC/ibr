@@ -6,7 +6,7 @@ const UpdatedImage = ({ afterBeforeImage }) => {
   return (
     <>
       <div className="bg-white border  img-bag  border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-300">
-        <a href="#">
+        <div>
           <img
             className="rounded-t-lg "
             src={
@@ -15,7 +15,7 @@ const UpdatedImage = ({ afterBeforeImage }) => {
             alt=""
           />
           <ViewDwnld imagesBeforeAfter={afterBeforeImage} />
-        </a>
+        </div>
         <div className=""></div>
       </div>
     </>
