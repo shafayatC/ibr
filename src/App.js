@@ -28,22 +28,7 @@ function App() {
   const [getServiceTypeId, setServiceTypeId] = useState("")
   const [getMenu, setMenu] = useState([]); 
 
-  const menuFunc = () =>{
-    fetch("http://103.197.204.22:8007/api/2023-02/menu")
-    .then((res) => res.json())
-    .then(
-      (data) => {
-        setMenu(data.results.menu_list);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
 
-  useEffect(() => {
-    menuFunc()
-  }, []);
 
   return (
     <FileContextManager.Provider
@@ -58,7 +43,7 @@ function App() {
         setLockMenuBool
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu]}>
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu]}>
       <div className="App">
         <InitialDataLoad/>
         <Navbar items={getMenu}></Navbar>
