@@ -60,33 +60,33 @@ const SignUp = () => {
 
   return (
     <div className="container mx-auto">
-      <div class="px-6 mt-20 mb-20 text-gray-800">
-        <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-          <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-            <div class="flex flex-row items-center justify-center lg:justify-start">
-              <p class="text-3xl mb-0 mr-4">Signup</p>
+      <div className="px-6 mt-20 mb-20 text-gray-800">
+        <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+          <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+            <div className="flex flex-row items-center justify-center lg:justify-start">
+              <p className="text-3xl mb-0 mr-4">Signup</p>
             </div>
 
-            <div class="flex items-center my-8 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
+            <div className="flex items-center my-8 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
 
-            <div class="mb-6">
+            <div className="mb-6">
               <input
                 type="text"
-                class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="Email address"
                 onChange={onChangeMail}
               />
             </div>
 
-            {/* <div class="form-group form-check">
+            {/* <div className="form-group form-check">
                 <input
                   type="checkbox"
-                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-theme-shade  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-theme-shade  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   id="exampleCheck2"
                 />
                 <label
-                  class="form-check-label inline-block text-gray-800"
+                  className="form-check-label inline-block text-gray-800"
                   for="exampleCheck2"
                 >
                   I agree to the Terms of Use and Privacy Policy
@@ -99,10 +99,10 @@ const SignUp = () => {
                 data like IDs, credentials, or non-public information. Learn how
                 to edit your username. Learn how to delete your account.
               </p> */}
-            <div class="text-center">
+            <div className="text-center">
               <button
                 onClick={singUpFunc}
-                class=" w-full mb-5 py-3 bg-theme-shade text-white font-medium text-sm "
+                className=" w-full mb-5 py-3 bg-theme-shade text-white font-medium text-sm "
               >
                 Create Account
               </button>
@@ -122,12 +122,12 @@ const SignUp = () => {
                     Apple
                   </button>
                 </div> */}
-              <p class="text-sm font-semibold mt-2 pt-1  mb-0">
+              <p className="text-sm font-semibold mt-2 pt-1  mb-0">
                 Already have an account?
                 <Link to="/log-in">
                   <a
                     href="#!"
-                    class="text-red-600 hover:text-lime-400 focus:text-red-700 transition duration-200 ease-in-out"
+                    className="text-red-600 hover:text-lime-400 focus:text-red-700 transition duration-200 ease-in-out"
                   >
                     Log in here
                   </a>

@@ -317,6 +317,9 @@ function Imageupload() {
   };
 
   const clearData = () => {
+    document.getElementById("filepicker").value = ""; 
+    document.getElementById("singleImagePick").value = ""; 
+    
     setMainFile([]);
     setFileInfo([]);
     setImageShow([]);
@@ -574,7 +577,7 @@ function Imageupload() {
                 onClick={handleClose}
                 className="bg-white w-10 h-10 border border-theme-shade rounded-full"
               >
-                <i class="fa-solid fa-xmark"></i>
+                <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
           </div>

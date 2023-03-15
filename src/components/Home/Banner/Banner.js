@@ -11,7 +11,7 @@ const Banner = () => {
             <div className="flex">
               <p className="text-4xl mr-5 font-semibold">Retouch.ai</p>
               <p>
-                <i class="fa-solid mt-4 fa-location-dot"></i> Dhaka,Bangladesh
+                <i className="fa-solid mt-4 fa-location-dot"></i> Dhaka,Bangladesh
               </p>
             </div>
             <p className="mt-3">Best Photo Retouching Services</p>
