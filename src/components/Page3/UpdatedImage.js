@@ -7,6 +7,7 @@ const UpdatedImage = ({ afterBeforeImage }) => {
     <>
       <div className="bg-white border   border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-300">
         <div className="">
+
           <img
             className="rounded-t-lg img-bag-2 "
             src={
