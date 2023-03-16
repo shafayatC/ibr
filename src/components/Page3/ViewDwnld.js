@@ -14,10 +14,8 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     useContext(OrderContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
-  const before =
-    imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
-  const after =
-    imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
+  const before = imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
+  const after = imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
   const isProcess = imagesBeforeAfter.output_urls[0].is_ai_processed;
 
   const handleViewClick = () => {
@@ -30,7 +28,6 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     document.body.style.overflow = "unset";
   };
 
-  useEffect(() => {}, [imagesBeforeAfter]);
 
   const loadMenuServiceId = () => {
     fetch("http://103.197.204.22:8007/api/2023-02/service-types")
@@ -62,8 +59,8 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
 
   useEffect(() => {
     loadMenuServiceId();
-  }, []);
-
+  }, [imagesBeforeAfter]);
+  
   return (
     <div>
       {isImageVisible && (
@@ -77,20 +74,21 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
               right: 0,
               bottom: 0,
               zIndex: 9,
-
               display: "flex",
               justifyContent: "center",
             }}
           >
-            <div className="h-[600px] w-[800px] bg-white mt-10 relative ">
-              <div className=" w-[470px]  mt-12 pl-5 absolute ">
-                <ReactCompareImage
-                  hover={true}
-                  vertical={false}
-                  leftImage={before}
-                  rightImage={after}
-                />
-                <div className="flex gap-4">
+            <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+              <div className="  pt-20 pl-5 absolute ">
+                <div className="w-[350px]">
+                  <ReactCompareImage
+                    hover={true}
+                    vertical={false}
+                    leftImage={before}
+                    rightImage={after}
+                  />
+                </div>
+                <div className="flex gap-4 justify-center">
                   <div>
                     <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
                       Download
@@ -109,25 +107,27 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
                   </div>
                 </div>
               </div>
-              <div id="rightMenuBarWrap" className="hfull  w-48  bg-white   ">
+
+              <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                 <ul className="space-y-2">
                   {getServicMenu.length > 0 &&
                     getServicMenu.map((data, index) => (
                       <li key={index}>
-                        <p className="pl-4 bg-gray-200 py-1 font-semibold">
+                        <p className="pl-4 bg-gray-200 py-1 mb-2 rounded-l-3xl font-semibold">
                           {data.name}
                         </p>
                         {data.sub_menu.length > 0 &&
                           data.sub_menu.map((subData, sIndex) => (
                             <div
                               key={sIndex}
-                              className="flex items-center p-2 text-base font-normal hover:border-r-2 bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
+                              className="flex items-center p-2 text-base font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
                             >
                               <input
                                 type="checkbox"
                                 defaultChecked={subData.is_checked}
                                 onChange={() => setChecked(!checked)}
                                 id={"check_" + sIndex}
+                                className=" checked:bg-orange-400 checked:border-orange-400"
                               />
                               <label
                                 htmlFor={"check_" + sIndex}
@@ -140,9 +140,14 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
                       </li>
                     ))}
                 </ul>
+                <button className="bg-green-700 mt-3 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+                  Send
+                </button>
               </div>
             </div>
+
             <button
+              className="bg-white w-10 h-10 border border-theme-shade rounded-full"
               style={{
                 position: "absolute",
                 top: 20,
@@ -153,7 +158,7 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
               }}
               onClick={handleCloseClick}
             >
-              Close
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
         </div>
