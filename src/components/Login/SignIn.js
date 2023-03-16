@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, redirect} from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userContextManager } from "../../App";
@@ -10,7 +10,6 @@ const SignIn = () => {
   const [getMail, setMail] = useState("");
   const [getUserInfo, setUserInfo] = useContext(userContextManager);
 
-  const location = useLocation(); 
   const showToastMessage = (msg) => {
     toast.success(msg, {
       position: toast.POSITION.TOP_RIGHT,
@@ -30,6 +29,7 @@ const SignIn = () => {
   };
 
   const singInFunc = async () => {
+
     var validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -59,7 +59,6 @@ const SignIn = () => {
         if(res.status_code == 200){
             setUserInfo(res); 
             showToastMessage(res.message)
-            location.to("/");
             console.log("redirect not working")
         } else{
           showToastMessageWarning(res.message)
@@ -76,6 +75,8 @@ const SignIn = () => {
   return (
     <div className="container mx-auto">
       <div>
+        {console.log(getUserInfo)}
+         {getUserInfo.status_code == 200 && <Navigate to="/" replace={true} />}
         <section>
           <div className="px-6 mt-20 text-gray-800">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">

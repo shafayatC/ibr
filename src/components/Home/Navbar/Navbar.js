@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import imgTrain from "./img/train.svg";
 import logo from "../../../images/logo_2.png";
 import "./navbar.css";
-import { OrderContextManager } from "../../../App";
+import { OrderContextManager, userContextManager } from "../../../App";
 
 const Navbar = ({ items }) => {
   //const [error, setError] = useState(null);
@@ -11,10 +11,15 @@ const Navbar = ({ items }) => {
   // const [items, setItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [getMenuId, setMenuId] = useContext(OrderContextManager);
+  const [getUserInfo, setUserInfo] = useContext(userContextManager);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
+  const signOutFunc=()=>{
+    setUserInfo({}); 
+  }
 
   return (
     <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900">
@@ -52,16 +57,17 @@ const Navbar = ({ items }) => {
           className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
           id="navbar-default"
         >
-          <ul className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
+          <div className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
             {items.map((item, index) => (
               <Link
+                key={index}
                 onClick={() => setMenuId(item.id)}
                 style={{
                   order: item.sequence_no,
                   marginLeft: "0px",
                   marginRight: "0px",
                 }}
-                className={item.type == "sign_up" && " bg-theme-shade rounded"}
+                className={item.type == "sign_up" ? getUserInfo.status_code == 200 ? "hidden" : " bg-theme-shade rounded" : item.type == "sign_in" ? getUserInfo.status_code == 200 && "hidden" : ""}
                 to={item.url}
               >
                 <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
@@ -69,7 +75,19 @@ const Navbar = ({ items }) => {
                 </button>
               </Link>
             ))}
-          </ul>
+              {getUserInfo.status_code == 200 &&
+                    <a
+                    className="bg-theme-shade rounded"
+                    style={{order: 99,
+                      marginLeft: "0px",
+                      marginRight: "0px"}}>
+                    <button  onClick={signOutFunc} className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
+                      <div>Sign out</div>
+                    </button>
+                    </a>
+                  }
+          
+          </div>
         </div>
       </div>
     </nav>
