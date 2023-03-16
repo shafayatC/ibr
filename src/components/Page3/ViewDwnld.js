@@ -14,10 +14,8 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     useContext(OrderContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
-  const before =
-    imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
-  const after =
-    imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
+  const before = imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
+  const after = imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
   const isProcess = imagesBeforeAfter.output_urls[0].is_ai_processed;
 
   const handleViewClick = () => {
@@ -30,7 +28,6 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     document.body.style.overflow = "unset";
   };
 
-  useEffect(() => {}, [imagesBeforeAfter]);
 
   const loadMenuServiceId = () => {
     fetch("http://103.197.204.22:8007/api/2023-02/service-types")
@@ -62,8 +59,8 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
 
   useEffect(() => {
     loadMenuServiceId();
-  }, []);
-
+  }, [imagesBeforeAfter]);
+  
   return (
     <div>
       {isImageVisible && (
@@ -77,7 +74,6 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
               right: 0,
               bottom: 0,
               zIndex: 9,
-
               display: "flex",
               justifyContent: "center",
             }}
