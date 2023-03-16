@@ -7,6 +7,11 @@ import Service_2 from "../../NewService/Service_2";
 import video from "../VideoViewer/Video/demo.mp4";
 import applelogo from "../HomeNew/img/apple_logo.png";
 import googlelogo from "../HomeNew/img/google_logo.png";
+import box from "../../NewService/Services/img/box.png";
+import x from "../../NewService/Services/img/x.png";
+import o from "../../NewService/Services/img/o.png";
+import control from "../../NewService/Services/img/control.png";
+
 import "./style.css";
 
 const Home = () => {
@@ -44,6 +49,20 @@ const Home = () => {
                   </Link>
                 )
             )}
+            <div>
+              <p className="mt-16 mb-6 text-white font-semibold text-4xl">
+                Add-On Services
+              </p>
+              <div className="flex gap-5">
+                <img className="h-12 w-12 " src={box} alt="" />
+                <img className="h-12 w-12 " src={x} alt="" />
+                <img className="h-12 w-12 " src={o} alt="" />
+                <img className="h-12 w-12 " src={control} alt="" />
+                <img className="h-12 w-12 " src={x} alt="" />
+                <img className="h-12 w-12 " src={box} alt="" />
+                <img className="h-12 w-12 " src={o} alt="" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
