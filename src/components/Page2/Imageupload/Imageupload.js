@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FileContextManager, OrderContextManager, userContextManager } from "../../../App";
+import {
+  FileContextManager,
+  OrderContextManager,
+  userContextManager,
+} from "../../../App";
 import "./style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,7 +50,10 @@ function Imageupload() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages =
+    actionStatus == "filter"
+      ? getSuggest.slice(indexOfFirstItem, indexOfLastItem)
+      : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -163,9 +170,8 @@ function Imageupload() {
   const checkAiProccesDone = (getAfterBeforeImg) => {
     console.log("testing ai process");
     if (getAfterBeforeImg.length > 0) {
-      
       getAfterBeforeImg.map((data, index) => {
-        console.log(data)
+        console.log(data);
         if (typeof data.output_urls[0] !== "undefined") {
           if (data.output_urls[0].is_ai_processed == false) {
             const myCallback = (result) => {
@@ -196,7 +202,8 @@ function Imageupload() {
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
-      user_id: getUserInfo.status_code == 200 ? getUserInfo.results.token : null,
+      user_id:
+        getUserInfo.status_code == 200 ? getUserInfo.results.token : null,
     };
     console.log(
       "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
@@ -392,7 +399,7 @@ function Imageupload() {
     setInterval(() => {
       checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
-  },[getAfterBeforeImg]);
+  }, [getAfterBeforeImg]);
 
   return (
     <>
@@ -473,8 +480,12 @@ function Imageupload() {
               } gap-4 pt-5  pr-3`}
             >
               {currentImages.map((image, index) => (
-
-                <div key={index} className={currentImages.length === 1 && "flex justify-center"}>
+                <div
+                  key={index}
+                  className={
+                    currentImages.length === 1 && "flex justify-center"
+                  }
+                >
                   <div
                     className={`img-container  bg-no-repeat  cursor-pointer img-bag
                      ${
@@ -487,7 +498,6 @@ function Imageupload() {
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
                     }}
-                    
                   />
                 </div>
               ))}

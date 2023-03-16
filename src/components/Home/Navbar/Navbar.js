@@ -17,12 +17,12 @@ const Navbar = ({ items }) => {
     setIsOpen(!isOpen);
   };
 
-  const signOutFunc=()=>{
-    setUserInfo({}); 
-  }
+  const signOutFunc = () => {
+    setUserInfo({});
+  };
 
   return (
-    <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900">
+    <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900 relative z-20">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
@@ -67,7 +67,15 @@ const Navbar = ({ items }) => {
                   marginLeft: "0px",
                   marginRight: "0px",
                 }}
-                className={item.type == "sign_up" ? getUserInfo.status_code == 200 ? "hidden" : " bg-theme-shade rounded" : item.type == "sign_in" ? getUserInfo.status_code == 200 && "hidden" : ""}
+                className={
+                  item.type == "sign_up"
+                    ? getUserInfo.status_code == 200
+                      ? "hidden"
+                      : " bg-theme-shade rounded"
+                    : item.type == "sign_in"
+                    ? getUserInfo.status_code == 200 && "hidden"
+                    : ""
+                }
                 to={item.url}
               >
                 <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
@@ -75,18 +83,19 @@ const Navbar = ({ items }) => {
                 </button>
               </Link>
             ))}
-              {getUserInfo.status_code == 200 &&
-                    <a
-                    className="bg-theme-shade rounded"
-                    style={{order: 99,
-                      marginLeft: "0px",
-                      marginRight: "0px"}}>
-                    <button  onClick={signOutFunc} className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
-                      <div>Sign out</div>
-                    </button>
-                    </a>
-                  }
-          
+            {getUserInfo.status_code == 200 && (
+              <a
+                className="bg-theme-shade rounded"
+                style={{ order: 99, marginLeft: "0px", marginRight: "0px" }}
+              >
+                <button
+                  onClick={signOutFunc}
+                  className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black"
+                >
+                  <div>Sign out</div>
+                </button>
+              </a>
+            )}
           </div>
         </div>
       </div>
