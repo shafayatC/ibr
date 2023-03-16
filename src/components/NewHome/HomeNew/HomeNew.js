@@ -24,7 +24,7 @@ const Home = () => {
         <div className="home_right flex">
           <div>
             <video
-              className="mt-0 ml-10 mb-20"
+              className="mt-0 ml-10 mb-10"
               width="65%"
               height="450"
               controls
@@ -53,22 +53,43 @@ const Home = () => {
               <p className="mt-16 mb-6 text-white font-semibold text-4xl">
                 Add-On Services
               </p>
-              <div className="flex gap-5">
-                <img className="h-12 w-12 " src={box} alt="" />
-                <img className="h-12 w-12 " src={x} alt="" />
-                <img className="h-12 w-12 " src={o} alt="" />
-                <img className="h-12 w-12 " src={control} alt="" />
-                <img className="h-12 w-12 " src={x} alt="" />
-                <img className="h-12 w-12 " src={box} alt="" />
-                <img className="h-12 w-12 " src={o} alt="" />
+              <div className="flex gap-7">
+                <div>
+                  <img className="h-12 w-12 " src={box} alt="" />
+                  <p className="text-white">Liquify</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={x} alt="" />
+                  <p className="text-white">Recolor</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={o} alt="" />
+                  <p className="text-white">Clipping</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={control} alt="" />
+                  <p className="text-white">Masking</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={box} alt="" />
+                  <p className="text-white">Recolor</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={o} alt="" />
+                  <p className="text-white">Recolor</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={x} alt="" />
+                  <p className="text-white">Recolor</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Loading></Loading>
+      {/* <Loading></Loading>
       <Services></Services>
-      <Service_2></Service_2>
+      <Service_2></Service_2> */}
     </div>
   );
 };
