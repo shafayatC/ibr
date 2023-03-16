@@ -53,7 +53,8 @@ function Imageupload() {
   const api_url_py = "http://127.0.0.1:5000/api/upload";
   const api_send = "http://27.147.191.97:8008/upload-file";
 
-  {/*
+  {
+    /*
   const orderInfoFunc = () => {
     console.log("my order"); 
     const myOrdre = {
@@ -75,7 +76,8 @@ function Imageupload() {
         console.error("Error:", error);
       });
   };
-*/}
+*/
+  }
   const uploadFile = (e) => {
     const newFile = e.target.files;
 
@@ -218,12 +220,10 @@ function Imageupload() {
             data.append("subscription_plan_type_id", "sdfsdfsdf");
             dataTransfer(data);
           });
-
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
   };
 
   const dataTransferMyPython = async (data) => {
@@ -354,7 +354,7 @@ function Imageupload() {
     setLoadProgress(0);
     setActionStatus("");
     setCurrentPage(1);
-   // orderInfoFunc();
+    // orderInfoFunc();
     setLockMenuBool(false);
   };
 
@@ -606,7 +606,7 @@ function Imageupload() {
           </div>
         )}
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5">
+        <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5 pr-3">
           {getAfterBeforeImg.length > 0 &&
             actionStatus == "process" &&
             getAfterBeforeImg.map((data, index) => (
