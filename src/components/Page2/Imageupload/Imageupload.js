@@ -582,7 +582,7 @@ function Imageupload() {
               src={imgUrl}
               className="max-w-full max-h-full w-[600px] h-[400px]"
             />
-            <div className="flex mt-5 gap-8">
+            <div className="flex mt-5 gap-8 z-20">
               <button className="cursor-pointer text-black ">
                 <i class="fa-solid fa-arrow-left text-4xl "></i>
               </button>
