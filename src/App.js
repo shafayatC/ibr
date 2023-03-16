@@ -18,6 +18,7 @@ import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext(); 
+export const userContextManager = createContext(); 
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
@@ -27,7 +28,7 @@ function App() {
   const [getLockMenuBool, setLockMenuBool] = useState(false);
   const [getServiceTypeId, setServiceTypeId] = useState("")
   const [getMenu, setMenu] = useState([]); 
-
+  const [getUserInfo, setUserInfo] = useState({}); 
 
 
   return (
@@ -44,6 +45,7 @@ function App() {
       ]}
     >
       <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu]}>
+      <userContextManager.Provider value={[getUserInfo, setUserInfo]}>
       <div className="App">
         <InitialDataLoad/>
         <Navbar items={getMenu}></Navbar>
@@ -62,6 +64,7 @@ function App() {
           <Route path="/upgrade-account" element={<UpgradeAccount />} />
         </Routes>
       </div>
+      </userContextManager.Provider>
       </OrderContextManager.Provider>
     </FileContextManager.Provider>
   );
