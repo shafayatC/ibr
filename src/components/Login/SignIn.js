@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userContextManager } from "../../App";
 
 const SignIn = () => {
   const [getPassword, setPassword] = useState("");
   const [getMail, setMail] = useState("");
+  const [getUserInfo, setUserInfo] = useContext(userContextManager);
 
+  const location = useLocation(); 
   const showToastMessage = (msg) => {
     toast.success(msg, {
       position: toast.POSITION.TOP_RIGHT,
@@ -27,7 +30,6 @@ const SignIn = () => {
   };
 
   const singInFunc = async () => {
-    console.log("Hi");
     var validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -51,10 +53,18 @@ const SignIn = () => {
         );
 
         const res = await rawResponse.json();
-        console.log(res);
-        res.status_code == 200
-          ? showToastMessage(res.message)
-          : showToastMessageWarning(res.message);
+
+
+
+        if(res.status_code == 200){
+            setUserInfo(res); 
+            showToastMessage(res.message)
+            location.to("/");
+            console.log("redirect not working")
+        } else{
+          showToastMessageWarning(res.message)
+        }
+
       } catch (error) {
         showToastMessageError(error);
       }
