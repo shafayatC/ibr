@@ -184,7 +184,6 @@ function Imageupload() {
   };
 
   const processImagesAi = () => {
-    
     toast.success("Items Process Successfully!", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -197,7 +196,9 @@ function Imageupload() {
       service_type_id: getServiceTypeId,
       user_id: null,
     };
-    console.log("getMenuId "+ getMenuId + " getServiceTypeId "+ getServiceTypeId)
+    console.log(
+      "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
+    );
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
@@ -206,20 +207,20 @@ function Imageupload() {
     })
       .then((res) => res.json())
       .then((data) => {
-          let order_id = data.results.order_master_info.order_id;
-          console.log("order_id : " + order_id); 
-          fileInfo.map((img_file, index) => {
-            const filePath = img_file.file.webkitRelativePath;
-            const imgType = getFileType(img_file.file);
+        let order_id = data.results.order_master_info.order_id;
+        console.log("order_id : " + order_id);
+        fileInfo.map((img_file, index) => {
+          const filePath = img_file.file.webkitRelativePath;
+          const imgType = getFileType(img_file.file);
 
-            let data = new FormData();
-            data.append("order_master_id", order_id);
-            data.append("service_type_id", getServiceTypeId);
-            data.append("file", img_file.file);
-            data.append("file_relative_path", "filePath/psdfspd");
-            data.append("subscription_plan_type_id", "sdfsdfsdf");
-            dataTransfer(data);
-          });
+          let data = new FormData();
+          data.append("order_master_id", order_id);
+          data.append("service_type_id", getServiceTypeId);
+          data.append("file", img_file.file);
+          data.append("file_relative_path", "filePath/psdfspd");
+          data.append("subscription_plan_type_id", "sdfsdfsdf");
+          dataTransfer(data);
+        });
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -469,10 +470,19 @@ function Imageupload() {
               } gap-4 pt-5  pr-3`}
             >
               {currentImages.map((image, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  className={
+                    currentImages.length === 1 && "flex justify-center"
+                  }
+                >
                   <div
                     className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                     ${currentImages.length === 1 ? "h-[400px]" : "img-bag"}
+                     ${
+                       currentImages.length === 1
+                         ? "h-[400px] justify-center"
+                         : "img-bag"
+                     }
                      `}
                     onClick={() => viewImg(image.imageUrl)}
                     style={{
@@ -572,22 +582,14 @@ function Imageupload() {
               src={imgUrl}
               className="max-w-full max-h-full w-[600px] h-[400px]"
             />
-            {/* <div className="flex gap-4">
-              <div>
-                <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
-                  Download
-                </button>
-                <p className="text-sm text-center mt-1">
-                  Preview Image 100/200
-                </p>
-              </div>
-              <div>
-                <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800">
-                  Download HD
-                </button>
-                <p className="text-sm text-center mt-1">Full Image 2000/3000</p>
-              </div>
-            </div> */}
+            <div className="flex mt-5 gap-8">
+              <button className="cursor-pointer text-black ">
+                <i class="fa-solid fa-arrow-left text-4xl "></i>
+              </button>
+              <button className="cursor-pointer text-black ">
+                <i class="fa-solid fa-arrow-right text-4xl "></i>
+              </button>
+            </div>
 
             <div className="absolute right-4 top-4 flex gap-2">
               <button

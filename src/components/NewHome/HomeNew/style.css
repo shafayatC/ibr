@@ -1,6 +1,6 @@
 #home {
   background-image: url("../../../img/Background-for-RA.png");
-  min-height: 100vh;
+  min-height: calc(100vh - 44px);
   background-size: cover;
   background-attachment: fixed;
   background-color: #323530;
@@ -10,7 +10,7 @@
 
 .home_right {
   float: right;
-  margin-top: 15%;
+  padding-top: 15%;
   text-align: center;
   transform: translateY(-15%);
   padding-right: 60px;
