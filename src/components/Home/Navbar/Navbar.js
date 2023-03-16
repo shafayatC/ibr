@@ -22,7 +22,7 @@ const Navbar = ({ items }) => {
   }
 
   return (
-    <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900">
+    <nav className="bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900 relative z-10">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
