@@ -11,7 +11,7 @@ import UpgradeAccount from "../../UpgradeAccount/UpgradeAccount";
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
   const [imageShow, setImageShow] = useState([]);
-  const [imgUrl, setimgUrl] = useState();
+  const [getImgIndex, setImgIndex] = useState();
   const [actionStatus, setActionStatus] = useState("");
   const [LoadProgress, setLoadProgress] = useState(0);
   const [showImage, setShowImage] = useState(false);
@@ -374,13 +374,15 @@ function Imageupload() {
   };
 
   const viewImg = (img) => {
-    setimgUrl(img);
+    console.log(img);
+    setImgIndex(img);
     setShowImage(true);
   };
 
   const deletImage = (dlImage) => {
     console.log(dlImage);
-    setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
+    setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+    //setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
     handleClose();
   };
 
@@ -390,7 +392,7 @@ function Imageupload() {
 
   useEffect(() => {
     setInterval(() => {
-      checkAiProccesDone(getAfterBeforeImg);
+    //  checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
   },[getAfterBeforeImg]);
 
@@ -483,7 +485,7 @@ function Imageupload() {
                          : "img-bag"
                      }
                      `}
-                    onClick={() => viewImg(image.imageUrl)}
+                    onClick={() => viewImg((currentPage-1)*itemsPerPage+index)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
                     }}
@@ -510,7 +512,7 @@ function Imageupload() {
                     <div key={index}>
                       <div
                         className="img-container bg-cover bg-no-repeat w-full cursor-pointer img-bag"
-                        onClick={() => viewImg(image.imageUrl)}
+                        onClick={() => viewImg((currentPage-1)*itemsPerPage+index)}
                         style={{
                           backgroundImage: `url(${image.imageUrl})`,
                         }}
@@ -579,21 +581,21 @@ function Imageupload() {
             }}
           >
             <img
-              src={imgUrl}
+              src={fileInfo[getImgIndex].imageUrl}
               className="max-w-full max-h-full w-[600px] h-[400px]"
             />
             <div className="flex mt-5 gap-8 z-20">
-              <button className="cursor-pointer text-black ">
+              <button onClick={()=>{setImgIndex(getImgIndex-1)}} className="cursor-pointer text-black ">
                 <i class="fa-solid fa-arrow-left text-4xl "></i>
               </button>
-              <button className="cursor-pointer text-black ">
+              <button  onClick={()=>{setImgIndex(getImgIndex+1)}}  className="cursor-pointer text-black ">
                 <i class="fa-solid fa-arrow-right text-4xl "></i>
               </button>
             </div>
 
             <div className="absolute right-4 top-4 flex gap-2">
               <button
-                onClick={() => deletImage(imgUrl)}
+                onClick={() => deletImage(getImgIndex)}
                 className="bg-white w-10 h-10 rounded-full border border-theme-shade"
               >
                 <i className="fa-regular fa-trash-can"></i>
