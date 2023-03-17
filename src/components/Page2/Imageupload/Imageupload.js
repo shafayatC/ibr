@@ -200,8 +200,7 @@ function Imageupload() {
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
-      user_id:
-        getUserInfo.status_code == 200 ? getUserInfo.results.token : null,
+      user_id: getUserInfo.status_code == 200 ? getUserInfo.results.token : null,
     };
     console.log(
       "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
@@ -502,7 +501,6 @@ function Imageupload() {
                     onClick={() => viewImg((currentPage-1)*itemsPerPage+index)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
-
                     }}  
                   />
                 </div>
