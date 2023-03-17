@@ -17,11 +17,10 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     useContext(OrderContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
-  const before =
-    imagesBeforeAfter.output_urls[0].compressed_raw_image_public_url;
-  const after =
-    imagesBeforeAfter.output_urls[0].default_compressed_output_public_url;
-  const isProcess = imagesBeforeAfter.output_urls[0].is_ai_processed;
+
+  const before = imagesBeforeAfter.compressed_raw_image_public_url;
+  const after = imagesBeforeAfter.default_compressed_output_public_url;
+  const isProcess = imagesBeforeAfter.is_ai_processed;
 
   const handleViewClick = () => {
     setImageVisibility(true);
@@ -72,7 +71,7 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
   }, []);
 
   return (
-    <div>
+    <>
       {isImageVisible && (
         <div>
           <div
@@ -94,12 +93,11 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
               <div className="  pt-12 pl-16 absolute ">
                 <div className="w-[400px] border border-theme-shade  relative">
 
+
                   <ReactCompareImage
                     hover={true}
-                    vertical={false}
                     leftImage={before}
                     rightImage={after}
-
                   />
 
                   <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl">01</p>
@@ -182,7 +180,16 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
         </div>
       )}
       {isProcess && (
-        <div className="grid sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 gap-5">
+        <>
+          <button
+              className="viewButton h-8 w-8"
+              onClick={handleViewClick}
+              style={{ cursor: "pointer" }}
+            >  <i class="fa-regular fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            </button>
+          
+         {
+          /* <div className="grid sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 gap-5">
           <div className="col-span-3 ...">
             <BiShow
               className="h-8 w-8 opacity-40 "
@@ -190,14 +197,18 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
               style={{ cursor: "pointer" }}
             ></BiShow>
           </div>
+         
           <div className="...">
             <a href={after} download>
               <BiDownload className="h-7 w-7 opacity-40"></BiDownload>
             </a>
           </div>
+          
         </div>
+        */}
+          </>
       )}
-    </div>
+    </>
   );
 };
 

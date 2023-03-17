@@ -52,7 +52,7 @@ function Imageupload() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : actionStatus == "process" ? getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -111,13 +111,13 @@ function Imageupload() {
             console.log("The file already exists in the array.");
           } else {
             const imageUrl = URL.createObjectURL(file);
-            const fileObject = { file: file, imageUrl: imageUrl };
+            const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
             setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             console.log("The file does not exist in the array.");
           }
         } else {
           const imageUrl = URL.createObjectURL(file);
-          const fileObject = { file: file, imageUrl: imageUrl };
+          const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
           setFileInfo((fileInfo) => [...fileInfo, fileObject]);
         }
       }
@@ -217,15 +217,17 @@ function Imageupload() {
         let order_id = data.results.order_master_info.order_id;
         console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
         fileInfo.map((img_file, index) => {
+          const sequence_no= img_file.sequence_no; 
           const filePath = img_file.file.webkitRelativePath;
           const imgType = getFileType(img_file.file);
-
+          console.log(sequence_no)
           let data = new FormData();
           data.append("order_master_id", order_id);
           data.append("service_type_id", getServiceTypeId);
           data.append("file", img_file.file);
-          data.append("file_relative_path", "filePath/psdfspd");
+          data.append("file_relative_path", filePath);
           data.append("subscription_plan_type_id", "sdfsdfsdf");
+          data.append("sequence_no", sequence_no);
           dataTransfer(data);
         });
       })
@@ -305,6 +307,7 @@ function Imageupload() {
       );
       const data = await response.json();
       console.log(data);
+      data.status_code == 200 &&
       setAfterBeforeImg((getAfterBeforeImg) => [
         ...getAfterBeforeImg,
         data.results,
@@ -405,7 +408,7 @@ function Imageupload() {
 
   return (
     <>
-      {console.log(getAfterBeforeImg)}
+
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
@@ -630,13 +633,11 @@ function Imageupload() {
         )}
 
         <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5 pr-3">
-          {getAfterBeforeImg.length > 0 &&
+          {
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <>
-                {typeof data.output_urls[0] !== "undefined" && (
-                  <UpdatedImage afterBeforeImage={data} key={index} />
-                )}
+                  <UpdatedImage imgData={data} key={index} />
               </>
             ))}
         </div>
