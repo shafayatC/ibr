@@ -9,10 +9,7 @@
 }
 
 .home_right {
-  float: right;
-  padding-top: 15%;
   text-align: center;
-  transform: translateY(-15%);
   padding-right: 60px;
 }
 .home_right h3 {

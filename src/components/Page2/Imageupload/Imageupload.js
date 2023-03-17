@@ -11,6 +11,7 @@ import UpdatedImage from "../../Page3/UpdatedImage";
 import processlogo from "./img/process.png";
 import { matchSorter } from "match-sorter";
 import UpgradeAccount from "../../UpgradeAccount/UpgradeAccount";
+import CouponCode from "../../CouponCode/CouponCode";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +52,7 @@ function Imageupload() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : actionStatus == "process" ? getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
+  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -110,13 +111,13 @@ function Imageupload() {
             console.log("The file already exists in the array.");
           } else {
             const imageUrl = URL.createObjectURL(file);
-            const fileObject = { file: file, imageUrl: imageUrl };
+            const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
             setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             console.log("The file does not exist in the array.");
           }
         } else {
           const imageUrl = URL.createObjectURL(file);
-          const fileObject = { file: file, imageUrl: imageUrl };
+          const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
           setFileInfo((fileInfo) => [...fileInfo, fileObject]);
         }
       }
@@ -216,15 +217,17 @@ function Imageupload() {
         let order_id = data.results.order_master_info.order_id;
         console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
         fileInfo.map((img_file, index) => {
+          const sequence_no= img_file.sequence_no; 
           const filePath = img_file.file.webkitRelativePath;
           const imgType = getFileType(img_file.file);
-
+          console.log(sequence_no)
           let data = new FormData();
           data.append("order_master_id", order_id);
           data.append("service_type_id", getServiceTypeId);
           data.append("file", img_file.file);
-          data.append("file_relative_path", "filePath/psdfspd");
+          data.append("file_relative_path", filePath);
           data.append("subscription_plan_type_id", "sdfsdfsdf");
+          data.append("sequence_no", sequence_no);
           dataTransfer(data);
         });
       })
@@ -304,6 +307,7 @@ function Imageupload() {
       );
       const data = await response.json();
       console.log(data);
+      data.status_code == 200 &&
       setAfterBeforeImg((getAfterBeforeImg) => [
         ...getAfterBeforeImg,
         data.results,
@@ -396,15 +400,15 @@ function Imageupload() {
 
   useEffect(() => {
     setInterval(() => {
-    //  checkAiProccesDone(getAfterBeforeImg);
+      //  checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
 
     getAfterBeforeImg.length > 0 && setActionStatus("process")
-  },[]);
+  }, []);
 
   return (
     <>
-      {console.log(getAfterBeforeImg)}
+
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
@@ -474,11 +478,9 @@ function Imageupload() {
         {fileInfo.length > 0 && actionStatus == "" && (
           <>
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } lg:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4 pt-5  pr-3`}
+              className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } gap-4 pt-5  pr-3`}
             >
               {currentImages.map((image, index) => (
                 <div
@@ -489,16 +491,15 @@ function Imageupload() {
                 >
                   <div
                     className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                     ${
-                       currentImages.length === 1
-                         ? "h-[400px] justify-center"
-                         : "img-bag"
-                     }
+                     ${currentImages.length === 1
+                        ? "h-[400px] justify-center"
+                        : "img-bag"
+                      }
                      `}
-                    onClick={() => viewImg((currentPage-1)*itemsPerPage+index)}
+                    onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
-                    }}  
+                    }}
                   />
                 </div>
               ))}
@@ -509,11 +510,9 @@ function Imageupload() {
         {fileInfo.length > 0 && actionStatus == "filter" && (
           <>
             <div
-              className={`grid sm:grid-cols-1 md:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } lg:grid-cols-${
-                fileInfo.length > 3 ? "4" : fileInfo.length
-              } gap-4 pt-5 pr-3`}
+              className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
+                } gap-4 pt-5 pr-3`}
             >
               {currentImages.map(
                 (image, index) =>
@@ -521,7 +520,7 @@ function Imageupload() {
                     <div key={index}>
                       <div
                         className="img-container bg-cover bg-no-repeat w-full cursor-pointer img-bag"
-                        onClick={() => viewImg((currentPage-1)*itemsPerPage+index)}
+                        onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                         style={{
                           backgroundImage: `url(${image.imageUrl})`,
                         }}
@@ -545,17 +544,21 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-              { actionStatus == "process" ? 
-              <img
-                src={processlogo}
-                className="bg-gray-shade w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-              />
-              :
-              <img
-                src={processlogo}
-                onClick={processImagesAi}
-                className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-              />
+              {actionStatus == "process" ?
+                // <img
+                //   src={processlogo}
+                //   className="bg-gray-shade w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
+                // />
+                <i class="fa-solid fa-arrows-spin  pt-1 text-center text-black text-4xl cursor-pointer font-bold"></i>
+                :
+                // <img
+                //   src={processlogo}
+                //   onClick={processImagesAi}
+                //   className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
+                // />
+                <i
+                  onClick={processImagesAi}
+                  class="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
               }
 
               <ToastContainer />
@@ -563,11 +566,11 @@ function Imageupload() {
             {/* Next Button */}
             <button
               disabled={
-                actionStatus == "process" ? 
-                 currentPage === Math.ceil(getAfterBeforeImg.length / itemsPerPage)
-                  : 
+                actionStatus == "process" ?
+                  currentPage === Math.ceil(getAfterBeforeImg.length / itemsPerPage)
+                  :
                   currentPage === Math.ceil(fileInfo.length / itemsPerPage)
-                }
+              }
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={nextPage}
             >
@@ -604,10 +607,10 @@ function Imageupload() {
               className="max-w-full max-h-full w-[600px] h-[400px]"
             />
             <div className="flex mt-5 gap-8 z-20">
-              <button disabled={getImgIndex == 0} onClick={()=>{setImgIndex(getImgIndex-1)}} className="cursor-pointer text-black disabled:text-gray-200 ">
+              <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="cursor-pointer text-black disabled:text-gray-200 ">
                 <i class="fa-solid fa-arrow-left text-4xl "></i>
               </button>
-              <button disabled={getImgIndex == fileInfo.length-1 }  onClick={()=>{setImgIndex(getImgIndex+1)}}  className="cursor-pointer text-black  disabled:text-gray-200 ">
+              <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="cursor-pointer text-black  disabled:text-gray-200 ">
                 <i class="fa-solid fa-arrow-right text-4xl "></i>
               </button>
             </div>
@@ -630,13 +633,11 @@ function Imageupload() {
         )}
 
         <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5 pr-3">
-          {getAfterBeforeImg.length > 0 &&
+          {
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <>
-                {typeof data.output_urls[0] !== "undefined" && (
-                  <UpdatedImage afterBeforeImage={data} key={index} />
-                )}
+                  <UpdatedImage imgData={data} key={index} />
               </>
             ))}
         </div>
@@ -645,6 +646,10 @@ function Imageupload() {
             <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
+
+        <div className="hidden">
+          <CouponCode></CouponCode>
+        </div>
       </div>
     </>
   );

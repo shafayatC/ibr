@@ -23,7 +23,7 @@ const Leftsidebar = () => {
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] = useContext(OrderContextManager);
 
   const menuList = () => {
-{/*    if (getMenuId.length > 0) {
+    {/*    if (getMenuId.length > 0) {
       set_id_of_menu(getMenuId);
     } else {
       getMenu.map((data) => data.type == "upload" && set_id_of_menu(data.id));
@@ -50,7 +50,7 @@ const Leftsidebar = () => {
       );
   };
   useEffect(() => {
-     getMenuId.length > 0 &&   menuList();
+    getMenuId.length > 0 && menuList();
   }, [id_of_menu, getMenu]);
 
   return (
@@ -166,7 +166,7 @@ const Leftsidebar = () => {
                           document.querySelector("#updatePlan").click()
                         }
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
-                        >
+                      >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
                           <span>{item.highlight}</span>

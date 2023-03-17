@@ -15,6 +15,7 @@ import QuestionAnswer from "./components/QuestionAnswer/QuestionAnswer";
 import MatchSort from "./components/MatchSort/MatchSort";
 import UpgradeAccount from "./components/UpgradeAccount/UpgradeAccount";
 import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
+import CouponCode from "./components/CouponCode/CouponCode";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext(); 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
           <Route path="/question-answer" element={<QuestionAnswer />} />
           <Route path="/upgrade-account" element={<UpgradeAccount />} />
+          <Route path="/coupon-code" element={<CouponCode />} />
         </Routes>
       </div>
       </userContextManager.Provider>
