@@ -185,13 +185,16 @@ const ordeImageServiceFunc =()=>{
       {isProcess && (
         <>
           <button
-              className="viewButton h-8 w-8"
-              onClick={handleViewClick}
-              style={{ cursor: "pointer" }}
-            >  <i class="fa-regular fa-circle-check absolute right-1 top-1 text-green-400"></i>
-            </button>
-          
-         {
+            className="viewButton h-8 w-8"
+            onClick={handleViewClick}
+            style={{ cursor: "pointer" }}
+
+          >  <i class="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            <i class="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
+
+          </button>
+
+          {
           /* <div className="grid sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 gap-5">
           <div className="col-span-3 ...">
             <BiShow
@@ -209,7 +212,7 @@ const ordeImageServiceFunc =()=>{
           
         </div>
         */}
-          </>
+        </>
       )}
     </>
   );
