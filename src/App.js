@@ -30,6 +30,8 @@ function App() {
   const [getServiceTypeId, setServiceTypeId] = useState("")
   const [getMenu, setMenu] = useState([]); 
   const [getUserInfo, setUserInfo] = useState({}); 
+  const [getModelBaseUrl, setModelBaseUrl] = useState(""); 
+  const [getSubscriptionPlanId, setSubscriptionPlanId] = useState(""); 
 
 
   return (
@@ -45,7 +47,7 @@ function App() {
         setLockMenuBool
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu]}>
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl]}>
       <userContextManager.Provider value={[getUserInfo, setUserInfo]}>
       <div className="App">
         <InitialDataLoad/>
