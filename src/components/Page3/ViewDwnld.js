@@ -10,10 +10,10 @@ import "./page3.css";
 
 const ViewDwnld = ({ imagesBeforeAfter }) => {
   const [checked, setChecked] = useState(true);
-  const [getServicMenu, setServiceMenu] = useState([]);
+  const [getServicMenu, setServiceMenu] = useState({});
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] =
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] =
     useContext(OrderContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
@@ -36,8 +36,7 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
     console.log('Change:', e.target.value);
   };
 
-  useEffect(() => { }, [imagesBeforeAfter]);
-
+/*
   const loadMenuServiceId = () => {
     fetch("http://103.197.204.22:8007/api/2023-02/service-types")
       .then((response) => response.json())
@@ -65,9 +64,20 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
         setIsLoaded(true);
       });
   };
+*/
 
+const ordeImageServiceFunc =()=>{
+
+  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${imagesBeforeAfter.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`)
+  .then(res => res.json())
+  .then(data =>{
+    
+   data.status_code == 200 && setServiceMenu(data)
+  })
+
+}
   useEffect(() => {
-    loadMenuServiceId();
+    ordeImageServiceFunc()
   }, []);
 
   return (
@@ -125,33 +135,26 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
 
               <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                 <ul className="space-y-2">
-                  {getServicMenu.length > 0 &&
-                    getServicMenu.map((data, index) => (
+                  {Object.keys(getServicMenu).length > 0 &&
+                    getServicMenu.results.order_image_services.map((data, index) => (
                       <li key={index}>
-                        <p className="pl-4 bg-gray-200 py-1 mb-2 rounded-l-3xl font-semibold">
-                          {data.name}
-                        </p>
-                        {data.sub_menu.length > 0 &&
-                          data.sub_menu.map((subData, sIndex) => (
                             <div
-                              key={sIndex}
                               className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
                             >
                               <input
                                 type="checkbox"
-                                defaultChecked={subData.is_checked}
+                                defaultChecked={data.is_checked}
                                 onChange={() => setChecked(!checked)}
-                                id={"check_" + sIndex}
+                                id={"check_" + index}
                                 className=" checked:bg-orange-400 checked:border-orange-400"
                               />
                               <label
-                                htmlFor={"check_" + sIndex}
+                                htmlFor={"check_" + index}
                                 className="ml-3"
                               >
-                                {subData.name}
+                                {data.name}
                               </label>
                             </div>
-                          ))}
                       </li>
                     ))}
                 </ul>
@@ -182,13 +185,16 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
       {isProcess && (
         <>
           <button
-              className="viewButton h-8 w-8"
-              onClick={handleViewClick}
-              style={{ cursor: "pointer" }}
-            >  <i class="fa-regular fa-circle-check absolute right-1 top-1 text-green-400"></i>
-            </button>
-          
-         {
+            className="viewButton h-8 w-8"
+            onClick={handleViewClick}
+            style={{ cursor: "pointer" }}
+
+          >  <i class="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            <i class="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
+
+          </button>
+
+          {
           /* <div className="grid sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 gap-5">
           <div className="col-span-3 ...">
             <BiShow
@@ -206,7 +212,7 @@ const ViewDwnld = ({ imagesBeforeAfter }) => {
           
         </div>
         */}
-          </>
+        </>
       )}
     </>
   );

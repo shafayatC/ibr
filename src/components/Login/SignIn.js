@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
-import { Link, Navigate, redirect} from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userContextManager } from "../../App";
@@ -40,7 +40,7 @@ const SignIn = () => {
       };
 
       try {
-        const rawResponse = await fetch(
+        fetch(
           "http://103.197.204.22:8007/api/2023-02/system-sign-in",
           {
             method: "POST",
@@ -50,19 +50,40 @@ const SignIn = () => {
             },
             body: JSON.stringify(signInData),
           }
-        );
+        ).then(res => res.json())
+          .then(data => {
+            if (data.status_code == 200) {
 
-        const res = await rawResponse.json();
+              fetch(`http://103.197.204.22:8007/api/2023-02/token-validation?token=${data.results.token}`,
+                {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  }
+                }
+              ).then(res => res.json())
+                .then(result => {
+                  console.log(result)
+                  if (result.status_code == 200) {
+                    setUserInfo(result);
+                    showToastMessage(result.results.message)
+                    console.log("redirect working")
+                  } else {
+                    showToastMessageWarning(result.results.message)
+                  }
+
+                })
 
 
 
-        if(res.status_code == 200){
-            setUserInfo(res); 
-            showToastMessage(res.message)
-            console.log("redirect not working")
-        } else{
-          showToastMessageWarning(res.message)
-        }
+            } else {
+              showToastMessageWarning(data.message)
+            }
+          })
+
+
+
 
       } catch (error) {
         showToastMessageError(error);
@@ -76,7 +97,7 @@ const SignIn = () => {
     <div className="container mx-auto">
       <div>
         {console.log(getUserInfo)}
-         {getUserInfo.status_code == 200 && <Navigate to="/" replace={true} />}
+        {getUserInfo.status_code == 200 && <Navigate to="/" replace={true} />}
         <section>
           <div className="px-6 mt-20 text-gray-800">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">

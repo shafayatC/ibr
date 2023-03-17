@@ -4,19 +4,22 @@ import { OrderContextManager } from '../../App';
 
 const InitialDataLoad = () => {
 
-    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu] = useContext(OrderContextManager)
+    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] = useContext(OrderContextManager)
 
     const location = useLocation(); 
 
-    const serviceId = () =>{
-        fetch('http://103.197.204.22:8007/api/2023-02/service-types')
-        .then(response => response.json())
-        .then(data =>{
-            data.results.service_type_list.map(dataResult => {
-                dataResult.is_default == true && setServiceTypeId(dataResult.id)
-            })  
-        })
-      }
+    const defaultSettingFunc =() =>{
+      fetch("http://103.197.204.22:8007/api/2023-02/default-settings")
+      .then(res => res.json())
+      .then(data => {
+        if(data.status_code == 200){
+          console.log(data); 
+          setModelBaseUrl(data.results.default_settings[0].model_base_url)
+          setServiceTypeId(data.results.default_settings[0].service_type_id)
+          setSubscriptionPlanId(data.results.default_settings[0].subscription_plan_type_id)
+        } 
+      })
+    } 
 
       const menuFunc = () =>{
         fetch("http://103.197.204.22:8007/api/2023-02/menu")
@@ -38,7 +41,7 @@ const InitialDataLoad = () => {
       }
     
       useEffect(() => {
-        serviceId()
+        defaultSettingFunc()
         menuFunc()
       }, []);
       
