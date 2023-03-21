@@ -1,7 +1,7 @@
 import hoody from "./img/hoody.jpg";
 import { BiShow, BiDownload } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
-import { FileContextManager, OrderContextManager } from "../../App";
+import { OrderContextManager } from "../../App";
 import ReactCompareImage from "react-compare-image";
 
 import { Input } from 'antd';
@@ -9,38 +9,19 @@ import { Input } from 'antd';
 import "./page3.css";
 import CompareImage from "../CompareImage/CompareImage";
 
-const ViewDwnld = ({proccessImgIndex}) => {
+const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
   const [checked, setChecked] = useState(true);
   const [getServicMenu, setServiceMenu] = useState({});
-  const [getCurrImage , setCurrImage] = useState({})
-
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] =
     useContext(OrderContextManager);
-    const [
-      getMainFile,
-      setMainFile,
-      fileInfo,
-      setFileInfo,
-      getAfterBeforeImg,
-      setAfterBeforeImg,
-      getLockMenuBool,
-      setLockMenuBool,
-      getImageData, 
-      setImageData] = useContext(FileContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
-  const before = typeof getCurrImage !== 'undefined' && getCurrImage.compressed_raw_image_public_url;
-  const after = typeof getCurrImage !== 'undefined' && getCurrImage.default_compressed_output_public_url;
-  const isProcess = typeof getCurrImage !== 'undefined' && getCurrImage.is_ai_processed;
-
-  const checkServerData = () => {
-    const imgFile = getAfterBeforeImg.find(fl => fl.output_urls[0].order_image_detail_sequence_no == proccessImgIndex)
-    //   console.log(imgFile)
-   if( typeof imgFile !== 'undefined' && typeof imgFile.output_urls !== 'undefined'){
-    setCurrImage(imgFile.output_urls[0])
-   } 
-  }
+  const before = imagesBeforeAfter.compressed_raw_image_public_url;
+  const after = imagesBeforeAfter.default_compressed_output_public_url;
+  const isProcess = imagesBeforeAfter.is_ai_processed;
 
   const handleViewClick = () => {
     setImageVisibility(true);
@@ -48,8 +29,6 @@ const ViewDwnld = ({proccessImgIndex}) => {
   };
 
   const handleCloseClick = () => {
-    setImageData(0)
-    proccessImgIndex=0; 
     setImageVisibility(false);
     document.body.style.overflow = "unset";
   };
@@ -90,7 +69,7 @@ const ViewDwnld = ({proccessImgIndex}) => {
 
 const ordeImageServiceFunc =()=>{
 
-  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${getCurrImage.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`)
+  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${imagesBeforeAfter.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`)
   .then(res => res.json())
   .then(data =>{
     
@@ -99,11 +78,8 @@ const ordeImageServiceFunc =()=>{
 
 }
   useEffect(() => {
-    typeof getCurrImage !== 'undefined' &&  ordeImageServiceFunc()
-    typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && setImageVisibility(true)
-    typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && checkServerData()
-    console.log(proccessImgIndex)
-  }, [proccessImgIndex]);
+    ordeImageServiceFunc()
+  }, []);
 
   return (
     <>
@@ -126,15 +102,12 @@ const ordeImageServiceFunc =()=>{
             <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
               <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
               <div className="  pt-12 pl-16 absolute ">
-                <div className="w-[400px] h-[400px] border border-theme-shade  relative">
+                <div className="w-[400px] border border-theme-shade  relative">
 
-              {typeof getCurrImage.order_image_detail_sequence_no !== 'undefined' && 
-              getCurrImage.order_image_detail_sequence_no == proccessImgIndex &&
                 <CompareImage
                 topImage={before}
                 bottomImage={after}
                 />
-              }
                  {/* 
                   <ReactCompareImage
                     hover={true}
@@ -142,7 +115,7 @@ const ordeImageServiceFunc =()=>{
                     rightImage={after}
                   />
 */}
-                  <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{typeof getCurrImage.order_image_detail_sequence_no !== 'undefined' && getCurrImage.order_image_detail_sequence_no}</p>
+                  <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl">01</p>
                 </div>
 
                 <div className="flex gap-4 justify-center">
@@ -214,8 +187,40 @@ const ordeImageServiceFunc =()=>{
           </div>
         </div>
       )}
+      {isProcess && (
+        <>
+          <button
+            className="viewButton h-8 w-8"
+            onClick={handleViewClick}
+            style={{ cursor: "pointer" }}
+
+          >  <i class="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            <i class="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
+
+          </button>
+
+          {
+          /* <div className="grid sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 gap-5">
+          <div className="col-span-3 ...">
+            <BiShow
+              className="h-8 w-8 opacity-40 "
+              onClick={handleViewClick}
+              style={{ cursor: "pointer" }}
+            ></BiShow>
+          </div>
+         
+          <div className="...">
+            <a href={after} download>
+              <BiDownload className="h-7 w-7 opacity-40"></BiDownload>
+            </a>
+          </div>
+          
+        </div>
+        */}
+        </>
+      )}
     </>
   );
 };
 
-export default ViewDwnld;
+export default ViewDwnld_2;

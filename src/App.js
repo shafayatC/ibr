@@ -16,6 +16,7 @@ import MatchSort from "./components/MatchSort/MatchSort";
 import UpgradeAccount from "./components/UpgradeAccount/UpgradeAccount";
 import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
 import CouponCode from "./components/CouponCode/CouponCode";
+import CompareImage from "./components/CompareImage/CompareImage";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext(); 
@@ -25,6 +26,7 @@ function App() {
   const [getMainFile, setMainFile] = useState([]);
   const [fileInfo, setFileInfo] = useState([]);
   const [getAfterBeforeImg, setAfterBeforeImg] = useState([]);
+  const [getImageData, setImageData] = useState()
   const [getMenuId, setMenuId] = useState("")
   const [getLockMenuBool, setLockMenuBool] = useState(false);
   const [getServiceTypeId, setServiceTypeId] = useState("")
@@ -44,7 +46,9 @@ function App() {
         getAfterBeforeImg,
         setAfterBeforeImg,
         getLockMenuBool,
-        setLockMenuBool
+        setLockMenuBool,
+        getImageData, 
+        setImageData
       ]}
     >
       <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl]}>
