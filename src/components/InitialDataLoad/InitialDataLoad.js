@@ -1,15 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { OrderContextManager } from '../../App';
+import { OrderContextManager, userContextManager } from '../../App';
 
 const InitialDataLoad = () => {
 
     const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] = useContext(OrderContextManager)
+    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
     const location = useLocation(); 
 
     const defaultSettingFunc =() =>{
-      fetch("http://103.197.204.22:8007/api/2023-02/default-settings")
+      fetch("http://103.197.204.22:8007/api/2023-02/default-settings", { 
+        headers:{
+            'Authorization': 'bearer '+ getToken, 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }})
       .then(res => res.json())
       .then(data => {
         if(data.status_code == 200){
@@ -22,7 +27,11 @@ const InitialDataLoad = () => {
     } 
 
       const menuFunc = () =>{
-        fetch("http://103.197.204.22:8007/api/2023-02/menu")
+        fetch("http://103.197.204.22:8007/api/2023-02/menu", { 
+          headers:{
+              'Authorization': 'bearer '+ getToken, 
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }})
         .then((res) => res.json())
         .then(
           (data) => {

@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { userContextManager } from "../../App";
 
 const Toggle = () => {
   const fakeUser = "shafayat";
 
   const [getOperation, setOperation] = useState([]);
   const [getToggleVal, setToggleVal] = useState(false);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const loadOperation = () => {
-    fetch("http://27.147.191.97:8008/operation-type")
+    fetch("http://27.147.191.97:8008/operation-type", { 
+      headers:{
+          'Authorization': 'bearer '+ getToken, 
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }})
       .then((res) => res.json())
       .then((data) => {
         setOperation(data.operation_types);

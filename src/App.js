@@ -32,6 +32,7 @@ function App() {
   const [getServiceTypeId, setServiceTypeId] = useState("")
   const [getMenu, setMenu] = useState([]); 
   const [getUserInfo, setUserInfo] = useState({}); 
+  const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou"); 
   const [getModelBaseUrl, setModelBaseUrl] = useState(""); 
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState(""); 
 
@@ -52,7 +53,7 @@ function App() {
       ]}
     >
       <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl]}>
-      <userContextManager.Provider value={[getUserInfo, setUserInfo]}>
+      <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
       <div className="App">
         <InitialDataLoad/>
         <Navbar items={getMenu}></Navbar>

@@ -1,7 +1,7 @@
 import hoody from "./img/hoody.jpg";
 import { BiShow, BiDownload } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
-import { OrderContextManager } from "../../App";
+import { OrderContextManager, userContextManager } from "../../App";
 import ReactCompareImage from "react-compare-image";
 
 import { Input } from 'antd';
@@ -16,6 +16,7 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] =
     useContext(OrderContextManager);
+    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
@@ -69,7 +70,11 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
 
 const ordeImageServiceFunc =()=>{
 
-  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${imagesBeforeAfter.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`)
+  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${imagesBeforeAfter.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}` { 
+    headers:{
+        'Authorization': 'bearer '+ getToken, 
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }})
   .then(res => res.json())
   .then(data =>{
     

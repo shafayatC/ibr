@@ -8,7 +8,7 @@ import { userContextManager } from "../../App";
 const SignIn = () => {
   const [getPassword, setPassword] = useState("");
   const [getMail, setMail] = useState("");
-  const [getUserInfo, setUserInfo] = useContext(userContextManager);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const showToastMessage = (msg) => {
     toast.success(msg, {
@@ -47,6 +47,7 @@ const SignIn = () => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              'Authorization': 'bearer '+ getToken
             },
             body: JSON.stringify(signInData),
           }
@@ -60,6 +61,7 @@ const SignIn = () => {
                   headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    'Authorization': 'bearer '+ getToken
                   }
                 }
               ).then(res => res.json())
@@ -67,6 +69,7 @@ const SignIn = () => {
                   console.log(result)
                   if (result.status_code == 200) {
                     setUserInfo(result);
+                    setToken(result.results.token)
                     showToastMessage(result.results.message)
                     console.log("redirect working")
                   } else {

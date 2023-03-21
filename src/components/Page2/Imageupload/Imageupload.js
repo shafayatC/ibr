@@ -40,7 +40,7 @@ function Imageupload() {
     getImageData, 
     setImageData
   ] = useContext(FileContextManager);
-  const [getUserInfo] = useContext(userContextManager);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
 
@@ -214,7 +214,10 @@ function Imageupload() {
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        'Authorization': 'bearer '+ getToken
+       },
       body: JSON.stringify(myOrdre),
     })
       .then((res) => res.json())
@@ -252,6 +255,10 @@ function Imageupload() {
       const response = await fetch("http://127.0.0.1:5000/upload", {
         method: "POST",
         body: formData,
+        headers:{
+          'Authorization': 'bearer '+ getToken, 
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
       });
       const data = await response.json();
     } catch (error) {
@@ -277,6 +284,10 @@ function Imageupload() {
       fetch(api_url, {
         method: "POST",
         body: data,
+        headers:{
+          'Authorization': 'bearer '+ getToken, 
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
       })
         .then((res) => res.json())
         .then((result) => {
@@ -307,7 +318,11 @@ function Imageupload() {
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
         {
           method: "POST",
-          body: formData,
+          body: formData, 
+          headers:{
+            'Authorization': 'bearer '+ getToken, 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
         }
       );
       const data = await response.json();
