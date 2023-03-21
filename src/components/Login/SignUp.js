@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { userContextManager } from "../../App";
 
 const SignUp = () => {
 
   const [getMail, setMail] = useState("");
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const showToastMessage = () => {
     toast.success("Successfully Signup", {
@@ -42,7 +44,8 @@ const SignUp = () => {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'bearer '+ getToken
           },
           body: JSON.stringify(regMail)
         });

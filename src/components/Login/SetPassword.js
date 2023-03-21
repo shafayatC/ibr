@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userContextManager } from "../../App";
 
 const SetPassword = () => {
 
   const [getPassword, setPassword] =  useState("");
   const [getConfirmPass, setConfirmPass] = useState(""); 
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   let { token } = useParams();
 
@@ -36,7 +38,8 @@ const SetPassword = () => {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'bearer '+ getToken, 
           },
           body: JSON.stringify(passwordSet)
         });

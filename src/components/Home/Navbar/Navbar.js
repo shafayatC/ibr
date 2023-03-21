@@ -58,7 +58,7 @@ const Navbar = ({ items }) => {
           id="navbar-default"
         >
           <div className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
-            {items.map((item, index) => (
+            {typeof items !== 'undefined' && items.map((item, index) => (
               <Link
                 key={index}
                 onClick={() => setMenuId(item.id)}

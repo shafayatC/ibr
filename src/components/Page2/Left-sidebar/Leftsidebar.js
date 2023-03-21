@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
-import { FileContextManager, OrderContextManager } from "../../../App";
+import { FileContextManager, OrderContextManager, userContextManager } from "../../../App";
 
 const Leftsidebar = () => {
   const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ const Leftsidebar = () => {
   ] = useContext(FileContextManager);
 
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] = useContext(OrderContextManager);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const menuList = () => {
     {/*    if (getMenuId.length > 0) {
@@ -31,8 +32,11 @@ const Leftsidebar = () => {
   */}
 
     fetch(
-      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`
-    )
+      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, { 
+        headers:{
+            'Authorization': 'bearer '+ getToken, 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }})
       .then((res) => res.json())
       .then(
         (data) => {
