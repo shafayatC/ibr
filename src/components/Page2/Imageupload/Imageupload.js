@@ -12,6 +12,9 @@ import processlogo from "./img/process.png";
 import { matchSorter } from "match-sorter";
 import UpgradeAccount from "../../UpgradeAccount/UpgradeAccount";
 import CouponCode from "../../CouponCode/CouponCode";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import ViewDwnld from "../../Page3/ViewDwnld";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +27,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
-
+  const [getProccessImgIndex, setProccessImgIndex ] = useState(0)
   const [
     getMainFile,
     setMainFile,
@@ -34,6 +37,8 @@ function Imageupload() {
     setAfterBeforeImg,
     getLockMenuBool,
     setLockMenuBool,
+    getImageData, 
+    setImageData
   ] = useContext(FileContextManager);
   const [getUserInfo] = useContext(userContextManager);
 
@@ -398,6 +403,9 @@ function Imageupload() {
     setUpdatePlan(bl);
   };
 
+  const callBackImgIndex = (imgInd)=>{
+    setProccessImgIndex(imgInd)
+  }
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -637,7 +645,7 @@ function Imageupload() {
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <>
-                  <UpdatedImage imgData={data} key={index} />
+                  <UpdatedImage imgData={data} key={index} callBackImgIndex={callBackImgIndex} />
               </>
             ))}
         </div>
@@ -651,6 +659,7 @@ function Imageupload() {
           <CouponCode></CouponCode>
         </div>
       </div>
+      <ViewDwnld proccessImgIndex={getProccessImgIndex} />
     </>
   );
 }
