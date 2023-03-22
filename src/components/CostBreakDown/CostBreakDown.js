@@ -113,8 +113,23 @@ const CostBreakDown = () => {
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-5"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
+                <button
+                    className=" w-10 h-10 border border-theme-shade rounded-full"
+                    style={{
+                        position: "absolute",
+                        top: 60,
+                        right: 20,
+                        backgroundColor: "white",
+
+                        padding: "8px 15px",
+                    }}
+                // onClick={handleCloseClick}
+                >
+                    <i className="fa-solid fa-xmark"></i>
+                </button>
 
             </div>
+
         </div>
     )
 }
