@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logo from '../../images/logo.png'
 
 const CostBreakDown = () => {
@@ -113,6 +114,7 @@ const CostBreakDown = () => {
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-5"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
+                <Link to="/file-uploads"> 
                 <button
                     className=" w-10 h-10 border border-theme-shade rounded-full"
                     style={{
@@ -127,6 +129,7 @@ const CostBreakDown = () => {
                 >
                     <i className="fa-solid fa-xmark"></i>
                 </button>
+                </Link>
 
             </div>
 
