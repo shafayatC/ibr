@@ -198,7 +198,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
                     ))}
                 </ul>
                 <TextArea showCount maxLength={40} onChange={onChange} />
-                <button className="bg-green-700 mt-6 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+                <button className="bg-green-700 mt-6   font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
                   Send
                 </button>
               </div>
