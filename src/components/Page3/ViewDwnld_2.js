@@ -70,7 +70,7 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
 
 const ordeImageServiceFunc =()=>{
 
-  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${imagesBeforeAfter.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}` { 
+  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imagesBeforeAfter.order_image_service_id}`, { 
     headers:{
         'Authorization': 'bearer '+ getToken, 
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -88,6 +88,7 @@ const ordeImageServiceFunc =()=>{
 
   return (
     <>
+    
       {isImageVisible && (
         <div>
           <div

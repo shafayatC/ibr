@@ -205,7 +205,6 @@ function Imageupload() {
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
-      user_id: getUserInfo.status_code == 200 ? getUserInfo.results.token.token : null,
     };
     console.log(
       "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
