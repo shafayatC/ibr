@@ -205,7 +205,9 @@ function Imageupload() {
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
+      subscription_plan_type_id: getSubscriptionPlanId
     };
+
     console.log(
       "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
     );
