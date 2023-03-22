@@ -49,8 +49,7 @@ function Imageupload() {
     setUpdatePlan(true);
   };
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId] =
-    useContext(OrderContextManager);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId,] = useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -234,7 +233,7 @@ function Imageupload() {
           data.append("service_type_id", getServiceTypeId);
           data.append("file", img_file.file);
           data.append("file_relative_path", filePath);
-          data.append("subscription_plan_type_id", "sdfsdfsdf");
+          data.append("subscription_plan_type_id", getSubscriptionPlanId);
           data.append("sequence_no", sequence_no);
           dataTransfer(data);
         });
@@ -318,11 +317,11 @@ function Imageupload() {
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
         {
           method: "POST",
-          body: formData, 
+          body: formData /*
           headers:{
             'Authorization': 'bearer '+ getToken, 
             'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        }*/
         }
       );
       const data = await response.json();
@@ -431,7 +430,7 @@ function Imageupload() {
 
   return (
     <>
-
+      {console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId)}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
