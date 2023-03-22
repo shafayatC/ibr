@@ -14,9 +14,9 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
   const [getServicMenu, setServiceMenu] = useState({});
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] =
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl] =
     useContext(OrderContextManager);
-    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
@@ -38,57 +38,58 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
     console.log('Change:', e.target.value);
   };
 
-/*
-  const loadMenuServiceId = () => {
-    fetch("http://103.197.204.22:8007/api/2023-02/service-types")
-      .then((response) => response.json())
-      .then((res) => {
-        const promises = res.results.service_type_list.map((data) => {
-          const menuList = { ...data, sub_menu: [] };
-          data.is_default == true && setServiceTypeId(data.id);
-          return fetch(
-            `http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`
-          )
-            .then((listRes) => listRes.json())
-            .then((resultList) => {
-              menuList.sub_menu = resultList.results.service_items;
-              return menuList;
-            });
+  /*
+    const loadMenuServiceId = () => {
+      fetch("http://103.197.204.22:8007/api/2023-02/service-types")
+        .then((response) => response.json())
+        .then((res) => {
+          const promises = res.results.service_type_list.map((data) => {
+            const menuList = { ...data, sub_menu: [] };
+            data.is_default == true && setServiceTypeId(data.id);
+            return fetch(
+              `http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`
+            )
+              .then((listRes) => listRes.json())
+              .then((resultList) => {
+                menuList.sub_menu = resultList.results.service_items;
+                return menuList;
+              });
+          });
+          Promise.all(promises).then((menuArray) => {
+            setServiceMenu(menuArray);
+          });
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          setIsLoaded(true);
         });
-        Promise.all(promises).then((menuArray) => {
-          setServiceMenu(menuArray);
-        });
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoaded(true);
-      });
-  };
-*/
+    };
+  */
 
-const ordeImageServiceFunc =()=>{
+  const ordeImageServiceFunc = () => {
 
-  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imagesBeforeAfter.order_image_service_id}`, { 
-    headers:{
-        'Authorization': 'bearer '+ getToken, 
+    fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imagesBeforeAfter.order_image_service_id}`, {
+      headers: {
+        'Authorization': 'bearer ' + getToken,
         'Content-Type': 'application/x-www-form-urlencoded'
-    }})
-  .then(res => res.json())
-  .then(data =>{
-    
-   data.status_code == 200 && setServiceMenu(data)
-  })
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
 
-}
+        data.status_code == 200 && setServiceMenu(data)
+      })
+
+  }
   useEffect(() => {
     ordeImageServiceFunc()
   }, []);
 
   return (
     <>
-    
+
       {isImageVisible && (
         <div>
           <div
@@ -110,11 +111,11 @@ const ordeImageServiceFunc =()=>{
               <div className="  pt-12 pl-16 absolute ">
                 <div className="w-[400px] border border-theme-shade  relative">
 
-                <CompareImage
-                topImage={before}
-                bottomImage={after}
-                />
-                 {/* 
+                  <CompareImage
+                    topImage={before}
+                    bottomImage={after}
+                  />
+                  {/* 
                   <ReactCompareImage
                     hover={true}
                     leftImage={before}
@@ -149,23 +150,23 @@ const ordeImageServiceFunc =()=>{
                   {Object.keys(getServicMenu).length > 0 &&
                     getServicMenu.results.order_image_services.map((data, index) => (
                       <li key={index}>
-                            <div
-                              className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                defaultChecked={data.is_checked}
-                                onChange={() => setChecked(!checked)}
-                                id={"check_" + index}
-                                className=" checked:bg-orange-400 checked:border-orange-400"
-                              />
-                              <label
-                                htmlFor={"check_" + index}
-                                className="ml-3"
-                              >
-                                {data.name}
-                              </label>
-                            </div>
+                        <div
+                          className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            defaultChecked={data.is_checked}
+                            onChange={() => setChecked(!checked)}
+                            id={"check_" + index}
+                            className=" checked:bg-orange-400 checked:border-orange-400"
+                          />
+                          <label
+                            htmlFor={"check_" + index}
+                            className="ml-3"
+                          >
+                            {data.name}
+                          </label>
+                        </div>
                       </li>
                     ))}
                 </ul>
