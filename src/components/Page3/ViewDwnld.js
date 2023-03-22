@@ -9,25 +9,25 @@ import { Input } from 'antd';
 import "./page3.css";
 import CompareImage from "../CompareImage/CompareImage";
 
-const ViewDwnld = ({proccessImgIndex}) => {
+const ViewDwnld = ({ proccessImgIndex }) => {
   const [checked, setChecked] = useState(true);
   const [getServicMenu, setServiceMenu] = useState({});
-  const [getCurrImage , setCurrImage] = useState({})
+  const [getCurrImage, setCurrImage] = useState({})
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] =
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl] =
     useContext(OrderContextManager);
-    const [
-      getMainFile,
-      setMainFile,
-      fileInfo,
-      setFileInfo,
-      getAfterBeforeImg,
-      setAfterBeforeImg,
-      getLockMenuBool,
-      setLockMenuBool,
-      getImageData, 
-      setImageData] = useContext(FileContextManager);
-      const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [
+    getMainFile,
+    setMainFile,
+    fileInfo,
+    setFileInfo,
+    getAfterBeforeImg,
+    setAfterBeforeImg,
+    getLockMenuBool,
+    setLockMenuBool,
+    getImageData,
+    setImageData] = useContext(FileContextManager);
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
@@ -38,9 +38,9 @@ const ViewDwnld = ({proccessImgIndex}) => {
   const checkServerData = () => {
     const imgFile = getAfterBeforeImg.find(fl => fl.output_urls[0].order_image_detail_sequence_no == proccessImgIndex)
     //   console.log(imgFile)
-   if( typeof imgFile !== 'undefined' && typeof imgFile.output_urls !== 'undefined'){
-    setCurrImage(imgFile.output_urls[0])
-   } 
+    if (typeof imgFile !== 'undefined' && typeof imgFile.output_urls !== 'undefined') {
+      setCurrImage(imgFile.output_urls[0])
+    }
   }
 
   const handleViewClick = () => {
@@ -50,7 +50,7 @@ const ViewDwnld = ({proccessImgIndex}) => {
 
   const handleCloseClick = () => {
     setImageData(0)
-    proccessImgIndex=0; 
+    proccessImgIndex = 0;
     setImageVisibility(false);
     document.body.style.overflow = "unset";
   };
@@ -59,52 +59,53 @@ const ViewDwnld = ({proccessImgIndex}) => {
     console.log('Change:', e.target.value);
   };
 
-/*
-  const loadMenuServiceId = () => {
-    fetch("http://103.197.204.22:8007/api/2023-02/service-types")
-      .then((response) => response.json())
-      .then((res) => {
-        const promises = res.results.service_type_list.map((data) => {
-          const menuList = { ...data, sub_menu: [] };
-          data.is_default == true && setServiceTypeId(data.id);
-          return fetch(
-            `http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`
-          )
-            .then((listRes) => listRes.json())
-            .then((resultList) => {
-              menuList.sub_menu = resultList.results.service_items;
-              return menuList;
-            });
+  /*
+    const loadMenuServiceId = () => {
+      fetch("http://103.197.204.22:8007/api/2023-02/service-types")
+        .then((response) => response.json())
+        .then((res) => {
+          const promises = res.results.service_type_list.map((data) => {
+            const menuList = { ...data, sub_menu: [] };
+            data.is_default == true && setServiceTypeId(data.id);
+            return fetch(
+              `http://103.197.204.22:8007/api/2023-02/manual-service?service_type_id=${data.id}`
+            )
+              .then((listRes) => listRes.json())
+              .then((resultList) => {
+                menuList.sub_menu = resultList.results.service_items;
+                return menuList;
+              });
+          });
+          Promise.all(promises).then((menuArray) => {
+            setServiceMenu(menuArray);
+          });
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          setIsLoaded(true);
         });
-        Promise.all(promises).then((menuArray) => {
-          setServiceMenu(menuArray);
-        });
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoaded(true);
-      });
-  };
-*/
+    };
+  */
 
-const ordeImageServiceFunc =()=>{
+  const ordeImageServiceFunc = () => {
 
-  fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${getCurrImage.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`, { 
-    headers:{
-        'Authorization': 'bearer '+ getToken, 
+    fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?id=${getCurrImage.order_image_service_id}&service_type_id=${getServiceTypeId}&subscription_type_id=${getSubscriptionPlanId}`, {
+      headers: {
+        'Authorization': 'bearer ' + getToken,
         'Content-Type': 'application/x-www-form-urlencoded'
-    }})
-  .then(res => res.json())
-  .then(data =>{
-    
-   data.status_code == 200 && setServiceMenu(data)
-  })
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
 
-}
+        data.status_code == 200 && setServiceMenu(data)
+      })
+
+  }
   useEffect(() => {
-    typeof getCurrImage !== 'undefined' &&  ordeImageServiceFunc()
+    typeof getCurrImage !== 'undefined' && ordeImageServiceFunc()
     typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && setImageVisibility(true)
     typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && checkServerData()
     console.log(proccessImgIndex)
@@ -133,14 +134,14 @@ const ordeImageServiceFunc =()=>{
               <div className="  pt-12 pl-16 absolute ">
                 <div className="w-[400px] h-[400px] border border-theme-shade  relative">
 
-              {typeof getCurrImage.order_image_detail_sequence_no !== 'undefined' && 
-              getCurrImage.order_image_detail_sequence_no == proccessImgIndex &&
-                <CompareImage
-                topImage={before}
-                bottomImage={after}
-                />
-              }
-                 {/* 
+                  {typeof getCurrImage.order_image_detail_sequence_no !== 'undefined' &&
+                    getCurrImage.order_image_detail_sequence_no == proccessImgIndex &&
+                    <CompareImage
+                      topImage={before}
+                      bottomImage={after}
+                    />
+                  }
+                  {/* 
                   <ReactCompareImage
                     hover={true}
                     leftImage={before}
@@ -175,23 +176,23 @@ const ordeImageServiceFunc =()=>{
                   {Object.keys(getServicMenu).length > 0 &&
                     getServicMenu.results.order_image_services.map((data, index) => (
                       <li key={index}>
-                            <div
-                              className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                defaultChecked={data.is_checked}
-                                onChange={() => setChecked(!checked)}
-                                id={"check_" + index}
-                                className=" checked:bg-orange-400 checked:border-orange-400"
-                              />
-                              <label
-                                htmlFor={"check_" + index}
-                                className="ml-3"
-                              >
-                                {data.name}
-                              </label>
-                            </div>
+                        <div
+                          className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            defaultChecked={data.is_checked}
+                            onChange={() => setChecked(!checked)}
+                            id={"check_" + index}
+                            className=" checked:bg-orange-400 checked:border-orange-400"
+                          />
+                          <label
+                            htmlFor={"check_" + index}
+                            className="ml-3"
+                          >
+                            {data.name}
+                          </label>
+                        </div>
                       </li>
                     ))}
                 </ul>

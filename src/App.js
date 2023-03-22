@@ -17,10 +17,11 @@ import UpgradeAccount from "./components/UpgradeAccount/UpgradeAccount";
 import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
 import CouponCode from "./components/CouponCode/CouponCode";
 import CompareImage from "./components/CompareImage/CompareImage";
+import CostBreakDown from "./components/CostBreakDown/CostBreakDown";
 
 export const FileContextManager = createContext();
-export const OrderContextManager = createContext(); 
-export const userContextManager = createContext(); 
+export const OrderContextManager = createContext();
+export const userContextManager = createContext();
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
@@ -30,11 +31,11 @@ function App() {
   const [getMenuId, setMenuId] = useState("")
   const [getLockMenuBool, setLockMenuBool] = useState(false);
   const [getServiceTypeId, setServiceTypeId] = useState("")
-  const [getMenu, setMenu] = useState([]); 
-  const [getUserInfo, setUserInfo] = useState({}); 
-  const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou"); 
-  const [getModelBaseUrl, setModelBaseUrl] = useState(""); 
-  const [getSubscriptionPlanId, setSubscriptionPlanId] = useState(""); 
+  const [getMenu, setMenu] = useState([]);
+  const [getUserInfo, setUserInfo] = useState({});
+  const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou");
+  const [getModelBaseUrl, setModelBaseUrl] = useState("");
+  const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
 
 
   return (
@@ -48,32 +49,33 @@ function App() {
         setAfterBeforeImg,
         getLockMenuBool,
         setLockMenuBool,
-        getImageData, 
+        getImageData,
         setImageData
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl]}>
-      <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
-      <div className="App">
-        <InitialDataLoad/>
-        <Navbar items={getMenu}></Navbar>
-        <Routes>
-          {/* <Route path="/" element={<Navigation />} /> */}
-          <Route path="/" element={<Home />} />
-          <Route path="/price" element={<PriceCard />} />
-          <Route path="/file-uploads" element={<Page2 />} />
-          <Route path="/processed-img" element={<Page3 />} />
-          <Route path="/log-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
-          <Route path="/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
-          <Route path="/question-answer" element={<QuestionAnswer />} />
-          <Route path="/upgrade-account" element={<UpgradeAccount />} />
-          <Route path="/coupon-code" element={<CouponCode />} />
-        </Routes>
-      </div>
-      </userContextManager.Provider>
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl]}>
+        <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
+          <div className="App">
+            <InitialDataLoad />
+            <Navbar items={getMenu}></Navbar>
+            <Routes>
+              {/* <Route path="/" element={<Navigation />} /> */}
+              <Route path="/" element={<Home />} />
+              <Route path="/price" element={<PriceCard />} />
+              <Route path="/file-uploads" element={<Page2 />} />
+              <Route path="/processed-img" element={<Page3 />} />
+              <Route path="/log-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
+              <Route path="/resetpassword/:token" element={<ResetPassword />} />
+              <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
+              <Route path="/question-answer" element={<QuestionAnswer />} />
+              <Route path="/upgrade-account" element={<UpgradeAccount />} />
+              <Route path="/coupon-code" element={<CouponCode />} />
+              <Route path="/cost-breakdown" element={<CostBreakDown />} />
+            </Routes>
+          </div>
+        </userContextManager.Provider>
       </OrderContextManager.Provider>
     </FileContextManager.Provider>
   );
