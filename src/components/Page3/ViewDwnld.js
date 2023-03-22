@@ -113,7 +113,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   return (
     <>
-    {console.log(getCurrImage)}
+      {console.log(getCurrImage)}
       {isImageVisible && (
         <div>
           <div
@@ -172,7 +172,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
                 </div>
               </div>
 
-              <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
+              <div id="rightMenuBarWrap" className="hfull  w-52 flex flex-col justify-center  bg-white   ">
                 <ul className="space-y-2">
                   {Object.keys(getServicMenu).length > 0 &&
                     getServicMenu.results.order_image_services.map((data, index) => (
@@ -198,7 +198,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
                     ))}
                 </ul>
                 <TextArea showCount maxLength={40} onChange={onChange} />
-                <button className="bg-green-700 mt-3 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+                <button className="bg-green-700 mt-6 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
                   Send
                 </button>
               </div>
