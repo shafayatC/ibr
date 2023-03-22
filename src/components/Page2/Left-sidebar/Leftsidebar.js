@@ -3,6 +3,7 @@ import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
 import { FileContextManager, OrderContextManager, userContextManager } from "../../../App";
+import { Link } from "react-router-dom";
 
 const Leftsidebar = () => {
   const [error, setError] = useState(null);
@@ -216,6 +217,19 @@ const Leftsidebar = () => {
                           <span>{item.highlight}</span>
                         )}
                       </div>
+                    )}
+                    
+                    {item.name == "Cost Breakdown" && (
+                      <Link
+                        key={item.id}
+                        to={item.url}
+                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
+                      >
+                        <i className={item.icon}></i> {item.name}
+                        {item.highlight.length > 0 && (
+                          <span>{item.highlight}</span>
+                        )}
+                      </Link>
                     )}
                   </>
                 ))}

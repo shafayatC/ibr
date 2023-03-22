@@ -664,6 +664,7 @@ function Imageupload() {
               </>
             ))}
         </div>
+        
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
