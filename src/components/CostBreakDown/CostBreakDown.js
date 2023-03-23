@@ -34,16 +34,16 @@ const CostBreakDown = () => {
                         <div><p className="font-semibold text-sm">Date:</p>
                             <p className="font-semibold text-sm">Order No: </p>
                             <p className="font-semibold text-sm">Order Status: </p>
-                            <p className="font-semibold text-sm">Raw Images: </p>
+                            <p className="font-semibold text-sm">Raw Image(s): </p>
                         </div>
                         {console.log(getCostDetails)}
                         {Object.keys(getCostDetails).length > 0 &&
                             <div>
-                                <p>{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
-                                <p className=" text-sm">18-Mar-23</p>
-                                <p className=" text-sm"> AI-0001-IMG</p>
-                                <p className=" text-sm">incomplete</p>
-                                <p className=" text-sm">10</p>
+                                <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
+                                <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no}</p>
+                                <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_status}</p>
+                                <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no_of_images}</p>
+
                             </div>
                         }
 
@@ -57,9 +57,9 @@ const CostBreakDown = () => {
 
                         <div>
 
-                            <p className=" text-sm">Manual</p>
-                            <p className=" text-sm">AI Premium</p>
-                            <p className=" text-sm">Pending</p>
+                            <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_service_type}</p>
+                            <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_subcription_plan_type}</p>
+                            <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_payment_status}</p>
                         </div>
                     </div>
                 </div>
@@ -187,7 +187,7 @@ const CostBreakDown = () => {
                         <p className="font-semibold text-sm">$9.00</p>
                     </div>
                 </div>
-                <div className="w-[700px] mx-auto mt-6 " >
+                <div className="w-[600px] mx-auto mt-6 " >
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-2"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
