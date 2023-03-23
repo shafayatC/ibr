@@ -1,16 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { OrderContextManager } from "../../App";
+import { OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 
 const CostBreakDown = () => {
+    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
 
+    const [getCostDetails, setCostDetails] = useState([])
 
     useEffect(() => {
-        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`)
+        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+            headers: {
+                'Authorization': 'bearer ' + getToken,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => setCostDetails(data))
 
 
     }, [getOrderMasterId]);
@@ -29,13 +36,16 @@ const CostBreakDown = () => {
                             <p className="font-semibold text-sm">Order Status: </p>
                             <p className="font-semibold text-sm">Raw Images: </p>
                         </div>
-
-                        <div>
-                            <p className=" text-sm">18-Mar-23</p>
-                            <p className=" text-sm"> AI-0001-IMG</p>
-                            <p className=" text-sm">incomplete</p>
-                            <p className=" text-sm">10</p>
-                        </div>
+                        {console.log(getCostDetails)}
+                        {Object.keys(getCostDetails).length > 0 &&
+                            <div>
+                                <p>{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
+                                <p className=" text-sm">18-Mar-23</p>
+                                <p className=" text-sm"> AI-0001-IMG</p>
+                                <p className=" text-sm">incomplete</p>
+                                <p className=" text-sm">10</p>
+                            </div>
+                        }
 
                     </div>
                     <div className="flex justify-between gap-5">
@@ -70,6 +80,7 @@ const CostBreakDown = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <tr className="border-b dark:border-neutral-500">
                                                 <td className="whitespace-nowrap px-6 py-0 font-medium">1</td>
                                                 <td className="whitespace-nowrap px-6 py-0">Remove BG (AI)</td>
@@ -77,7 +88,7 @@ const CostBreakDown = () => {
                                                 <td className="whitespace-nowrap px-6 py-0">$0.00</td>
                                                 <td className="whitespace-nowrap px-6 py-0">$0.00</td>
                                             </tr>
-                                            <tr className="border-b dark:border-neutral-500">
+                                            {/* <tr className="border-b dark:border-neutral-500">
                                                 <td className="whitespace-nowrap px-6 py-0 font-medium">2</td>
                                                 <td className="whitespace-nowrap px-6 py-0">Remove BG (Manua)</td>
                                                 <td className="whitespace-nowrap px-6 py-0">10</td>
@@ -153,7 +164,7 @@ const CostBreakDown = () => {
                                                 <td className="whitespace-nowrap px-6 py-0">5</td>
                                                 <td className="whitespace-nowrap px-6 py-0">$0.40</td>
                                                 <td className="whitespace-nowrap px-6 py-0">$2.00</td>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>
@@ -176,7 +187,7 @@ const CostBreakDown = () => {
                         <p className="font-semibold text-sm">$9.00</p>
                     </div>
                 </div>
-                <div className="w-[700px] mx-auto mt-12 " >
+                <div className="w-[700px] mx-auto mt-6 " >
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-2"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
