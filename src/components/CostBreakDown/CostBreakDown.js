@@ -55,104 +55,104 @@ const CostBreakDown = () => {
                 </div>
 
                 <div className=" w-[600px] mx-auto mt-2 ">
-                    <div class="flex flex-col">
-                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div class="inline-block min-w-full py-0 sm:px-6 lg:px-8">
-                                <div class="overflow-hidden">
-                                    <table class="min-w-full text-left text-sm font-light">
-                                        <thead class="border-b font-medium dark:border-neutral-500">
+                    <div className="flex flex-col">
+                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div className="inline-block min-w-full py-0 sm:px-6 lg:px-8">
+                                <div className="overflow-hidden">
+                                    <table className="min-w-full text-left text-sm font-light">
+                                        <thead className="border-b font-medium dark:border-neutral-500">
                                             <tr className="bg-gray-400">
-                                                <th scope="col" class="px-6 py-0">SL</th>
-                                                <th scope="col" class="px-6 py-0">Service</th>
-                                                <th scope="col" class="px-6 py-0">No.of Services</th>
-                                                <th scope="col" class="px-6 py-0">Charge/Image</th>
-                                                <th scope="col" class="px-6 py-0">Total</th>
+                                                <th scope="col" className="px-6 py-0">SL</th>
+                                                <th scope="col" className="px-6 py-0">Service</th>
+                                                <th scope="col" className="px-6 py-0">No.of Services</th>
+                                                <th scope="col" className="px-6 py-0">Charge/Image</th>
+                                                <th scope="col" className="px-6 py-0">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">1</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Remove BG (AI)</td>
-                                                <td class="whitespace-nowrap px-6 py-0">10</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.00</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">1</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Remove BG (AI)</td>
+                                                <td className="whitespace-nowrap px-6 py-0">10</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.00</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">2</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Remove BG (Manua)</td>
-                                                <td class="whitespace-nowrap px-6 py-0">10</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.20</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">2</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Remove BG (Manua)</td>
+                                                <td className="whitespace-nowrap px-6 py-0">10</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.20</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">3</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Retouch</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$1.00</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$5.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">3</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Retouch</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$1.00</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$5.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">4</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">4</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">6</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">6</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">7</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">7</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">8</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">8</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">9</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">9</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">10</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">10</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">11</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">11</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
-                                            <tr class="border-b dark:border-neutral-500">
-                                                <td class="whitespace-nowrap px-6 py-0 font-medium">12</td>
-                                                <td class="whitespace-nowrap px-6 py-0">Image Masking</td>
-                                                <td class="whitespace-nowrap px-6 py-0">5</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$0.40</td>
-                                                <td class="whitespace-nowrap px-6 py-0">$2.00</td>
+                                            <tr className="border-b dark:border-neutral-500">
+                                                <td className="whitespace-nowrap px-6 py-0 font-medium">12</td>
+                                                <td className="whitespace-nowrap px-6 py-0">Image Masking</td>
+                                                <td className="whitespace-nowrap px-6 py-0">5</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$0.40</td>
+                                                <td className="whitespace-nowrap px-6 py-0">$2.00</td>
                                             </tr>
                                         </tbody>
                                     </table>
