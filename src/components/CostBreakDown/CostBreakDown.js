@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { OrderContextManager } from "../../App";
 import logo from '../../images/logo.png'
 
 const CostBreakDown = () => {
-
-    // useEffect(() => {
-    //     fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${order_master_image_id}`)
-    //         .then(res => res.json())
-    //         .then(data => data())
+    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
 
 
-    // }, []);
+    useEffect(() => {
+        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`)
+            .then(res => res.json())
+            .then(data => console.log(data))
+
+
+    }, [getOrderMasterId]);
 
 
     return (
