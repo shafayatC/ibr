@@ -208,9 +208,7 @@ function Imageupload() {
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    console.log(
-      "getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId
-    );
+   // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
@@ -313,7 +311,8 @@ function Imageupload() {
 
   const dataTransfer = async (formData) => {
     console.log("formData");
-    console.log(formData);
+    //console.log(await formData);
+    Promise.all(formData).then(data => console.log(data))
     try {
       const response = await fetch(
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
@@ -432,7 +431,7 @@ function Imageupload() {
 
   return (
     <>
-      {console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId)}
+      {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
@@ -661,9 +660,9 @@ function Imageupload() {
           {
             actionStatus == "process" &&
             currentImages.map((data, index) => (
-              <>
+              <div key={index}>
                   <UpdatedImage imgData={data} key={index} callBackImgIndex={callBackImgIndex} />
-              </>
+              </div>
             ))}
         </div>
         

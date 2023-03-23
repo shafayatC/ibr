@@ -91,6 +91,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   const ordeImageServiceFunc = () => {
 
+    typeof getCurrImage.order_image_detail_id !== 'undefined' && 
     fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getCurrImage.order_image_detail_id}`, {
       headers: {
         'Authorization': 'bearer ' + getToken,
@@ -113,7 +114,6 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   return (
     <>
-    {console.log(getServicMenu)}
       {isImageVisible && (
         <div>
           <div

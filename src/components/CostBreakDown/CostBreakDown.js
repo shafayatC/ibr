@@ -10,6 +10,7 @@ const CostBreakDown = () => {
     const [getCostDetails, setCostDetails] = useState([])
 
     useEffect(() => {
+        getOrderMasterId.length > 0 &&
         fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -25,6 +26,7 @@ const CostBreakDown = () => {
 
     return (
         <div className="container mx-auto">
+            {console.log("getOrderMasterId : " + getOrderMasterId)}
             <div >
                 <div className="bg-white flex flex-col items-center mt-2">  <img className="h-6 w-32 " src={logo} alt="" />
                     <p className="text-xl font-bold">COST BREAKDOWN</p>
@@ -37,7 +39,7 @@ const CostBreakDown = () => {
                             <p className="font-semibold text-sm">Raw Image(s): </p>
                         </div>
                         {console.log(getCostDetails)}
-                        {Object.keys(getCostDetails).length > 0 &&
+                        {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div>
                                 <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
                                 <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no}</p>
@@ -54,13 +56,14 @@ const CostBreakDown = () => {
                             <p className="font-semibold text-sm">Subscription: </p>
                             <p className="font-semibold text-sm">Payment Status: </p>
                         </div>
-
+                        {Object.keys(getCostDetails).length > 0 &&
                         <div>
 
                             <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_service_type}</p>
                             <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_subcription_plan_type}</p>
                             <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_payment_status}</p>
                         </div>
+                        }
                     </div>
                 </div>
 
