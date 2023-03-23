@@ -58,8 +58,8 @@ const viewDownloadFunc =()=>{
             />
           { Object.keys(getCurrImageData).length > 0 && 
           <>
-           <i class="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
-            <i class="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
+           <i className="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            <i className="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
             <button className="absolute top-0 left-0 h-full w-full" onClick={viewDownloadFunc}></button>
           </>
           }

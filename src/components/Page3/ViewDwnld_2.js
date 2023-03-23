@@ -201,8 +201,8 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
             onClick={handleViewClick}
             style={{ cursor: "pointer" }}
 
-          >  <i class="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
-            <i class="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
+          >  <i className="fa-solid fa-circle-check absolute right-1 top-1 text-green-400"></i>
+            <i className="fa-solid fa-check absolute right-6 top-1 text-green-400"></i>
 
           </button>
 
