@@ -42,9 +42,9 @@ const Home = () => {
           <div>
             <h2>AI-Professionals Collaboration</h2>
             {getMenu.map(
-              (data) =>
+              (data, index) =>
                 data.type == "upload" && (
-                  <Link onClick={() => setMenuId(data.id)} to={data.url}>
+                  <Link key={index} onClick={() => setMenuId(data.id)} to={data.url}>
                     <button>Get Started</button>
                   </Link>
                 )

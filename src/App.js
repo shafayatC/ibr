@@ -57,6 +57,7 @@ function App() {
       <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <div className="App">
+            {console.log("getOrderMasterId : "+ getOrderMasterId)}
             <InitialDataLoad />
             <Navbar items={getMenu}></Navbar>
             <Routes>

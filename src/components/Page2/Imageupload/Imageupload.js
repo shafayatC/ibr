@@ -459,7 +459,8 @@ function Imageupload() {
               getSuggest.map(
                 (data, index) =>
                   index < 2 && (
-                    <button
+                    <button 
+                      key={index}
                       onClick={() =>
                         filterBysuggest(data.file.webkitRelativePath)
                       }

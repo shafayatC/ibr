@@ -91,11 +91,11 @@ const Leftsidebar = () => {
           <div className="w-40  hfull pb-4  overflow-y-auto shadow-2xl bg-black-shade">
             <div className="leftBarMenuWrap space-y-2 mt-16">
               {items.length > 0 &&
-                items.map((item) => (
-                  <>
+                items.map((item, index) => 
+                  <div  key={index}>
                     {item.name == "Folder" && (
                       <div
-                        key={item.id}
+                        key={index}
                         onClick={() =>
                           document.querySelector("#filepicker").click()
                         }
@@ -110,8 +110,8 @@ const Leftsidebar = () => {
 
                     {item.name == "File" && (
                       <div
-                        key={item.id}
-                        onClick={() =>
+                      key={index}
+                      onClick={() =>
                           document.querySelector("#singleImagePick").click()
                         }
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
@@ -125,8 +125,8 @@ const Leftsidebar = () => {
 
                     {item.name == "URL" && (
                       <div
-                        key={item.id}
-                        onClick={() => document.querySelector("#").click()}
+                      key={index}
+                      onClick={() => document.querySelector("#").click()}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
@@ -138,8 +138,8 @@ const Leftsidebar = () => {
 
                     {item.name == "FTP" && (
                       <div
-                        key={item.id}
-                        onClick={() => document.querySelector("#").click()}
+                      key={index}
+                      onClick={() => document.querySelector("#").click()}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
@@ -151,7 +151,7 @@ const Leftsidebar = () => {
 
                     {item.name == "AI/Manual" && (
                       <div
-                        key={item.id}
+                      key={index}
 
                         onClick={() =>
                           document.querySelector("#").click()
@@ -166,8 +166,8 @@ const Leftsidebar = () => {
                     )}
                     {item.name == "Subscription" && (
                       <div
-                        key={item.id}
-                        onClick={() =>
+                      key={index}
+                      onClick={() =>
                           document.querySelector("#updatePlan").click()
                         }
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
@@ -180,8 +180,8 @@ const Leftsidebar = () => {
                     )}
                     {item.name == "Offer/Coupon" && (
                       <div
-                        key={item.id}
-                        onClick={() => document.querySelector("#").click()}
+                      key={index}
+                      onClick={() => document.querySelector("#").click()}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
@@ -193,8 +193,8 @@ const Leftsidebar = () => {
 
                     {item.name == "Filter" && (
                       <div
-                        key={item.id}
-                        onClick={() => document.querySelector("#").click()}
+                      key={index}
+                      onClick={() => document.querySelector("#").click()}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
@@ -206,8 +206,8 @@ const Leftsidebar = () => {
 
                     {item.name == "Clear" && (
                       <div
-                        key={item.id}
-                        onClick={() =>
+                      key={index}
+                      onClick={() =>
                           document.querySelector("#clearData").click()
                         }
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
@@ -221,8 +221,8 @@ const Leftsidebar = () => {
                     
                     {item.name == "Cost Breakdown" && (
                       <Link
-                        key={item.id}
-                        to={item.url}
+                      key={index}
+                      to={item.url}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
@@ -231,8 +231,8 @@ const Leftsidebar = () => {
                         )}
                       </Link>
                     )}
-                  </>
-                ))}
+                  </div>
+                )}
             </div>
           </div>
         </aside>
