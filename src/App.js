@@ -35,6 +35,7 @@ function App() {
   const [getUserInfo, setUserInfo] = useState({});
   const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou");
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
+  const [getOrderMasterId, setOrderMasterId] = useState("");
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
 
 
@@ -53,7 +54,7 @@ function App() {
         setImageData
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl]}>
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <div className="App">
             <InitialDataLoad />

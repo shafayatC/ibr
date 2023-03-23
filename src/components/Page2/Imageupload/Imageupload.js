@@ -49,7 +49,7 @@ function Imageupload() {
     setUpdatePlan(true);
   };
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId,] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -223,6 +223,7 @@ function Imageupload() {
       .then((res) => res.json())
       .then((data) => {
         let order_id = data.results.order_master_info.order_id;
+        setOrderMasterId(order_id)
         console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
         fileInfo.map((img_file, index) => {
           const sequence_no= img_file.sequence_no; 
