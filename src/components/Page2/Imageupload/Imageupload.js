@@ -459,7 +459,8 @@ function Imageupload() {
               getSuggest.map(
                 (data, index) =>
                   index < 2 && (
-                    <button
+                    <button 
+                      key={index}
                       onClick={() =>
                         filterBysuggest(data.file.webkitRelativePath)
                       }
@@ -573,7 +574,7 @@ function Imageupload() {
                 //   src={processlogo}
                 //   className="bg-gray-shade w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
                 // />
-                <i class="fa-solid fa-arrows-spin  pt-1 text-center text-black text-4xl cursor-pointer font-bold"></i>
+                <i className="fa-solid fa-arrows-spin  pt-1 text-center text-black text-4xl cursor-pointer font-bold"></i>
                 :
                 // <img
                 //   src={processlogo}
@@ -582,7 +583,7 @@ function Imageupload() {
                 // />
                 <i
                   onClick={processImagesAi}
-                  class="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
+                  className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
               }
 
               <ToastContainer />
@@ -632,10 +633,10 @@ function Imageupload() {
             />
             <div className="flex mt-5 gap-8 z-20">
               <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="cursor-pointer text-black disabled:text-gray-200 ">
-                <i class="fa-solid fa-arrow-left text-4xl "></i>
+                <i className="fa-solid fa-arrow-left text-4xl "></i>
               </button>
               <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="cursor-pointer text-black  disabled:text-gray-200 ">
-                <i class="fa-solid fa-arrow-right text-4xl "></i>
+                <i className="fa-solid fa-arrow-right text-4xl "></i>
               </button>
             </div>
 

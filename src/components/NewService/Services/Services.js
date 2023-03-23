@@ -40,8 +40,7 @@ const Services = () => {
         className="container m-auto grid grid-cols-1 md:grid-cols-4 pt-[30px] md:pt-[50px] gap-12 md:gap-0"
       >
         {dataArray.map((data, index) => (
-          <>
-            <div className="serviceProductWrap">
+            <div key={index} className="serviceProductWrap">
               <div className="srvImage">
                 <img src={data.img} />
               </div>
@@ -50,7 +49,6 @@ const Services = () => {
                 <p className="text-center ">{data.des}</p>
               </div>
             </div>
-          </>
         ))}
       </div>
     </div>

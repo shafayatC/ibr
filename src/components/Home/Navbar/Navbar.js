@@ -69,11 +69,11 @@ const Navbar = ({ items }) => {
                 }}
                 className={
                   item.type == "sign_up"
-                    ? getUserInfo.status_code == 200
+                    ? Object.keys(getUserInfo).length > 0 
                       ? "hidden"
                       : " bg-theme-shade rounded"
                     : item.type == "sign_in"
-                    ? getUserInfo.status_code == 200 && "hidden"
+                    ?  Object.keys(getUserInfo).length > 0  && "hidden"
                     : ""
                 }
                 to={item.url}
