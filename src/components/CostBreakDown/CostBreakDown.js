@@ -190,7 +190,7 @@ const CostBreakDown = () => {
                         <p className="font-semibold text-sm">$9.00</p>
                     </div>
                 </div>
-                <div className="w-[600px] mx-auto mt-6 " >
+                <div className="w-[600px] fixed bottom-0 left-[50%]" style={{transform: 'translateX(-50%)'}} >
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-2"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
