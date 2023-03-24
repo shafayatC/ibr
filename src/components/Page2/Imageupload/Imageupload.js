@@ -15,6 +15,7 @@ import CouponCode from "../../CouponCode/CouponCode";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import ViewDwnld from "../../Page3/ViewDwnld";
+import ProccessImage from "./ProccessImage/ProccessImage";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -243,6 +244,34 @@ function Imageupload() {
       });
   };
 
+  const dataTransfer = async (formData) => {
+    console.log("formData");
+    //console.log(await formData);
+    Promise.all(formData).then(data => console.log(data))
+    try {
+      const response = await fetch(
+        "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
+        {
+          method: "POST",
+          body: formData /*
+          headers:{
+            'Authorization': 'bearer '+ getToken, 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }*/
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      data.status_code == 200 &&
+      setAfterBeforeImg((getAfterBeforeImg) => [
+        ...getAfterBeforeImg,
+        data.results,
+      ]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const dataTransferMyPython = async (data) => {
     let formData = new FormData();
 
@@ -306,34 +335,6 @@ function Imageupload() {
         });
     } else {
       console.log("have no data avaialble");
-    }
-  };
-
-  const dataTransfer = async (formData) => {
-    console.log("formData");
-    //console.log(await formData);
-    Promise.all(formData).then(data => console.log(data))
-    try {
-      const response = await fetch(
-        "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
-        {
-          method: "POST",
-          body: formData /*
-          headers:{
-            'Authorization': 'bearer '+ getToken, 
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }*/
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      data.status_code == 200 &&
-      setAfterBeforeImg((getAfterBeforeImg) => [
-        ...getAfterBeforeImg,
-        data.results,
-      ]);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -585,7 +586,6 @@ function Imageupload() {
                   className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
               }
 
-              <ToastContainer />
             </div>
             {/* Next Button */}
             <button
@@ -657,13 +657,18 @@ function Imageupload() {
         )}
 
         <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5 pr-3">
-          {
+          {/*
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <div key={index}>
                   <UpdatedImage imgData={data} key={index} callBackImgIndex={callBackImgIndex} />
               </div>
-            ))}
+            ))
+            */}
+            {
+               actionStatus == "process" &&
+              <ProccessImage/>
+            }
         </div>
         
         {getUpdatePlan && (
@@ -677,6 +682,7 @@ function Imageupload() {
         </div>
       </div>
       <ViewDwnld proccessImgIndex={getProccessImgIndex} />
+      <ToastContainer />
     </>
   );
 }
