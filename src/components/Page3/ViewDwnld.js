@@ -125,7 +125,6 @@ const ViewDwnld = ({ proccessImgIndex }) => {
               right: 0,
               bottom: 0,
               zIndex: 9,
-
               display: "flex",
               justifyContent: "center",
             }}
