@@ -133,7 +133,6 @@ const CostBreakDown = () => {
                             top: 50,
                             right: 20,
                             backgroundColor: "white",
-
                             padding: "8px 15px",
                         }}
                     // onClick={handleCloseClick}
