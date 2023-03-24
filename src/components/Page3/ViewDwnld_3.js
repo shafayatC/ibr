@@ -31,9 +31,9 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
-  const before =  getAfterBeforeImg[proccessImgIndex].output_urls[0].compressed_raw_image_public_url;
-  const after =  getAfterBeforeImg[proccessImgIndex].output_urls[0].default_compressed_output_public_url;
-  const isProcess = getAfterBeforeImg[proccessImgIndex].output_urls[0].is_ai_processed;
+  const before = typeof getCurrImage !== 'undefined' && getCurrImage.compressed_raw_image_public_url;
+  const after = typeof getCurrImage !== 'undefined' && getCurrImage.default_compressed_output_public_url;
+  const isProcess = typeof getCurrImage !== 'undefined' && getCurrImage.is_ai_processed;
 
   const checkServerData = () => {
     const imgFile = getAfterBeforeImg.find(fl => fl.output_urls[0].order_image_detail_sequence_no == proccessImgIndex)
@@ -110,7 +110,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
     typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && setImageVisibility(true)
     typeof proccessImgIndex !== 'undefined' && proccessImgIndex > 0 && checkServerData()
     console.log(proccessImgIndex)
-  }, []);
+  }, [proccessImgIndex, getCurrImage]);
 
   return (
     <>

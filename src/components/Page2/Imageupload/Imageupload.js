@@ -557,7 +557,7 @@ function Imageupload() {
           </>
         )}
 
-        {fileInfo.length > 0 && (
+        {fileInfo.length > 0 && actionStatus !== "process" &&(
           <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
             {/* Previous button */}
             <button
@@ -569,32 +569,13 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-              {actionStatus == "process" ?
-                // <img
-                //   src={processlogo}
-                //   className="bg-gray-shade w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-                // />
-                <i className="fa-solid fa-arrows-spin  pt-1 text-center text-black text-4xl cursor-pointer font-bold"></i>
-                :
-                // <img
-                //   src={processlogo}
-                //   onClick={processImagesAi}
-                //   className="bg-white hover:bg-blue-500 hover:text-white w-12 h-12 text-center text-black text-xs font-bold  rounded-full"
-                // />
                 <i
                   onClick={processImagesAi}
                   className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
-              }
-
             </div>
             {/* Next Button */}
             <button
-              disabled={
-                actionStatus == "process" ?
-                  currentPage === Math.ceil(getAfterBeforeImg.length / itemsPerPage)
-                  :
-                  currentPage === Math.ceil(fileInfo.length / itemsPerPage)
-              }
+              disabled={currentPage === Math.ceil(fileInfo.length / itemsPerPage)}
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={nextPage}
             >
@@ -656,7 +637,6 @@ function Imageupload() {
           </div>
         )}
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-5 pr-3">
           {/*
             actionStatus == "process" &&
             currentImages.map((data, index) => (
@@ -669,7 +649,6 @@ function Imageupload() {
                actionStatus == "process" &&
               <ProccessImage/>
             }
-        </div>
         
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
@@ -681,7 +660,6 @@ function Imageupload() {
           <CouponCode></CouponCode>
         </div>
       </div>
-      <ViewDwnld proccessImgIndex={getProccessImgIndex} />
       <ToastContainer />
     </>
   );
