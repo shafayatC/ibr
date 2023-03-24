@@ -107,18 +107,20 @@ const CostBreakDown = () => {
 
                 <div className="flex justify-end w-[700px]  mt-3 mx-auto gap-5">
                     <div>
-                        <p className="font-semibold text-sm">Total Charge </p> <hr></hr>
-                        <p className="font-semibold text-sm">Discount </p><hr></hr>
-                        <p className="font-semibold text-sm">Net Charge </p><hr></hr>
+                        <p className="font-semibold text-sm">Total Charge: </p> <hr></hr>
+                        <p className="font-semibold text-sm">Discount: </p><hr></hr>
+                        <p className="font-semibold text-sm">Net Charge: </p><hr></hr>
                     </div>
+                    {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
+                        <div className="mr-10">
 
-                    <div className="mr-10">
-
-                        <p className="font-semibold text-sm">$ 9.00</p>
-                        <p className="font-semibold text-sm">$ 0.00</p>
-                        <p className="font-semibold text-sm">$ 9.00</p>
-                    </div>
+                            <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
+                            <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
+                            <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
+                        </div>
+                    }
                 </div>
+
                 <div className="w-[700px] fixed bottom-0 left-[50%]" style={{ transform: 'translateX(-50%)' }} >
                     <hr className="mb-3"></hr>
                     <p className="text-xs text-center  mb-2"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
