@@ -18,6 +18,7 @@ import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
 import bg from '../../../img/Background-for-RA.png'; 
+import Loading_2 from "../../Loading/Loading_2";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +32,7 @@ function Imageupload() {
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
   const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+
   const [
     getMainFile,
     setMainFile,
@@ -48,7 +50,6 @@ function Imageupload() {
   const [getUpdatePlan, setUpdatePlan] = useState(false);
 
   const UpdatePlan = () => {
-    console.log("change me ");
     setUpdatePlan(true);
   };
 
@@ -137,7 +138,7 @@ function Imageupload() {
               );
 
               if (foundFile) {
-                console.log("The file already exists in the array.");
+               // console.log("The file already exists in the array.");
               } else {
                 const imageUrl = URL.createObjectURL(file);
                 const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
@@ -339,7 +340,7 @@ function Imageupload() {
   const dataTransfer = async (formData) => {
     console.log("formData");
     //console.log(await formData);
-    Promise.all(formData).then(data => console.log(data))
+   // Promise.all(formData).then(data => console.log(data))
     try {
       const response = await fetch(
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
@@ -354,6 +355,10 @@ function Imageupload() {
       );
       const data = await response.json();
       console.log(data);
+      console.log(typeof(3+1))
+      
+      setProccessImgIndex(getProccessImgIndex => getProccessImgIndex + 1);
+      console.log(getProccessImgIndex)
       data.status_code == 200 &&
         setAfterBeforeImg((getAfterBeforeImg) => [
           ...getAfterBeforeImg,
@@ -511,10 +516,6 @@ function Imageupload() {
     setUpdatePlan(bl);
   };
 
-  const callBackImgIndex = (imgInd) => {
-    setProccessImgIndex(imgInd)
-  }
-
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -525,6 +526,7 @@ function Imageupload() {
 
   return (
     <>
+    {console.log("getProccessImgIndex count : " +getProccessImgIndex + " file info length : " + fileInfo.length)}
       {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
@@ -595,6 +597,7 @@ function Imageupload() {
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <div>
+            { fileInfo.length > getProccessImgIndex && <Loading_2/> }
             {fileInfo.length !== getAfterBeforeImg.length && 
             <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
             </div>
@@ -612,18 +615,31 @@ function Imageupload() {
                     currentImages.length === 1 && "flex justify-center"
                   }
                 >
-                  <div
-                    className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                  { fileInfo.length > getProccessImgIndex ?  
+                   <div
+                    className={`img-container  bg-no-repeat img-bag
                      ${currentImages.length === 1
                         ? "h-[400px] justify-center"
                         : "img-bag"
                       }
                      `}
-                    onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
                     }}
-                  />
+                  /> : 
+                  <div
+                  className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                   ${currentImages.length === 1
+                      ? "h-[400px] justify-center"
+                      : "img-bag"
+                    }
+                   `}
+                  onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                  style={{
+                    backgroundImage: `url(${image.imageUrl})`,
+                  }}
+                />}
+                
 
                 </div>
               ))}
@@ -668,9 +684,13 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-              <i
-                onClick={processImagesAi}
-                className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
+            <button 
+            disabled={fileInfo.length > getProccessImgIndex}
+            onClick={processImagesAi} 
+            className="disabled:text-gray-800" >
+              <i 
+              className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${ fileInfo.length > getProccessImgIndex ? 'text-gray-600': 'text-white'}`}></i>
+            </button>
             </div>
             {/* Next Button */}
             <button
