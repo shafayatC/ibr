@@ -30,10 +30,10 @@ const SignIn = () => {
 
   const singInFunc = async () => {
 
-    var validRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (getMail.match(validRegex)) {
+      
       const signInData = {
         email: getMail,
         password: getPassword,

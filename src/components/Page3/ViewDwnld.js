@@ -31,8 +31,8 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
-  const before =  getAfterBeforeImg[proccessImgIndex].output_urls[0].compressed_raw_image_public_url;
-  const after =  getAfterBeforeImg[proccessImgIndex].output_urls[0].default_compressed_output_public_url;
+  const before = getAfterBeforeImg[proccessImgIndex].output_urls[0].compressed_raw_image_public_url;
+  const after = getAfterBeforeImg[proccessImgIndex].output_urls[0].default_compressed_output_public_url;
   const isProcess = getAfterBeforeImg[proccessImgIndex].output_urls[0].is_ai_processed;
 
   const checkServerData = () => {
@@ -91,18 +91,18 @@ const ViewDwnld = ({ proccessImgIndex }) => {
 
   const ordeImageServiceFunc = () => {
 
-    typeof getCurrImage.order_image_detail_id !== 'undefined' && 
-    fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getCurrImage.order_image_detail_id}`, {
-      headers: {
-        'Authorization': 'bearer ' + getToken,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-
-        data.status_code == 200 && setServiceMenu(data)
+    typeof getCurrImage.order_image_detail_id !== 'undefined' &&
+      fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getCurrImage.order_image_detail_id}`, {
+        headers: {
+          'Authorization': 'bearer ' + getToken,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       })
+        .then(res => res.json())
+        .then(data => {
+
+          data.status_code == 200 && setServiceMenu(data)
+        })
 
   }
   useEffect(() => {
@@ -119,6 +119,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
           <div
             className="bg-green-800"
             style={{
+
               position: "fixed",
               top: 0,
               left: 0,

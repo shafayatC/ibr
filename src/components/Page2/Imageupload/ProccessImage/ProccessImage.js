@@ -5,6 +5,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { FileContextManager, userContextManager } from '../../../../App';
 import CompareImage from '../../../CompareImage/CompareImage';
 import ViewDwnld from '../../../Page3/ViewDwnld';
+import ServiceMenu from '../../ServiceMenu/ServiceMenu';
 
 const ProccessImage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -47,12 +48,12 @@ const ProccessImage = () => {
         }
         */
     }
-    const handleCloseClick = () => { 
+    const handleCloseClick = () => {
         setImageVisibility(!isImageVisible)
-       // proccessImgIndex = 0;
-       // setImageVisibility(false);
+        // proccessImgIndex = 0;
+        // setImageVisibility(false);
         //document.body.style.overflow = "unset";
-      };
+    };
 
     const viewDownloadFunc = (imgInt) => {
         const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(imgInt);
@@ -160,7 +161,8 @@ const ProccessImage = () => {
                                     </div>
                                 </div>
                             </div>
-
+                            <ServiceMenu ImageIndex={getImgIndex}/>
+                            {/*
                             <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                                 <ul className="space-y-2">
                                     {Object.keys(getServicMenu).length > 0 &&
@@ -191,6 +193,8 @@ const ProccessImage = () => {
                                     Send
                                 </button>
                             </div>
+*/}
+
                         </div>
 
                         <button

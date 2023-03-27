@@ -13,6 +13,7 @@ import o from "../../NewService/Services/img/o.png";
 import control from "../../NewService/Services/img/control.png";
 
 import "./style.css";
+import Loading_2 from "../../Loading/Loading_2";
 
 const Home = () => {
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] =
@@ -50,6 +51,7 @@ const Home = () => {
                 )
             )}
             <div>
+
               <p className="mt-16 mb-6 text-white font-semibold text-4xl">
                 Add-On Services
               </p>

@@ -16,6 +16,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
+import ServiceMenu from "../ServiceMenu/ServiceMenu";
+import bg from '../../../img/Background-for-RA.png'; 
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +30,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
-  const [getProccessImgIndex, setProccessImgIndex ] = useState(0)
+  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
   const [
     getMainFile,
     setMainFile,
@@ -38,7 +40,7 @@ function Imageupload() {
     setAfterBeforeImg,
     getLockMenuBool,
     setLockMenuBool,
-    getImageData, 
+    getImageData,
     setImageData
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
@@ -95,38 +97,86 @@ function Imageupload() {
     setLoadProgress(0);
     setActionStatus("");
 
-    let i = 0;
-    for (const file of newFile) {
-      i++;
+    const myOrdre = {
+      menu_id: getMenuId,
+      service_type_id: getServiceTypeId,
+      subscription_plan_type_id: getSubscriptionPlanId
+    };
 
-      setLoadProgress(Math.round((100 / newFile.length) * i));
+    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
-      if (file.type == "image/jpeg" || file.type == "image/png") {
-        if (fileInfo.length > 0) {
-          // check if the images is already exits
-          const foundFile = fileInfo.find(
-            (fl) =>
-              fl.file.lastModified === file.lastModified &&
-              fl.file.name === file.name &&
-              fl.file.size === file.size &&
-              fl.file.type === file.type
-          );
+    fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'bearer ' + getToken
+      },
+      body: JSON.stringify(myOrdre),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let order_id = data.results.order_master_info.order_id;
+        setOrderMasterId(order_id)
+        console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
 
-          if (foundFile) {
-            console.log("The file already exists in the array.");
-          } else {
-            const imageUrl = URL.createObjectURL(file);
-            const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-            setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-            console.log("The file does not exist in the array.");
+        let i = 0;
+        for (const file of newFile) {
+          i++;
+
+         // setLoadProgress(Math.round((100 / newFile.length) * i));
+
+          if (file.type == "image/jpeg" || file.type == "image/png") {
+            if (fileInfo.length > 0) {
+              // check if the images is already exits
+              const foundFile = fileInfo.find(
+                (fl) =>
+                  fl.file.lastModified === file.lastModified &&
+                  fl.file.name === file.name &&
+                  fl.file.size === file.size &&
+                  fl.file.type === file.type
+              );
+
+              if (foundFile) {
+                console.log("The file already exists in the array.");
+              } else {
+                const imageUrl = URL.createObjectURL(file);
+                const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
+                setFileInfo((fileInfo) => [...fileInfo, fileObject]);
+
+                let data = new FormData();
+                data.append("order_master_id", order_id);
+                data.append("service_type_id", getServiceTypeId);
+                data.append("file", file);
+                data.append("file_relative_path", "filePath/example");
+                data.append("subscription_plan_type_id", getSubscriptionPlanId);
+                data.append("sequence_no", fileInfo.length + i);
+                dataTransfer(data);
+
+                console.log("The file does not exist in the array.");
+              }
+            } else {
+              const imageUrl = URL.createObjectURL(file);
+              const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
+              setFileInfo((fileInfo) => [...fileInfo, fileObject]);
+              
+              let data = new FormData();
+              data.append("order_master_id", order_id);
+              data.append("service_type_id", getServiceTypeId);
+              data.append("file", file);
+              data.append("file_relative_path", "filePath/example");
+              data.append("subscription_plan_type_id", getSubscriptionPlanId);
+              data.append("sequence_no", fileInfo.length + i);
+              dataTransfer(data);
+
+            }
           }
-        } else {
-          const imageUrl = URL.createObjectURL(file);
-          const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-          setFileInfo((fileInfo) => [...fileInfo, fileObject]);
         }
-      }
-    }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+
   };
 
   const uniqueIdGenerate = (length) => {
@@ -195,6 +245,48 @@ function Imageupload() {
     }
   };
 
+  const uploadImageProccess = () => {
+
+    const myOrdre = {
+      menu_id: getMenuId,
+      service_type_id: getServiceTypeId,
+      subscription_plan_type_id: getSubscriptionPlanId
+    };
+
+    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
+
+    fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'bearer ' + getToken
+      },
+      body: JSON.stringify(myOrdre),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let order_id = data.results.order_master_info.order_id;
+        setOrderMasterId(order_id)
+        console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
+        fileInfo.map((img_file, index) => {
+          const sequence_no = img_file.sequence_no;
+          const filePath = img_file.file.webkitRelativePath;
+          const imgType = getFileType(img_file.file);
+          console.log(sequence_no)
+          let data = new FormData();
+          data.append("order_master_id", order_id);
+          data.append("service_type_id", getServiceTypeId);
+          data.append("file", img_file.file);
+          data.append("file_relative_path", filePath);
+          data.append("subscription_plan_type_id", getSubscriptionPlanId);
+          data.append("sequence_no", sequence_no);
+          dataTransfer(data);
+        });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
   const processImagesAi = () => {
     toast.success("Items Process Successfully!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -209,14 +301,14 @@ function Imageupload() {
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-   // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
+    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        'Authorization': 'bearer '+ getToken
-       },
+        'Authorization': 'bearer ' + getToken
+      },
       body: JSON.stringify(myOrdre),
     })
       .then((res) => res.json())
@@ -225,7 +317,7 @@ function Imageupload() {
         setOrderMasterId(order_id)
         console.log("order_id : " + order_id + " service type id : " + getServiceTypeId);
         fileInfo.map((img_file, index) => {
-          const sequence_no= img_file.sequence_no; 
+          const sequence_no = img_file.sequence_no;
           const filePath = img_file.file.webkitRelativePath;
           const imgType = getFileType(img_file.file);
           console.log(sequence_no)
@@ -263,10 +355,10 @@ function Imageupload() {
       const data = await response.json();
       console.log(data);
       data.status_code == 200 &&
-      setAfterBeforeImg((getAfterBeforeImg) => [
-        ...getAfterBeforeImg,
-        data.results,
-      ]);
+        setAfterBeforeImg((getAfterBeforeImg) => [
+          ...getAfterBeforeImg,
+          data.results,
+        ]);
     } catch (error) {
       console.error(error);
     }
@@ -283,10 +375,10 @@ function Imageupload() {
       const response = await fetch("http://127.0.0.1:5000/upload", {
         method: "POST",
         body: formData,
-        headers:{
-          'Authorization': 'bearer '+ getToken, 
+        headers: {
+          'Authorization': 'bearer ' + getToken,
           'Content-Type': 'application/x-www-form-urlencoded'
-      }
+        }
       });
       const data = await response.json();
     } catch (error) {
@@ -312,10 +404,10 @@ function Imageupload() {
       fetch(api_url, {
         method: "POST",
         body: data,
-        headers:{
-          'Authorization': 'bearer '+ getToken, 
+        headers: {
+          'Authorization': 'bearer ' + getToken,
           'Content-Type': 'application/x-www-form-urlencoded'
-      }
+        }
       })
         .then((res) => res.json())
         .then((result) => {
@@ -419,16 +511,17 @@ function Imageupload() {
     setUpdatePlan(bl);
   };
 
-  const callBackImgIndex = (imgInd)=>{
+  const callBackImgIndex = (imgInd) => {
     setProccessImgIndex(imgInd)
   }
+
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
 
-    getAfterBeforeImg.length > 0 && setActionStatus("process")
-  }, []);
+   // getAfterBeforeImg.length > 0 && setActionStatus("process")
+  }, [getAfterBeforeImg]);
 
   return (
     <>
@@ -459,7 +552,7 @@ function Imageupload() {
               getSuggest.map(
                 (data, index) =>
                   index < 2 && (
-                    <button 
+                    <button
                       key={index}
                       onClick={() =>
                         filterBysuggest(data.file.webkitRelativePath)
@@ -501,12 +594,17 @@ function Imageupload() {
         <button className="hidden" id="clearData" onClick={clearData}></button>
 
         {fileInfo.length > 0 && actionStatus == "" && (
-          <>
+          <div>
+            {fileInfo.length !== getAfterBeforeImg.length && 
+            <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
+            </div>
+            }
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
                 } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
                 } gap-4 pt-5  pr-3`}
             >
+
               {currentImages.map((image, index) => (
                 <div
                   key={index}
@@ -526,10 +624,11 @@ function Imageupload() {
                       backgroundImage: `url(${image.imageUrl})`,
                     }}
                   />
+
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         {fileInfo.length > 0 && actionStatus == "filter" && (
@@ -557,7 +656,7 @@ function Imageupload() {
           </>
         )}
 
-        {fileInfo.length > 0 && actionStatus !== "process" &&(
+        {fileInfo.length > 0 && actionStatus !== "process" && (
           <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
             {/* Previous button */}
             <button
@@ -569,9 +668,9 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-                <i
-                  onClick={processImagesAi}
-                  className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
+              <i
+                onClick={processImagesAi}
+                className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
             </div>
             {/* Next Button */}
             <button
@@ -589,7 +688,69 @@ function Imageupload() {
           </div>
         )}
 
-        {showImage && (
+            {showImage &&
+                <div>
+                    <div
+                        style={{
+                            position: "fixed",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            zIndex: 9,
+                            display: "flex",
+                            justifyContent: "center",
+                            backgroundImage: `url(${bg})`
+                        }}
+                    >
+                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+                            <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
+                            <div className="  pt-12 pl-16 absolute ">
+                                <div className="w-[400px] h-[400px] border border-theme-shade  relative">
+                                <img className="h-full" src={fileInfo[getImgIndex].imageUrl}/>
+                                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
+                                </div>
+
+                                <div className="flex gap-4 justify-center">
+                                    <div>
+                                        <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
+                                            Download
+                                        </button>
+                                        <p className="text-sm text-center mt-1">
+                                            Preview Image 100/200
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
+                                            Download HD
+                                        </button>
+                                        <p className="text-sm text-center mt-1">
+                                            Full Image 2000/3000
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                          { getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex}/> }
+                        </div>
+
+                        <button
+                            className="bg-white w-10 h-10 border border-theme-shade rounded-full"
+                            style={{
+                                position: "absolute",
+                                top: 20,
+                                right: 20,
+                                backgroundColor: "white",
+                                border: "none",
+                                padding: "10px 15px",
+                            }}
+                            onClick={handleClose}
+                        >
+                            <i className="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        {/* showImage && (
           <div
             className="img-container"
             style={{
@@ -635,9 +796,9 @@ function Imageupload() {
               </button>
             </div>
           </div>
-        )}
+          )*/}
 
-          {/*
+        {/*
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <div key={index}>
@@ -645,11 +806,11 @@ function Imageupload() {
               </div>
             ))
             */}
-            {
-               actionStatus == "process" &&
-              <ProccessImage/>
-            }
-        
+        {
+          actionStatus == "process" &&
+          <ProccessImage />
+        }
+
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />

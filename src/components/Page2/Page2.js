@@ -1,4 +1,5 @@
 // import Navbar from "../Home/Navbar/Navbar";
+import Loading_2 from "../Loading/Loading_2";
 import Footer from "./Footer";
 import Imageupload from "./Imageupload/Imageupload";
 import Leftsidebar from "./Left-sidebar/Leftsidebar";
@@ -16,6 +17,7 @@ function Page2() {
 
         <div className="md:col-span-3 lg:col-span-7  leftSideBarWrap">
           <Imageupload />
+          <Loading_2></Loading_2>
           {/* <Footer /> */}
         </div>
         {/*<div className="leftSideBarWrap"><Rightsidebar /> </div> */}
