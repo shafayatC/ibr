@@ -17,7 +17,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
-import bg from '../../../img/Background-for-RA.png'; 
+import bg from '../../../img/Background-for-RA.png';
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -123,7 +123,7 @@ function Imageupload() {
         for (const file of newFile) {
           i++;
 
-         // setLoadProgress(Math.round((100 / newFile.length) * i));
+          // setLoadProgress(Math.round((100 / newFile.length) * i));
 
           if (file.type == "image/jpeg" || file.type == "image/png") {
             if (fileInfo.length > 0) {
@@ -158,7 +158,7 @@ function Imageupload() {
               const imageUrl = URL.createObjectURL(file);
               const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
               setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-              
+
               let data = new FormData();
               data.append("order_master_id", order_id);
               data.append("service_type_id", getServiceTypeId);
@@ -520,7 +520,7 @@ function Imageupload() {
       //  checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
 
-   // getAfterBeforeImg.length > 0 && setActionStatus("process")
+    // getAfterBeforeImg.length > 0 && setActionStatus("process")
   }, [getAfterBeforeImg]);
 
   return (
@@ -595,9 +595,9 @@ function Imageupload() {
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <div>
-            {fileInfo.length !== getAfterBeforeImg.length && 
-            <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
-            </div>
+            {fileInfo.length !== getAfterBeforeImg.length &&
+              <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
+              </div>
             }
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
@@ -688,68 +688,68 @@ function Imageupload() {
           </div>
         )}
 
-            {showImage &&
-                <div>
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 9,
-                            display: "flex",
-                            justifyContent: "center",
-                            backgroundImage: `url(${bg})`
-                        }}
-                    >
-                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
-                            <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
-                            <div className="  pt-12 pl-16 absolute ">
-                                <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                                <img className="h-full" src={fileInfo[getImgIndex].imageUrl}/>
-                                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
-                                </div>
+        {showImage &&
+          <div>
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 99,
+                display: "flex",
+                justifyContent: "center",
+                backgroundImage: `url(${bg})`
+              }}
+            >
+              <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+                <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
+                <div className="  pt-12 pl-16 absolute ">
+                  <div className="w-[400px] h-[400px] border border-theme-shade  relative">
+                    <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
+                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
+                  </div>
 
-                                <div className="flex gap-4 justify-center">
-                                    <div>
-                                        <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
-                                            Download
-                                        </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Preview Image 100/200
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
-                                            Download HD
-                                        </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Full Image 2000/3000
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                          { getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex}/> }
-                        </div>
-
-                        <button
-                            className="bg-white w-10 h-10 border border-theme-shade rounded-full"
-                            style={{
-                                position: "absolute",
-                                top: 20,
-                                right: 20,
-                                backgroundColor: "white",
-                                border: "none",
-                                padding: "10px 15px",
-                            }}
-                            onClick={handleClose}
-                        >
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
+                  <div className="flex gap-4 justify-center">
+                    <div>
+                      <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
+                        Download
+                      </button>
+                      <p className="text-sm text-center mt-1">
+                        Preview Image 100/200
+                      </p>
                     </div>
+                    <div>
+                      <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
+                        Download HD
+                      </button>
+                      <p className="text-sm text-center mt-1">
+                        Full Image 2000/3000
+                      </p>
+                    </div>
+                  </div>
                 </div>
-            }
+                {getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex} />}
+              </div>
+
+              <button
+                className="bg-white w-10 h-10 border border-theme-shade rounded-full"
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  right: 20,
+                  backgroundColor: "white",
+                  border: "none",
+                  padding: "10px 15px",
+                }}
+                onClick={handleClose}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        }
         {/* showImage && (
           <div
             className="img-container"
