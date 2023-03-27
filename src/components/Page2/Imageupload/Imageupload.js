@@ -17,6 +17,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
+import bg from '../../../img/Background-for-RA.png'; 
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -690,7 +691,6 @@ function Imageupload() {
             {showImage &&
                 <div>
                     <div
-                        className="bg-green-800"
                         style={{
                             position: "fixed",
                             top: 0,
@@ -700,6 +700,7 @@ function Imageupload() {
                             zIndex: 9,
                             display: "flex",
                             justifyContent: "center",
+                            backgroundImage: `url(${bg})`
                         }}
                     >
                         <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
