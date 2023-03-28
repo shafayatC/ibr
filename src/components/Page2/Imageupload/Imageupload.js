@@ -17,14 +17,15 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
-import bg from '../../../img/Background-for-RA.png'; 
+import bg from '../../../img/Background-for-RA.png';
 import Loading_2 from "../../Loading/Loading_2";
+import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
   const [imageShow, setImageShow] = useState([]);
   const [getImgIndex, setImgIndex] = useState();
-  const [actionStatus, setActionStatus] = useState("");
+ // const [actionStatus, setActionStatus] = useState("");
   const [LoadProgress, setLoadProgress] = useState(0);
   const [showImage, setShowImage] = useState(false);
   const [getOrderInfo, setOrderInfo] = useState({});
@@ -43,14 +44,20 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool,
     getImageData,
-    setImageData
+    setImageData,
+    actionStatus,
+    setActionStatus
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
+  const [getCostBreak, setCostBreak] = useState(false);
 
   const UpdatePlan = () => {
     setUpdatePlan(true);
+  };
+  const CostPlan = () => {
+    setCostBreak(true);
   };
 
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
@@ -138,7 +145,7 @@ function Imageupload() {
               );
 
               if (foundFile) {
-               // console.log("The file already exists in the array.");
+                // console.log("The file already exists in the array.");
               } else {
                 const imageUrl = URL.createObjectURL(file);
                 const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
@@ -296,13 +303,13 @@ function Imageupload() {
     setActionStatus("process");
     setLockMenuBool(true);
 
+    /*
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
@@ -335,12 +342,14 @@ function Imageupload() {
       .catch((error) => {
         console.error("Error:", error);
       });
+      */
+
   };
 
   const dataTransfer = async (formData) => {
     console.log("formData");
     //console.log(await formData);
-   // Promise.all(formData).then(data => console.log(data))
+    // Promise.all(formData).then(data => console.log(data))
     try {
       const response = await fetch(
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
@@ -355,8 +364,8 @@ function Imageupload() {
       );
       const data = await response.json();
       console.log(data);
-      console.log(typeof(3+1))
-      
+      console.log(typeof (3 + 1))
+
       setProccessImgIndex(getProccessImgIndex => getProccessImgIndex + 1);
       console.log(getProccessImgIndex)
       data.status_code == 200 &&
@@ -515,6 +524,9 @@ function Imageupload() {
   const upgradCallBack = (bl) => {
     setUpdatePlan(bl);
   };
+  const costCallBack = (bl) => {
+    setCostBreak(bl);
+  };
 
   useEffect(() => {
     setInterval(() => {
@@ -526,7 +538,7 @@ function Imageupload() {
 
   return (
     <>
-    {console.log("getProccessImgIndex count : " +getProccessImgIndex + " file info length : " + fileInfo.length)}
+      {console.log("getProccessImgIndex count : " + getProccessImgIndex + " file info length : " + fileInfo.length)}
       {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
@@ -584,7 +596,7 @@ function Imageupload() {
           id="singleImagePick"
           name="imageFile"
           className="hidden"
-          accept="image/*"
+          accept="image/jpeg, image/png"
           multiple
         />
         <button
@@ -592,16 +604,21 @@ function Imageupload() {
           id="updatePlan"
           onClick={UpdatePlan}
         ></button>
+        <button
+          className="hidden"
+          id="costPlan"
+          onClick={CostPlan}
+        ></button>
 
         <button className="hidden" id="clearData" onClick={clearData}></button>
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <div>
 
-            { fileInfo.length > getProccessImgIndex && <Loading_2/> }
-            {fileInfo.length !== getAfterBeforeImg.length && 
-            <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
-            </div>
+            {fileInfo.length > getProccessImgIndex && <Loading_2 />}
+            {fileInfo.length !== getAfterBeforeImg.length &&
+              <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
+              </div>
             }
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
@@ -616,31 +633,31 @@ function Imageupload() {
                     currentImages.length === 1 && "flex justify-center"
                   }
                 >
-                  { fileInfo.length > getProccessImgIndex ?  
-                   <div
-                    className={`img-container  bg-no-repeat img-bag
+                  {fileInfo.length > getProccessImgIndex ?
+                    <div
+                      className={`img-container  bg-no-repeat img-bag
                      ${currentImages.length === 1
-                        ? "h-[400px] justify-center"
-                        : "img-bag"
-                      }
+                          ? "h-[400px] justify-center"
+                          : "img-bag"
+                        }
                      `}
-                    style={{
-                      backgroundImage: `url(${image.imageUrl})`,
-                    }}
-                  /> : 
-                  <div
-                  className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                      style={{
+                        backgroundImage: `url(${image.imageUrl})`,
+                      }}
+                    /> :
+                    <div
+                      className={`img-container  bg-no-repeat  cursor-pointer img-bag
                    ${currentImages.length === 1
-                      ? "h-[400px] justify-center"
-                      : "img-bag"
-                    }
+                          ? "h-[400px] justify-center"
+                          : "img-bag"
+                        }
                    `}
-                  onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
-                  style={{
-                    backgroundImage: `url(${image.imageUrl})`,
-                  }}
-                />}
-                
+                      onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                      style={{
+                        backgroundImage: `url(${image.imageUrl})`,
+                      }}
+                    />}
+
 
                 </div>
               ))}
@@ -685,13 +702,13 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-            <button 
-            disabled={fileInfo.length > getProccessImgIndex}
-            onClick={processImagesAi} 
-            className="disabled:text-gray-800" >
-              <i 
-              className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${ fileInfo.length > getProccessImgIndex ? 'text-gray-600': 'text-white'}`}></i>
-            </button>
+              <button
+                disabled={fileInfo.length > getProccessImgIndex}
+                onClick={processImagesAi}
+                className="disabled:text-gray-800" >
+                <i
+                  className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${fileInfo.length > getProccessImgIndex ? 'text-gray-600' : 'text-white'}`}></i>
+              </button>
             </div>
             {/* Next Button */}
             <button
@@ -724,7 +741,7 @@ function Imageupload() {
                 backgroundImage: `url(${bg})`
               }}
             >
-              <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+              <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
                 <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
                 <div className="  pt-12 pl-16 absolute ">
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
@@ -754,6 +771,14 @@ function Imageupload() {
                 {getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex} />}
               </div>
 
+              <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
+                <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
+                  <i className="fa-solid fa-arrow-left text-4xl "></i>
+                </button>
+                <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
+                  <i className="fa-solid fa-arrow-right text-4xl "></i>
+                </button>
+              </div>
               <button
                 className="bg-white w-10 h-10 border border-theme-shade rounded-full"
                 style={{
@@ -835,6 +860,11 @@ function Imageupload() {
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
+          </div>
+        )}
+        {getCostBreak && (
+          <div className=" bg-white absolute top-0 left-0 w-full h-full z-50 ">
+            <CostBreakDown costCallBack={costCallBack} />
           </div>
         )}
 

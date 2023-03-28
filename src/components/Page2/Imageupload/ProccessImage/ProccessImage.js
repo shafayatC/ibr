@@ -78,6 +78,10 @@ const ProccessImage = () => {
         //  setImageData(imgData.sequence_no)
     }
 
+    const newIndexReturn =(img_ind)=>{
+
+        console.log("my index: " + img_ind)
+    }
     useEffect(() => {
         checkServerData()
     }, [getAfterBeforeImg, getImgIndex])
@@ -118,7 +122,6 @@ const ProccessImage = () => {
             {isImageVisible &&
                 <div>
                     <div
-
                         style={{
                             position: "fixed",
                             top: 0,
@@ -131,12 +134,10 @@ const ProccessImage = () => {
                             backgroundImage: `url(${bg})`
                         }}
                     >
-                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
                             <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
                             <div className="  pt-12 pl-16 absolute ">
                                 <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-
-
                                     <CompareImage
                                         topImage={getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
                                         bottomImage={getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
@@ -144,26 +145,44 @@ const ProccessImage = () => {
                                     <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{typeof getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no !== 'undefined' && getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
                                 </div>
 
-                                <div className="flex gap-4 justify-center">
+                                <div className="flex gap-2 border mt-2 pb-1 border-gray-400 justify-center">
                                     <div>
-                                        <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
-                                            Download
+                                        <button className="  w-20 py-1 hover:bg-white ">
+                                            <i class="fa-regular fa-share-from-square"></i>
                                         </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Preview Image 100/200
+                                        <p className="text-xs text-center ">
+                                            Share
                                         </p>
                                     </div>
                                     <div>
-                                        <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
-                                            Download HD
+                                        <button className=" w-20 py-1 hover:bg-white ">
+                                            <i class="fa-solid fa-download"></i>
                                         </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Full Image 2000/3000
+                                        <p className="text-xs text-center ">
+                                            HD
                                         </p>
                                     </div>
+                                    <div>
+                                        <button className="w-20 py-1 hover:bg-white ">
+                                            <i class="fa-solid fa-download"></i>
+                                        </button>
+                                        <p className="text-xs text-center ">
+                                            HD
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <button className=" w-20 py-1 hover:bg-white">
+                                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                                        </button>
+                                        <p className="text-xs text-center ">
+                                            Refresh
+                                        </p>
+                                    </div>
+
+
                                 </div>
                             </div>
-                            <ServiceMenu ImageIndex={getImgIndex} />
+                            <ServiceMenu ImageIndex={getImgIndex} newIndexReturn={newIndexReturn} />
                             {/*
                             <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                                 <ul className="space-y-2">
@@ -198,7 +217,15 @@ const ProccessImage = () => {
 */}
 
                         </div>
-
+              
+                        <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
+                            <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
+                            <i className="fa-solid fa-arrow-left text-4xl "></i>
+                            </button>
+                            <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
+                            <i className="fa-solid fa-arrow-right text-4xl "></i>
+                            </button>
+                        </div>
                         <button
                             className="bg-white w-10 h-10 border border-theme-shade rounded-full"
                             style={{

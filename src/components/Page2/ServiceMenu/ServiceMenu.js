@@ -118,7 +118,7 @@ const ServiceMenu = ({ ImageIndex }) => {
             </ul>
             <TextArea showCount maxLength={40} onChange={onChangeNotes} />
             <button onClick={updateImagerServiceFunc} className="bg-green-700 mt-3 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
-                Send
+                Done
             </button>
         </div>
 

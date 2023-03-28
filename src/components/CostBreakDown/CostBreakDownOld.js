@@ -8,7 +8,7 @@ const CostBreakDown = () => {
 
     return (
         <div className="container mx-auto">
-            <div >
+            <div className="bg-white">
                 <div className="bg-white flex flex-col items-center mt-10">  <img className="h-8 w-44 mb-2" src={logo} alt="" />
                     <p className="text-3xl font-bold">COST BREAKDOWN</p>
                 </div>
