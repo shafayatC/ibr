@@ -26,11 +26,9 @@ const Navbar = ({ items }) => {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
-            <img className="h-8 w-48 mr-2" src={logo} alt="" />
+            <img className="h-8 w-52 -ml-10" src={logo} alt="" />
           </span>
-          {/* <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
-            Retouch.ai
-          </span> */}
+
         </Link>
         <button
           type="button"
@@ -67,7 +65,7 @@ const Navbar = ({ items }) => {
                   marginLeft: "0px",
                   marginRight: "0px",
                 }}
-                className={ item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" : ""}
+                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" : ""}
                 to={item.url}
               >
                 <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">

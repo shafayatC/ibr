@@ -144,23 +144,41 @@ const ProccessImage = () => {
                                     <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{typeof getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no !== 'undefined' && getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
                                 </div>
 
-                                <div className="flex gap-4 justify-center">
+                                <div className="flex gap-2 border mt-2 pb-1 border-gray-400 justify-center">
                                     <div>
-                                        <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
-                                            Download
+                                        <button className="  w-20 py-1 hover:bg-white ">
+                                            <i class="fa-regular fa-share-from-square"></i>
                                         </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Preview Image 100/200
+                                        <p className="text-xs text-center ">
+                                            Share
                                         </p>
                                     </div>
                                     <div>
-                                        <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
-                                            Download HD
+                                        <button className=" w-20 py-1 hover:bg-white ">
+                                            <i class="fa-solid fa-download"></i>
                                         </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Full Image 2000/3000
+                                        <p className="text-xs text-center ">
+                                            HD
                                         </p>
                                     </div>
+                                    <div>
+                                        <button className="w-20 py-1 hover:bg-white ">
+                                            <i class="fa-solid fa-download"></i>
+                                        </button>
+                                        <p className="text-xs text-center ">
+                                            HD
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <button className=" w-20 py-1 hover:bg-white">
+                                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                                        </button>
+                                        <p className="text-xs text-center ">
+                                            Refresh
+                                        </p>
+                                    </div>
+
+
                                 </div>
                             </div>
                             <ServiceMenu ImageIndex={getImgIndex} />
