@@ -25,7 +25,7 @@ function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
   const [imageShow, setImageShow] = useState([]);
   const [getImgIndex, setImgIndex] = useState();
-  const [actionStatus, setActionStatus] = useState("");
+ // const [actionStatus, setActionStatus] = useState("");
   const [LoadProgress, setLoadProgress] = useState(0);
   const [showImage, setShowImage] = useState(false);
   const [getOrderInfo, setOrderInfo] = useState({});
@@ -44,7 +44,9 @@ function Imageupload() {
     getLockMenuBool,
     setLockMenuBool,
     getImageData,
-    setImageData
+    setImageData,
+    actionStatus,
+    setActionStatus
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -301,13 +303,13 @@ function Imageupload() {
     setActionStatus("process");
     setLockMenuBool(true);
 
+    /*
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
       method: "POST", // or 'PUT'
@@ -340,6 +342,8 @@ function Imageupload() {
       .catch((error) => {
         console.error("Error:", error);
       });
+      */
+
   };
 
   const dataTransfer = async (formData) => {
@@ -592,7 +596,7 @@ function Imageupload() {
           id="singleImagePick"
           name="imageFile"
           className="hidden"
-          accept="image/*"
+          accept="image/jpeg, image/png"
           multiple
         />
         <button
@@ -767,6 +771,14 @@ function Imageupload() {
                 {getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex} />}
               </div>
 
+              <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
+                <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
+                  <i className="fa-solid fa-arrow-left text-4xl "></i>
+                </button>
+                <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
+                  <i className="fa-solid fa-arrow-right text-4xl "></i>
+                </button>
+              </div>
               <button
                 className="bg-white w-10 h-10 border border-theme-shade rounded-full"
                 style={{
