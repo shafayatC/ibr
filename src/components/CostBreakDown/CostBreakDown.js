@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 
-const CostBreakDown = () => {
+const CostBreakDown = ({ costCallBack }) => {
+
+    const HandleClose = () => {
+        costCallBack(false);
+    };
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
 
@@ -112,7 +116,7 @@ const CostBreakDown = () => {
                         <p className="font-semibold text-sm">Net Charge: </p><hr></hr>
                     </div>
                     {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
-                        <div className="mr-10">
+                        <div className="mr-8">
 
                             <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
@@ -121,21 +125,21 @@ const CostBreakDown = () => {
                     }
                 </div>
 
-                <div className="w-[700px] fixed bottom-0 left-[50%]" style={{ transform: 'translateX(-50%)' }} >
+                <div className="w-[700px] bg-white fixed bottom-0 left-[55%]" style={{ transform: 'translateX(-50%)' }} >
                     <hr className="mb-3"></hr>
-                    <p className="text-xs text-center  mb-2"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
+                    <p className="text-xs text-center  mb-5"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
                 </div>
-                <Link to="/file-uploads">
+                <Link to="">
                     <button
                         className=" w-10 h-10 border border-theme-shade rounded-full"
                         style={{
                             position: "absolute",
-                            top: 50,
+                            top: 10,
                             right: 20,
                             backgroundColor: "white",
                             padding: "8px 15px",
                         }}
-                    // onClick={handleCloseClick}
+                        onClick={HandleClose}
                     >
                         <i className="fa-solid fa-xmark"></i>
                     </button>

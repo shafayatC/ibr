@@ -26,11 +26,9 @@ const Navbar = ({ items }) => {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
-            <img className="h-8 w-48 mr-2" src={logo} alt="" />
+            <img className="h-8 w-52 -ml-10" src={logo} alt="" />
           </span>
-          {/* <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
-            Retouch.ai
-          </span> */}
+
         </Link>
         <button
           type="button"

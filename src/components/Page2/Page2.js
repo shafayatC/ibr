@@ -14,7 +14,7 @@ function Page2() {
           <Leftsidebar />
         </div>
 
-        <div className="md:col-span-3 lg:col-span-7  leftSideBarWrap">
+        <div className="md:col-span-3 lg:col-span-7 relative leftSideBarWrap">
           <Imageupload />
           {/* <Footer /> */}
         </div>

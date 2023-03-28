@@ -19,6 +19,7 @@ import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
 import bg from '../../../img/Background-for-RA.png';
 import Loading_2 from "../../Loading/Loading_2";
+import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,9 +51,13 @@ function Imageupload() {
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
+  const [getCostBreak, setCostBreak] = useState(false);
 
   const UpdatePlan = () => {
     setUpdatePlan(true);
+  };
+  const CostPlan = () => {
+    setCostBreak(true);
   };
 
   const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
@@ -519,6 +524,9 @@ function Imageupload() {
   const upgradCallBack = (bl) => {
     setUpdatePlan(bl);
   };
+  const costCallBack = (bl) => {
+    setCostBreak(bl);
+  };
 
   useEffect(() => {
     setInterval(() => {
@@ -595,6 +603,11 @@ function Imageupload() {
           className="hidden"
           id="updatePlan"
           onClick={UpdatePlan}
+        ></button>
+        <button
+          className="hidden"
+          id="costPlan"
+          onClick={CostPlan}
         ></button>
 
         <button className="hidden" id="clearData" onClick={clearData}></button>
@@ -847,6 +860,11 @@ function Imageupload() {
         {getUpdatePlan && (
           <div className=" absolute top-0 left-96 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
+          </div>
+        )}
+        {getCostBreak && (
+          <div className=" bg-white absolute top-0 left-0 w-full h-full z-50 ">
+            <CostBreakDown costCallBack={costCallBack} />
           </div>
         )}
 
