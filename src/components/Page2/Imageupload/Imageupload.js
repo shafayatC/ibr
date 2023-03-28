@@ -18,6 +18,7 @@ import ViewDwnld from "../../Page3/ViewDwnld";
 import ProccessImage from "./ProccessImage/ProccessImage";
 import ServiceMenu from "../ServiceMenu/ServiceMenu";
 import bg from '../../../img/Background-for-RA.png'; 
+import Loading_2 from "../../Loading/Loading_2";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +32,7 @@ function Imageupload() {
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
   const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+
   const [
     getMainFile,
     setMainFile,
@@ -48,7 +50,6 @@ function Imageupload() {
   const [getUpdatePlan, setUpdatePlan] = useState(false);
 
   const UpdatePlan = () => {
-    console.log("change me ");
     setUpdatePlan(true);
   };
 
@@ -123,7 +124,7 @@ function Imageupload() {
         for (const file of newFile) {
           i++;
 
-         // setLoadProgress(Math.round((100 / newFile.length) * i));
+          // setLoadProgress(Math.round((100 / newFile.length) * i));
 
           if (file.type == "image/jpeg" || file.type == "image/png") {
             if (fileInfo.length > 0) {
@@ -137,7 +138,7 @@ function Imageupload() {
               );
 
               if (foundFile) {
-                console.log("The file already exists in the array.");
+               // console.log("The file already exists in the array.");
               } else {
                 const imageUrl = URL.createObjectURL(file);
                 const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
@@ -158,7 +159,7 @@ function Imageupload() {
               const imageUrl = URL.createObjectURL(file);
               const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
               setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-              
+
               let data = new FormData();
               data.append("order_master_id", order_id);
               data.append("service_type_id", getServiceTypeId);
@@ -339,7 +340,7 @@ function Imageupload() {
   const dataTransfer = async (formData) => {
     console.log("formData");
     //console.log(await formData);
-    Promise.all(formData).then(data => console.log(data))
+   // Promise.all(formData).then(data => console.log(data))
     try {
       const response = await fetch(
         "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
@@ -354,6 +355,10 @@ function Imageupload() {
       );
       const data = await response.json();
       console.log(data);
+      console.log(typeof(3+1))
+      
+      setProccessImgIndex(getProccessImgIndex => getProccessImgIndex + 1);
+      console.log(getProccessImgIndex)
       data.status_code == 200 &&
         setAfterBeforeImg((getAfterBeforeImg) => [
           ...getAfterBeforeImg,
@@ -511,20 +516,17 @@ function Imageupload() {
     setUpdatePlan(bl);
   };
 
-  const callBackImgIndex = (imgInd) => {
-    setProccessImgIndex(imgInd)
-  }
-
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
     }, 2000);
 
-   // getAfterBeforeImg.length > 0 && setActionStatus("process")
+    // getAfterBeforeImg.length > 0 && setActionStatus("process")
   }, [getAfterBeforeImg]);
 
   return (
     <>
+    {console.log("getProccessImgIndex count : " +getProccessImgIndex + " file info length : " + fileInfo.length)}
       {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
@@ -595,6 +597,8 @@ function Imageupload() {
 
         {fileInfo.length > 0 && actionStatus == "" && (
           <div>
+
+            { fileInfo.length > getProccessImgIndex && <Loading_2/> }
             {fileInfo.length !== getAfterBeforeImg.length && 
             <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
             </div>
@@ -612,18 +616,31 @@ function Imageupload() {
                     currentImages.length === 1 && "flex justify-center"
                   }
                 >
-                  <div
-                    className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                  { fileInfo.length > getProccessImgIndex ?  
+                   <div
+                    className={`img-container  bg-no-repeat img-bag
                      ${currentImages.length === 1
                         ? "h-[400px] justify-center"
                         : "img-bag"
                       }
                      `}
-                    onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
                     }}
-                  />
+                  /> : 
+                  <div
+                  className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                   ${currentImages.length === 1
+                      ? "h-[400px] justify-center"
+                      : "img-bag"
+                    }
+                   `}
+                  onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                  style={{
+                    backgroundImage: `url(${image.imageUrl})`,
+                  }}
+                />}
+                
 
                 </div>
               ))}
@@ -668,9 +685,13 @@ function Imageupload() {
             </button>
             {/* Process */}
             <div className="">
-              <i
-                onClick={processImagesAi}
-                className="fa-solid fa-arrows-spin pt-1 text-center text-white text-4xl cursor-pointer font-bold"></i>
+            <button 
+            disabled={fileInfo.length > getProccessImgIndex}
+            onClick={processImagesAi} 
+            className="disabled:text-gray-800" >
+              <i 
+              className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${ fileInfo.length > getProccessImgIndex ? 'text-gray-600': 'text-white'}`}></i>
+            </button>
             </div>
             {/* Next Button */}
             <button
@@ -688,68 +709,68 @@ function Imageupload() {
           </div>
         )}
 
-            {showImage &&
-                <div>
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 9,
-                            display: "flex",
-                            justifyContent: "center",
-                            backgroundImage: `url(${bg})`
-                        }}
-                    >
-                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
-                            <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
-                            <div className="  pt-12 pl-16 absolute ">
-                                <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                                <img className="h-full" src={fileInfo[getImgIndex].imageUrl}/>
-                                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
-                                </div>
+        {showImage &&
+          <div>
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 99,
+                display: "flex",
+                justifyContent: "center",
+                backgroundImage: `url(${bg})`
+              }}
+            >
+              <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+                <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
+                <div className="  pt-12 pl-16 absolute ">
+                  <div className="w-[400px] h-[400px] border border-theme-shade  relative">
+                    <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
+                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
+                  </div>
 
-                                <div className="flex gap-4 justify-center">
-                                    <div>
-                                        <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
-                                            Download
-                                        </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Preview Image 100/200
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
-                                            Download HD
-                                        </button>
-                                        <p className="text-sm text-center mt-1">
-                                            Full Image 2000/3000
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                          { getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex}/> }
-                        </div>
-
-                        <button
-                            className="bg-white w-10 h-10 border border-theme-shade rounded-full"
-                            style={{
-                                position: "absolute",
-                                top: 20,
-                                right: 20,
-                                backgroundColor: "white",
-                                border: "none",
-                                padding: "10px 15px",
-                            }}
-                            onClick={handleClose}
-                        >
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
+                  <div className="flex gap-4 justify-center">
+                    <div>
+                      <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
+                        Download
+                      </button>
+                      <p className="text-sm text-center mt-1">
+                        Preview Image 100/200
+                      </p>
                     </div>
+                    <div>
+                      <button className="bg-white text-black border-green-800 border  rounded-2xl mt-4 px-4 w-40 py-1 hover:bg-green-800 hover:text-white">
+                        Download HD
+                      </button>
+                      <p className="text-sm text-center mt-1">
+                        Full Image 2000/3000
+                      </p>
+                    </div>
+                  </div>
                 </div>
-            }
+                {getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex} />}
+              </div>
+
+              <button
+                className="bg-white w-10 h-10 border border-theme-shade rounded-full"
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  right: 20,
+                  backgroundColor: "white",
+                  border: "none",
+                  padding: "10px 15px",
+                }}
+                onClick={handleClose}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        }
         {/* showImage && (
           <div
             className="img-container"

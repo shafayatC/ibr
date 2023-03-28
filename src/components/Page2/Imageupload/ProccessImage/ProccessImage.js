@@ -6,6 +6,7 @@ import { FileContextManager, userContextManager } from '../../../../App';
 import CompareImage from '../../../CompareImage/CompareImage';
 import ViewDwnld from '../../../Page3/ViewDwnld';
 import ServiceMenu from '../../ServiceMenu/ServiceMenu';
+import bg from '../../../../img/Background-for-RA.png';
 
 const ProccessImage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -79,7 +80,7 @@ const ProccessImage = () => {
 
     useEffect(() => {
         checkServerData()
-    }, [getAfterBeforeImg])
+    }, [getAfterBeforeImg, getImgIndex])
 
     return (
         <div>
@@ -117,7 +118,7 @@ const ProccessImage = () => {
             {isImageVisible &&
                 <div>
                     <div
-                        className="bg-green-800"
+
                         style={{
                             position: "fixed",
                             top: 0,
@@ -127,6 +128,7 @@ const ProccessImage = () => {
                             zIndex: 9,
                             display: "flex",
                             justifyContent: "center",
+                            backgroundImage: `url(${bg})`
                         }}
                     >
                         <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
@@ -161,7 +163,7 @@ const ProccessImage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <ServiceMenu ImageIndex={getImgIndex}/>
+                            <ServiceMenu ImageIndex={getImgIndex} />
                             {/*
                             <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                                 <ul className="space-y-2">

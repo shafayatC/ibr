@@ -21,8 +21,6 @@ function CouponCode() {
         })
             .then(res => res.json())
             .then(data => setCouponDetails(data))
-
-
     }, []);
 
 
@@ -36,7 +34,6 @@ function CouponCode() {
                         <img className="h-12 w-60 mt-3" src={logo} alt="" />
                     </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-y-8 gap-x-5 mt-10">
-                        {console.log(getCouponDetails)}
                         {Object.keys(getCouponDetails).length > 0 && typeof getCouponDetails.results.promotions_list !== 'undefined' &&
                             getCouponDetails.results.promotions_list.map((data, index) => (
 

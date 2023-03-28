@@ -81,7 +81,6 @@ const ServiceMenu = ({ ImageIndex }) => {
             .then(data => {
                 data.status_code == 200 && setServiceMenu(data)
             })
-
         }
 
     }
@@ -95,7 +94,7 @@ const ServiceMenu = ({ ImageIndex }) => {
             {console.log(getNotes)}
             <ul className="space-y-2">
                 {Object.keys(getServicMenu).length > 0 &&
-                    getServicMenu.results.order_image_services.map((data, index) => (
+                    getServicMenu.results.order_image_service_list.map((data, index) => (
                         <li key={index}>
                             <div
                                 className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
