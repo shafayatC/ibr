@@ -78,6 +78,10 @@ const ProccessImage = () => {
         //  setImageData(imgData.sequence_no)
     }
 
+    const newIndexReturn =(img_ind)=>{
+
+        console.log("my index: " + img_ind)
+    }
     useEffect(() => {
         checkServerData()
     }, [getAfterBeforeImg, getImgIndex])
@@ -118,7 +122,6 @@ const ProccessImage = () => {
             {isImageVisible &&
                 <div>
                     <div
-
                         style={{
                             position: "fixed",
                             top: 0,
@@ -135,8 +138,6 @@ const ProccessImage = () => {
                             <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
                             <div className="  pt-12 pl-16 absolute ">
                                 <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-
-
                                     <CompareImage
                                         topImage={getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
                                         bottomImage={getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
@@ -163,7 +164,7 @@ const ProccessImage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <ServiceMenu ImageIndex={getImgIndex} />
+                            <ServiceMenu ImageIndex={getImgIndex} newIndexReturn={newIndexReturn} />
                             {/*
                             <div id="rightMenuBarWrap" className="hfull  w-52   bg-white   ">
                                 <ul className="space-y-2">
@@ -198,7 +199,15 @@ const ProccessImage = () => {
 */}
 
                         </div>
-
+              
+                        <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
+                            <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
+                            <i className="fa-solid fa-arrow-left text-4xl "></i>
+                            </button>
+                            <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
+                            <i className="fa-solid fa-arrow-right text-4xl "></i>
+                            </button>
+                        </div>
                         <button
                             className="bg-white w-10 h-10 border border-theme-shade rounded-full"
                             style={{

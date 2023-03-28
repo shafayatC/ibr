@@ -54,6 +54,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
     setImageVisibility(false);
     document.body.style.overflow = "unset";
   };
+  
   const { TextArea } = Input;
   const onChange = (e) => {
     console.log('Change:', e.target.value);

@@ -37,6 +37,7 @@ function App() {
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getOrderMasterId, setOrderMasterId] = useState("");
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
+  const [actionStatus, setActionStatus] = useState("");
 
 
   return (
@@ -51,7 +52,9 @@ function App() {
         getLockMenuBool,
         setLockMenuBool,
         getImageData,
-        setImageData
+        setImageData,
+        actionStatus,
+        setActionStatus
       ]}
     >
       <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId]}>
@@ -69,7 +72,7 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
               <Route path="/resetpassword/:token" element={<ResetPassword />} />
-              <Route path="/newuserconfirmation/:token" element={<SetPassword />} />
+              <Route path="/confirm-password/:token" element={<SetPassword />} />
               <Route path="/question-answer" element={<QuestionAnswer />} />
               <Route path="/upgrade-account" element={<UpgradeAccount />} />
               <Route path="/coupon-code" element={<CouponCode />} />
