@@ -134,7 +134,7 @@ const ProccessImage = () => {
                             backgroundImage: `url(${bg})`
                         }}
                     >
-                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg">
+                        <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
                             <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
                             <div className="  pt-12 pl-16 absolute ">
                                 <div className="w-[400px] h-[400px] border border-theme-shade  relative">
