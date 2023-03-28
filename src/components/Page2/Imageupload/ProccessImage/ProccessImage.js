@@ -80,7 +80,7 @@ const ProccessImage = () => {
 
     useEffect(() => {
         checkServerData()
-    }, [getAfterBeforeImg])
+    }, [getAfterBeforeImg, getImgIndex])
 
     return (
         <div>
