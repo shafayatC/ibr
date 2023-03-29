@@ -66,7 +66,7 @@ const Navbar = ({ items }) => {
                   marginLeft: "0px",
                   marginRight: "0px",
                 }}
-                className={ item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" :  item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ?  "hidden" : " " : ""}
+                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " " : ""}
                 to={item.url}
               >
                 <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
