@@ -119,42 +119,39 @@ const ServiceMenu = ({ ImageIndex }) => {
         orderImageDetail()
     }, [ImageIndex])
     return (
-        <>
-            <p className="bg-theme-shade text-white absolute top-10 left-0 font-semibold py-1 px-7 rounded-r-3xl">{getImagePrice}</p>
 
-            <div id="rightMenuBarWrap" className="  w-52   bg-white">
-                {console.log(getServicMenu)}
-                {console.log(getNotes)}
-                <ul className="space-y-2">
-                    {Object.keys(getServicMenu).length > 0 &&
-                        getServicMenu.results.order_image_service_list.map((data, index) => (
-                            <li key={index}>
-                                <div
-                                    className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
+        <div id="rightMenuBarWrap" className="  w-52   bg-white">
+            {console.log(getServicMenu)}
+            {console.log(getNotes)}
+            <ul className="space-y-2">
+                {Object.keys(getServicMenu).length > 0 &&
+                    getServicMenu.results.order_image_service_list.map((data, index) => (
+                        <li key={index}>
+                            <div
+                                className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={data.is_checked}
+                                    id={"check_" + index}
+                                    onChange={(e) => updateImagerServiceFunc(e, data.service_item_id)}
+                                    className=" checked:bg-orange-400 checked:border-orange-400"
+                                />
+                                <label
+                                    htmlFor={"check_" + index}
+                                    className="ml-3"
                                 >
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={data.is_checked}
-                                        id={"check_" + index}
-                                        onChange={(e) => updateImagerServiceFunc(e, data.service_item_id)}
-                                        className=" checked:bg-orange-400 checked:border-orange-400"
-                                    />
-                                    <label
-                                        htmlFor={"check_" + index}
-                                        className="ml-3"
-                                    >
-                                        {data.name}
-                                    </label>
-                                </div>
-                            </li>
-                        ))}
-                </ul>
-                <TextArea className='mb-5' showCount maxLength={40} onChange={onChangeNotes} />
-                <button className="bg-green-700  font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
-                    Done
-                </button>
-            </div>
-        </>
+                                    {data.name}
+                                </label>
+                            </div>
+                        </li>
+                    ))}
+            </ul>
+            <TextArea className='mb-5' showCount maxLength={40} onChange={onChangeNotes} />
+            <button className="bg-green-700  font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+                Done
+            </button>
+        </div>
 
     );
 };

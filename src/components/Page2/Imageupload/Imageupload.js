@@ -20,6 +20,7 @@ import ServiceMenu from "../ServiceMenu/ServiceMenu";
 import bg from '../../../img/Background-for-RA.png';
 import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
+import Page2 from "../Page2";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -539,7 +540,7 @@ function Imageupload() {
   }, [getAfterBeforeImg]);
 
   return (
-    <>
+    <Page2>
       {console.log("getProccessImgIndex count : " + getProccessImgIndex + " file info length : " + fileInfo.length)}
       {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
@@ -745,6 +746,7 @@ function Imageupload() {
             >
               <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
 
+
                 <p className=" text-black absolute top-2 left-32 font-semibold text-lg">Retouch your photo by using the services mentioned</p>
                 <p className="bg-teal-500 text-white absolute top-12 right-0 font-semibold py-1 px-7 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
@@ -894,7 +896,7 @@ function Imageupload() {
         </div>
       </div>
       <ToastContainer />
-    </>
+    </Page2>
   );
 }
 
