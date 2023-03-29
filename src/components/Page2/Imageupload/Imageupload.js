@@ -744,7 +744,7 @@ function Imageupload() {
               }}
             >
               <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
-                <p className="bg-theme-shade text-white absolute top-10 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
+
                 <p className=" text-black absolute top-2 left-32 font-semibold text-lg">Retouch your photo by using the services mentioned</p>
                 <p className="bg-teal-500 text-white absolute top-12 right-0 font-semibold py-1 px-7 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
@@ -884,7 +884,7 @@ function Imageupload() {
           </div>
         )}
         {getCostBreak && (
-          <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-50 ">
+          <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-[999]">
             <CostBreakDown costCallBack={costCallBack} />
           </div>
         )}
