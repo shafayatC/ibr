@@ -3,6 +3,7 @@ import offer from "../CouponCode/img/coupon_2.jpg"
 import logo from "../../images/logo.png"
 import { userContextManager } from "../../App";
 import { Link } from "react-router-dom";
+import Page2 from "../Page2/Page2";
 
 function CouponCode() {
 
@@ -25,20 +26,20 @@ function CouponCode() {
 
 
     return (
-        <>
-            <div className="container mx-auto">
+        <Page2>
+            <div className="container mx-auto ">
 
-                <div>
+                <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
                     <div className="flex justify-center mb-10">
                         <h2 className="text-4xl mt-4 text-green-700 font-semibold">PROMO CODE |</h2>
                         <img className="h-12 w-60 mt-3" src={logo} alt="" />
                     </div>
-                    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-y-8 gap-x-5 mt-10">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 mx-10 justify-items-center mt-10">
                         {Object.keys(getCouponDetails).length > 0 && typeof getCouponDetails.results.promotions_list !== 'undefined' &&
                             getCouponDetails.results.promotions_list.map((data, index) => (
 
                                 <div className="">
-                                    <div className="card p-2  border border-green-400  bg-white shadow-xl">
+                                    <div className=" card p-2 border border-green-400  bg-white shadow-xl">
                                         <img className="" src={offer} alt="" />
 
                                         <div className="card-body ml-2">
@@ -62,7 +63,7 @@ function CouponCode() {
                         className=" w-10 h-10 border border-theme-shade rounded-full"
                         style={{
                             position: "absolute",
-                            top: 60,
+                            top: 20,
                             right: 20,
                             backgroundColor: "white",
 
@@ -74,7 +75,7 @@ function CouponCode() {
                     </button>
                 </Link>
             </div>
-        </>
+        </Page2>
     );
 }
 export default CouponCode;

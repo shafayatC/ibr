@@ -40,6 +40,7 @@ function App() {
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
   const [actionStatus, setActionStatus] = useState("");
   const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  const [getCostDetails, setCostDetails] = useState({})
 
 
   return (
@@ -61,7 +62,7 @@ function App() {
         setProccessImgIndex
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId]}>
+      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <div className="App">
             <InitialDataLoad />

@@ -2,6 +2,7 @@ import { Input } from 'antd';
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { FileContextManager, userContextManager } from '../../../App';
+import './service.css';
 
 const ServiceMenu = ({ ImageIndex }) => {
 
@@ -120,40 +121,45 @@ const ServiceMenu = ({ ImageIndex }) => {
     }, [ImageIndex])
     return (
         <>
-            <p className="bg-theme-shade text-white absolute top-10 left-0 font-semibold py-1 px-7 rounded-r-3xl">{getImagePrice}</p>
-        <div id="rightMenuBarWrap" className="  w-52   bg-white">
-            {console.log(getServicMenu)}
-            {console.log(getNotes)}
-            <ul className="space-y-2">
-                {Object.keys(getServicMenu).length > 0 &&
-                    getServicMenu.results.order_image_service_list.map((data, index) => (
-                        <li key={index}>
-                            <div
-                                className="flex items-center p-2  text-xs font-normal hover:border-r-2 rounded-l-3xl bg-green-700 hover:border-r-white text-white mb-2 cursor-pointer"
-                            >
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={data.is_checked}
-                                    id={"check_" + index}
-                                    onChange={(e) => updateImagerServiceFunc(e, data.service_item_id)}
-                                    className=" checked:bg-orange-400 checked:border-orange-400"
-                                />
-                                <label
-                                    htmlFor={"check_" + index}
-                                    className="ml-3"
+            <p className="bg-red-500 text-white text-xs absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
+            <div id="rightMenuBarWrap" className="  w-60   bg-white">
+                {console.log(getServicMenu)}
+                {console.log(getNotes)}
+                <ul className="space-y-2">
+                    {Object.keys(getServicMenu).length > 0 &&
+                        getServicMenu.results.order_image_service_list.map((data, index) => (
+                            <li key={index}>
+                                <div
+                                    className="flex items-center border border-teal-600 px-4 py-2 text-xs font-normal rounded-lg  bg-white  text-black mb-2 cursor-pointer"
                                 >
-                                    {data.name}
-                                </label>
-                            </div>
-                        </li>
-                    ))}
-            </ul>
-            <TextArea className='mb-5' showCount maxLength={40} onChange={onChangeNotes} />
-            <button className="bg-green-700  font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
-                Done
-            </button>
-        </div>
+
+                                    <input
+                                        type="checkbox"
+                                        defaultChecked={data.is_checked}
+                                        id={"check_" + index}
+                                        onChange={(e) => updateImagerServiceFunc(e, data.service_item_id)}
+                                        className=" checked:bg-teal-500 rounded-full  "
+                                    />
+                                    <label
+                                        htmlFor={"check_" + index}
+                                        className="ml-3 text-sm"
+                                    >
+                                        {data.name}
+                                        <p className='text-xs'>Hello from Retouched</p>
+
+                                    </label>
+                                </div>
+                            </li>
+                        ))}
+                </ul>
+                {/* <TextArea className='mb-5' showCount maxLength={40} onChange={onChangeNotes} /> */}
+                {/* <button className="bg-green-700 text-sm font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+                    Done
+                </button> */}
+            </div>
+
         </>
+
     );
 };
 

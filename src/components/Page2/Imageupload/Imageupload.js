@@ -21,6 +21,7 @@ import bg from '../../../img/Background-for-RA.png';
 import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
+import TotalBill from "./TotalBill";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +34,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
+  const [getTotalPrice, setTotalPrice] = useState();
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
 
   const [
@@ -63,7 +65,7 @@ function Imageupload() {
     setCostBreak(true);
   };
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -501,6 +503,7 @@ function Imageupload() {
 
   const handleClose = () => {
     setShowImage(false);
+    totalPriceFunc()
   };
 
   const nextPage = () => {
@@ -519,9 +522,35 @@ function Imageupload() {
 
   const deletImage = (dlImage) => {
     console.log(dlImage);
-    setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+
+    const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(fileInfo[getImgIndex].sequence_no);
+
+    console.log(getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id)
+    const delateInfo = {
+      "id": getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id,
+      "is_deleted": true
+    }
+    
+    ImageIndex > -1 &&
+      fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'bearer ' + getToken
+        },
+        body: JSON.stringify(delateInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+          setAfterBeforeImg(getAfterBeforeImg.filter(fl => fl.output_urls[0].order_image_detail_sequence_no !== fileInfo[getImgIndex].sequence_no))
+          setProccessImgIndex(getProccessImgIndex - 1)
+          handleClose();
+
+        })
+
     //setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
-    handleClose();
   };
 
   const upgradCallBack = (bl) => {
@@ -530,6 +559,22 @@ function Imageupload() {
   const costCallBack = (bl) => {
     setCostBreak(bl);
   };
+
+  const totalPriceFunc = () => {
+
+    fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+      headers: {
+        'Authorization': 'bearer ' + getToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setTotalPrice(data.results.order_master_charge_breakdown[0].total_charge);
+      })
+  }
+
 
   useEffect(() => {
     setInterval(() => {
@@ -722,9 +767,13 @@ function Imageupload() {
               <i className="fa-solid fa-arrow-right ml-4"></i>
             </button>
             {/* Image/total count */}
+
+
+
             <div className="text-white ml-60 text-sm mt-2">
               <p>Image Count : {fileInfo.length}</p>
-              <p>Total Bill :</p>
+
+              <p>Total Bill : {fileInfo.length == getProccessImgIndex && <TotalBill totalPrice={getTotalPrice} />}</p>
             </div>
           </div>
         )}
@@ -744,14 +793,16 @@ function Imageupload() {
                 backgroundImage: `url(${bg})`
               }}
             >
-              <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
-                <p className=" text-black absolute top-2 left-32 font-semibold text-lg">Retouch your photo by using the services mentioned</p>
-                <p className="bg-teal-500 text-white absolute top-12 right-0 font-semibold py-1 px-7 rounded-l-3xl">Choose Your Services</p>
+              <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50">
+
+
+                <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>
+                <p className="bg-teal-500 text-white absolute top-1 right-0 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
 
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                     <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
-                    <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
+                    <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
                   </div>
 
                   {/* <div className="flex gap-4 justify-center">
@@ -883,15 +934,15 @@ function Imageupload() {
             <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
-        {getCostBreak && (
-          <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-50 ">
+        {/* {getCostBreak && (
+          <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-[999]">
             <CostBreakDown costCallBack={costCallBack} />
           </div>
-        )}
+        )} */}
 
-        <div className="hidden">
+        {/* <div className="hidden">
           <CouponCode></CouponCode>
-        </div>
+        </div> */}
       </div>
       <ToastContainer />
     </Page2>
