@@ -1,10 +1,8 @@
 #rightMenuBarWrap {
   /* padding: 0px; */
-  top:18%;
+  top:8%;
   right: 0;
   position: absolute;
   padding-right: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
 }
