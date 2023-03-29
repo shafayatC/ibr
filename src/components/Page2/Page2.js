@@ -5,17 +5,18 @@ import Leftsidebar from "./Left-sidebar/Leftsidebar";
 import Rightsidebar from "./Right-sidebar/Rightsidebar";
 import "./style.css";
 
-function Page2() {
+function Page2({children}) {
   return (
     <div className="Page2 bg-gray-shade">
       {/* <Navbar /> */}
       <div className="pageContent_wrap grid grid-cols-1 md:grid-cols-5 lg:grid-cols-8 gap-1">
         <div className="leftSideBarWrap">
+          
           <Leftsidebar />
         </div>
 
         <div className="md:col-span-3 lg:col-span-7 relative leftSideBarWrap">
-          <Imageupload />
+             {children}
           {/* <Footer /> */}
         </div>
         {/*<div className="leftSideBarWrap"><Rightsidebar /> </div> */}

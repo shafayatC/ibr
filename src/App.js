@@ -18,6 +18,7 @@ import InitialDataLoad from "./components/InitialDataLoad/InitialDataLoad";
 import CouponCode from "./components/CouponCode/CouponCode";
 import CompareImage from "./components/CompareImage/CompareImage";
 import CostBreakDown from "./components/CostBreakDown/CostBreakDown";
+import Imageupload from "./components/Page2/Imageupload/Imageupload";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -69,7 +70,7 @@ function App() {
               {/* <Route path="/" element={<Navigation />} /> */}
               <Route path="/" element={<Home />} />
               <Route path="/price" element={<PriceCard />} />
-              <Route path="/file-uploads" element={<Page2 />} />
+              <Route path="/file-uploads" element={<Imageupload />} />
               <Route path="/processed-img" element={<Page3 />} />
               <Route path="/log-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
