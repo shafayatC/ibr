@@ -793,7 +793,7 @@ function Imageupload() {
                 backgroundImage: `url(${bg})`
               }}
             >
-              <div className="h-[550px] w-[800px] bg-white mt-10 relative rounded-md z-50">
+              <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50">
 
 
                 <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>

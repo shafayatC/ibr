@@ -121,7 +121,7 @@ const ServiceMenu = ({ ImageIndex }) => {
     }, [ImageIndex])
     return (
         <>
-            <p className="bg-red-500 text-white text-xs absolute top-1 left-0 font-bold py-2  px-2 rounded-r-full ">{getImagePrice}</p>
+            <p className="bg-red-500 text-white text-xs absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
             <div id="rightMenuBarWrap" className="  w-60   bg-white">
                 {console.log(getServicMenu)}
                 {console.log(getNotes)}
