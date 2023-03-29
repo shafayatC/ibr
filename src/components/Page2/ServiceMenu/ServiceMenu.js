@@ -119,7 +119,8 @@ const ServiceMenu = ({ ImageIndex }) => {
         orderImageDetail()
     }, [ImageIndex])
     return (
-
+        <>
+            <p className="bg-theme-shade text-white absolute top-10 left-0 font-semibold py-1 px-7 rounded-r-3xl">{getImagePrice}</p>
         <div id="rightMenuBarWrap" className="  w-52   bg-white">
             {console.log(getServicMenu)}
             {console.log(getNotes)}
@@ -152,7 +153,7 @@ const ServiceMenu = ({ ImageIndex }) => {
                 Done
             </button>
         </div>
-
+        </>
     );
 };
 
