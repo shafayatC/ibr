@@ -32,7 +32,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
-  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
 
   const [
     getMainFile,
@@ -46,7 +46,9 @@ function Imageupload() {
     getImageData,
     setImageData,
     actionStatus,
-    setActionStatus
+    setActionStatus,
+    getProccessImgIndex,
+    setProccessImgIndex
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -746,6 +748,7 @@ function Imageupload() {
                 <p className=" text-black absolute top-2 left-32 font-semibold text-lg">Retouch your photo by using the services mentioned</p>
                 <p className="bg-teal-500 text-white absolute top-12 right-0 font-semibold py-1 px-7 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
+
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                     <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
                     <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
