@@ -9,22 +9,22 @@ const CostBreakDown = ({ costCallBack }) => {
         costCallBack(false);
     };
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
+    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
 
-    const [getCostDetails, setCostDetails] = useState([])
+    // const [getCostDetails, setCostDetails] = useState({})
 
+    const constDetailFunc = () => {
+        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+            headers: {
+                'Authorization': 'bearer ' + getToken,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(res => res.json())
+            .then(data => setCostDetails(data))
+    }
     useEffect(() => {
-        getOrderMasterId.length > 0 &&
-            fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
-                headers: {
-                    'Authorization': 'bearer ' + getToken,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => res.json())
-                .then(data => setCostDetails(data))
-
-
+        getOrderMasterId.length > 0 && constDetailFunc()
     }, [getOrderMasterId]);
 
 

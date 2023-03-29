@@ -21,6 +21,7 @@ import bg from '../../../img/Background-for-RA.png';
 import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
+import TotalBill from "./TotalBill";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +34,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
+  const [getTotalPrice, setTotalPrice] = useState();
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
 
   const [
@@ -63,7 +65,7 @@ function Imageupload() {
     setCostBreak(true);
   };
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
 
   const itemsPerPage = 8;
 
@@ -501,6 +503,7 @@ function Imageupload() {
 
   const handleClose = () => {
     setShowImage(false);
+    totalPriceFunc()
   };
 
   const nextPage = () => {
@@ -519,9 +522,35 @@ function Imageupload() {
 
   const deletImage = (dlImage) => {
     console.log(dlImage);
-    setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+
+    const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(fileInfo[getImgIndex].sequence_no);
+
+    console.log(getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id)
+    const delateInfo = {
+      "id": getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id,
+      "is_deleted": true
+    }
+    
+    ImageIndex > -1 &&
+      fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'bearer ' + getToken
+        },
+        body: JSON.stringify(delateInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+          setAfterBeforeImg(getAfterBeforeImg.filter(fl => fl.output_urls[0].order_image_detail_sequence_no !== fileInfo[getImgIndex].sequence_no))
+          setProccessImgIndex(getProccessImgIndex - 1)
+          handleClose();
+
+        })
+
     //setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
-    handleClose();
   };
 
   const upgradCallBack = (bl) => {
@@ -530,6 +559,22 @@ function Imageupload() {
   const costCallBack = (bl) => {
     setCostBreak(bl);
   };
+
+  const totalPriceFunc = () => {
+
+    fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+      headers: {
+        'Authorization': 'bearer ' + getToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setTotalPrice(data.results.order_master_charge_breakdown[0].total_charge);
+      })
+  }
+
 
   useEffect(() => {
     setInterval(() => {
@@ -722,9 +767,13 @@ function Imageupload() {
               <i className="fa-solid fa-arrow-right ml-4"></i>
             </button>
             {/* Image/total count */}
+
+
+
             <div className="text-white ml-60 text-sm mt-2">
               <p>Image Count : {fileInfo.length}</p>
-              <p>Total Bill :</p>
+
+              <p>Total Bill : {fileInfo.length == getProccessImgIndex && <TotalBill totalPrice={getTotalPrice} />}</p>
             </div>
           </div>
         )}
