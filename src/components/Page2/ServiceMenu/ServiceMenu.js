@@ -6,9 +6,9 @@ import { FileContextManager, userContextManager } from '../../../App';
 const ServiceMenu = ({ ImageIndex }) => {
 
     const [getServicMenu, setServiceMenu] = useState({});
-    const [getImageDetail, setImageDetail] = useState({}); 
-    const [getServices, setServices] =  useState([]); 
-    const [getNotes, setNotes] =  useState(""); 
+    const [getImageDetail, setImageDetail] = useState({});
+    const [getServices, setServices] = useState([]);
+    const [getNotes, setNotes] = useState("");
 
     const [checked, setChecked] = useState(true);
     const [
@@ -26,18 +26,18 @@ const ServiceMenu = ({ ImageIndex }) => {
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const { TextArea } = Input;
 
-    const onChangeService=(e, data)=>{
-       //e.preventDefault(); 
-        if(e.target.checked){
-            setServices(getServices => [...getServices, data]); 
-        }else {
-            const removeService = getServices.filter(res => res !==data )
-            setServices(removeService); 
+    const onChangeService = (e, data) => {
+        //e.preventDefault(); 
+        if (e.target.checked) {
+            setServices(getServices => [...getServices, data]);
+        } else {
+            const removeService = getServices.filter(res => res !== data)
+            setServices(removeService);
         }
     }
 
-    const onChangeNotes =(e)=>{
-        setNotes(e.target.value); 
+    const onChangeNotes = (e) => {
+        setNotes(e.target.value);
     }
     const updateImagerServiceFunc = () => {
 
@@ -59,15 +59,15 @@ const ServiceMenu = ({ ImageIndex }) => {
                 body: JSON.stringify(serviceData),
             }
         )
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
     }
 
     const orderImageDetail = () => {
 
-        if(typeof getAfterBeforeImg[ImageIndex] !== 'undefined'){
+        if (typeof getAfterBeforeImg[ImageIndex] !== 'undefined') {
 
             setImageDetail(getAfterBeforeImg[ImageIndex].output_urls[0])
 
@@ -77,10 +77,10 @@ const ServiceMenu = ({ ImageIndex }) => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(res => res.json())
-            .then(data => {
-                data.status_code == 200 && setServiceMenu(data)
-            })
+                .then(res => res.json())
+                .then(data => {
+                    data.status_code == 200 && setServiceMenu(data)
+                })
         }
 
     }
@@ -89,7 +89,7 @@ const ServiceMenu = ({ ImageIndex }) => {
     }, [ImageIndex])
     return (
 
-        <div id="rightMenuBarWrap" className="hfull  w-52   bg-white">
+        <div id="rightMenuBarWrap" className="  w-52   bg-white">
             {console.log(getServicMenu)}
             {console.log(getNotes)}
             <ul className="space-y-2">
@@ -103,7 +103,7 @@ const ServiceMenu = ({ ImageIndex }) => {
                                     type="checkbox"
                                     defaultChecked={data.is_checked}
                                     id={"check_" + index}
-                                    onChange={(e)=>onChangeService(e, data.service_item_id)}
+                                    onChange={(e) => onChangeService(e, data.service_item_id)}
                                     className=" checked:bg-orange-400 checked:border-orange-400"
                                 />
                                 <label
@@ -116,8 +116,8 @@ const ServiceMenu = ({ ImageIndex }) => {
                         </li>
                     ))}
             </ul>
-            <TextArea showCount maxLength={40} onChange={onChangeNotes} />
-            <button onClick={updateImagerServiceFunc} className="bg-green-700 mt-3 font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
+            <TextArea className='mb-5' showCount maxLength={40} onChange={onChangeNotes} />
+            <button onClick={updateImagerServiceFunc} className="bg-green-700  font-semibold px-8 rounded-3xl hover:bg-white border border-green-700 hover:text-black py-1 text-white">
                 Done
             </button>
         </div>
