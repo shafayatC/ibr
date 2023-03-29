@@ -3,6 +3,7 @@ import offer from "../CouponCode/img/coupon_2.jpg"
 import logo from "../../images/logo.png"
 import { userContextManager } from "../../App";
 import { Link } from "react-router-dom";
+import Page2 from "../Page2/Page2";
 
 function CouponCode() {
 
@@ -25,10 +26,10 @@ function CouponCode() {
 
 
     return (
-        <>
+        <Page2>
             <div className="container mx-auto">
 
-                <div>
+                <div className="bg-white coupon">
                     <div className="flex justify-center mb-10">
                         <h2 className="text-4xl mt-4 text-green-700 font-semibold">PROMO CODE |</h2>
                         <img className="h-12 w-60 mt-3" src={logo} alt="" />
@@ -74,7 +75,7 @@ function CouponCode() {
                     </button>
                 </Link>
             </div>
-        </>
+        </Page2>
     );
 }
 export default CouponCode;
