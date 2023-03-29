@@ -32,7 +32,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
-  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
 
   const [
     getMainFile,
@@ -46,7 +46,9 @@ function Imageupload() {
     getImageData,
     setImageData,
     actionStatus,
-    setActionStatus
+    setActionStatus,
+    getProccessImgIndex,
+    setProccessImgIndex
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -742,14 +744,17 @@ function Imageupload() {
               }}
             >
               <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
-                <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
-                <div className="  pt-12 pl-16 absolute ">
+                <p className="bg-theme-shade text-white absolute top-10 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
+                <p className=" text-black absolute top-2 left-32 font-semibold text-lg">Retouch your photo by using the services mentioned</p>
+                <p className="bg-teal-500 text-white absolute top-12 right-0 font-semibold py-1 px-7 rounded-l-3xl">Choose Your Services</p>
+                <div className="  pt-20 pl-16 absolute ">
+
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                     <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
                     <p className="absolute top-0 right-0  bg-theme-shade px-3 text-xs py-1  rounded-l-3xl z-10">{fileInfo[getImgIndex].sequence_no}</p>
                   </div>
 
-                  <div className="flex gap-4 justify-center">
+                  {/* <div className="flex gap-4 justify-center">
                     <div>
                       <button className="bg-green-800 text-white rounded-2xl mt-4  px-4 w-40 py-1 hover:bg-white hover:text-black border border-green-800">
                         Download
@@ -766,20 +771,22 @@ function Imageupload() {
                         Full Image 2000/3000
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 {getAfterBeforeImg.length > 0 && getAfterBeforeImg.some(fl => fl.output_urls[0].order_image_detail_sequence_no == fileInfo[getImgIndex].sequence_no) && <ServiceMenu ImageIndex={getImgIndex} />}
               </div>
 
               <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
-                <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
-                  <i className="fa-solid fa-arrow-left text-4xl "></i>
+                <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
+                  <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
+                  {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
                 </button>
-                <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
-                  <i className="fa-solid fa-arrow-right text-4xl "></i>
+                <button disabled={getImgIndex == fileInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
+                  <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
+                  {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
                 </button>
               </div>
-              <button
+              {/* <button
                 className="bg-white w-10 h-10 border border-theme-shade rounded-full"
                 style={{
                   position: "absolute",
@@ -792,7 +799,21 @@ function Imageupload() {
                 onClick={handleClose}
               >
                 <i className="fa-solid fa-xmark"></i>
-              </button>
+              </button> */}
+              <div className="absolute right-4 top-4 flex gap-2">
+                <button
+                  onClick={() => deletImage(getImgIndex)}
+                  className="bg-white w-10 h-10 rounded-full border border-theme-shade"
+                >
+                  <i className="fa-regular fa-trash-can"></i>
+                </button>
+                <button
+                  onClick={handleClose}
+                  className="bg-white w-10 h-10 border border-theme-shade rounded-full"
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              </div>
             </div>
           </div>
         }
@@ -863,7 +884,7 @@ function Imageupload() {
           </div>
         )}
         {getCostBreak && (
-          <div className=" bg-white absolute top-0 left-0 w-full h-full z-50 ">
+          <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-50 ">
             <CostBreakDown costCallBack={costCallBack} />
           </div>
         )}
