@@ -32,7 +32,7 @@ function Imageupload() {
   const [getFilterText, setFilterText] = useState("");
   const [getSuggest, setSuggest] = useState([]);
   const [getSuggestBool, setSuggestBool] = useState(false);
-  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
 
   const [
     getMainFile,
@@ -46,7 +46,9 @@ function Imageupload() {
     getImageData,
     setImageData,
     actionStatus,
-    setActionStatus
+    setActionStatus,
+    getProccessImgIndex,
+    setProccessImgIndex
   ] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -742,7 +744,6 @@ function Imageupload() {
               }}
             >
               <div className="h-[540px] w-[800px] bg-white mt-10 relative rounded-lg z-50">
-                <p className="bg-theme-shade text-black absolute top-2 left-0 font-semibold py-1 px-7 rounded-r-3xl">Free</p>
                 <div className="  pt-12 pl-16 absolute ">
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                     <img className="h-full" src={fileInfo[getImgIndex].imageUrl} />
