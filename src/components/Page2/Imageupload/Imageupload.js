@@ -25,7 +25,7 @@ function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
   const [imageShow, setImageShow] = useState([]);
   const [getImgIndex, setImgIndex] = useState();
- // const [actionStatus, setActionStatus] = useState("");
+  // const [actionStatus, setActionStatus] = useState("");
   const [LoadProgress, setLoadProgress] = useState(0);
   const [showImage, setShowImage] = useState(false);
   const [getOrderInfo, setOrderInfo] = useState({});
@@ -623,7 +623,7 @@ function Imageupload() {
             <div
               className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
                 } lg:grid-cols-${fileInfo.length > 3 ? "4" : fileInfo.length
-                } gap-4 pt-5  pr-3`}
+                } gap-4 pt-5 ml-2  pr-3`}
             >
 
               {currentImages.map((image, index) => (
@@ -730,9 +730,9 @@ function Imageupload() {
           <div>
             <div
               style={{
-                position: "fixed",
+                position: "absolute",
                 top: 0,
-                left: 0,
+                left: -10,
                 right: 0,
                 bottom: 0,
                 zIndex: 99,
@@ -858,7 +858,7 @@ function Imageupload() {
         }
 
         {getUpdatePlan && (
-          <div className=" absolute top-0 left-96 ">
+          <div className=" absolute top-0 left-60 z-50 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
