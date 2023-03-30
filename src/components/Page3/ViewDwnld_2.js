@@ -14,8 +14,6 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
   const [getServicMenu, setServiceMenu] = useState({});
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl] =
-    useContext(OrderContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const [isImageVisible, setImageVisibility] = useState(false);
