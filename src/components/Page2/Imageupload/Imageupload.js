@@ -22,6 +22,7 @@ import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
+import { Link } from "react-router-dom";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -530,7 +531,7 @@ function Imageupload() {
       "id": getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id,
       "is_deleted": true
     }
-    
+
     ImageIndex > -1 &&
       fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
         method: "POST", // or 'PUT'
@@ -774,6 +775,11 @@ function Imageupload() {
               <p>Image Count : {fileInfo.length}</p>
 
               <p>Total Bill : {fileInfo.length == getProccessImgIndex && <TotalBill totalPrice={getTotalPrice} />}</p>
+            </div>
+            <div className="self-center ml-28">
+              <Link to="/cart">
+                <button className=" bg-teal-500 text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+              </Link>
             </div>
           </div>
         )}
