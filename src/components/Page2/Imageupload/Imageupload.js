@@ -708,8 +708,30 @@ function Imageupload() {
                     />}
 
 
+
                 </div>
               ))}
+              <div className="fixed bottom-16 flex justify-between w-[85%] ">
+                {/* Previous button */}
+                <div>
+                  <button
+                    disabled={currentPage === 1}
+                    className="cursor-pointer text-white disabled:text-gray-500"
+                    onClick={previousPage}
+                  >
+                    <i className="fa-solid text-2xl ml-3 fa-circle-chevron-left "></i>
+                  </button></div>
+                {/* Next Button */}
+                <div>
+                  <button
+                    disabled={currentPage === Math.ceil(fileInfo.length / itemsPerPage)}
+                    className="cursor-pointer text-white disabled:text-gray-500"
+                    onClick={nextPage}
+                  >
+                    <i className="fa-solid text-2xl fa-circle-chevron-right "></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -733,24 +755,26 @@ function Imageupload() {
                         }}
                       />
                     </div>
+
                   )
               )}
+
             </div>
           </>
         )}
 
         {fileInfo.length > 0 && actionStatus !== "process" && (
-          <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
+          <div className="flex fixed gap-6 bg-black-shade w-[300px] justify-center right-3 py-1 bottom-2 rounded-md">
             {/* Previous button */}
-            <button
+            {/* <button
               disabled={currentPage === 1}
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={previousPage}
             >
               <i className="fa-solid fa-arrow-left mr-4"></i>
-            </button>
+            </button> */}
             {/* Process */}
-            <div className="">
+            {/* <div className="">
               <button
                 disabled={fileInfo.length > getProccessImgIndex}
                 onClick={processImagesAi}
@@ -758,27 +782,27 @@ function Imageupload() {
                 <i
                   className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${fileInfo.length > getProccessImgIndex ? 'text-gray-600' : 'text-white'}`}></i>
               </button>
-            </div>
-            {/* Next Button */}
+            </div> */}
+            {/* Next Button
             <button
               disabled={currentPage === Math.ceil(fileInfo.length / itemsPerPage)}
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={nextPage}
             >
               <i className="fa-solid fa-arrow-right ml-4"></i>
-            </button>
+            </button> */}
             {/* Image/total count */}
 
 
 
-            <div className="text-white ml-60 text-sm mt-2">
+            <div className="text-white flex flex-col justify-center font-semibold text-sm ">
               <p>Image Count : {fileInfo.length}</p>
 
               <p>Total Bill : {fileInfo.length == getProccessImgIndex && <TotalBill totalPrice={getTotalPrice} />}</p>
             </div>
-            <div className="self-center ml-28">
+            <div className="self-center">
               <Link to="/cart">
-                <button className=" bg-teal-500 text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+                <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
               </Link>
             </div>
           </div>
@@ -803,7 +827,7 @@ function Imageupload() {
 
 
                 <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>
-                <p className="bg-teal-500 text-white absolute top-1 right-0 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
+                <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
 
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">

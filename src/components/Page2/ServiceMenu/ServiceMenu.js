@@ -121,8 +121,10 @@ const ServiceMenu = ({ ImageIndex }) => {
     }, [ImageIndex])
     return (
         <>
-            <p className="bg-red-500 text-white text-xs absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
-            <div id="rightMenuBarWrap" className="  w-60   bg-white">
+            <p className="bg-red-500 text-white text-xs  absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
+
+            <div id="rightMenuBarWrap" className="  w-64 flex flex-col justify-center  bg-white">
+
                 {console.log(getServicMenu)}
                 {console.log(getNotes)}
                 <ul className="space-y-2">
@@ -142,10 +144,10 @@ const ServiceMenu = ({ ImageIndex }) => {
                                     />
                                     <label
                                         htmlFor={"check_" + index}
-                                        className="ml-3 text-sm"
+                                        className="ml-3 text-sm font-semibold"
                                     >
                                         {data.name}
-                                        <p className='text-xs'>Hello from Retouched</p>
+                                        <p className='text-xs text-teal-600 font-normal'>{data.message}</p>
 
                                     </label>
                                 </div>
