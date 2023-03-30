@@ -8,7 +8,7 @@ const TotalBill = ({totalPrice}) => {
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getTotalPrice, setTotalPrice] = useState(); 
 
-    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
 
     const TotalPrice = () => {
 
