@@ -78,7 +78,7 @@ const ProccessImage = () => {
         //  setImageData(imgData.sequence_no)
     }
 
-    const newIndexReturn =(img_ind)=>{
+    const newIndexReturn = (img_ind) => {
 
         console.log("my index: " + img_ind)
     }
@@ -217,13 +217,13 @@ const ProccessImage = () => {
 */}
 
                         </div>
-              
+
                         <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
                             <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-52 cursor-pointer text-black disabled:text-gray-200 ">
-                            <i className="fa-solid fa-arrow-left text-4xl "></i>
+                                <i className="fa-solid fa-arrow-left text-4xl "></i>
                             </button>
                             <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-52 cursor-pointer text-black  disabled:text-gray-200 ">
-                            <i className="fa-solid fa-arrow-right text-4xl "></i>
+                                <i className="fa-solid fa-arrow-right text-4xl "></i>
                             </button>
                         </div>
                         <button
@@ -278,6 +278,9 @@ const ProccessImage = () => {
                 <div className="text-white ml-60 text-sm mt-2">
                     <p>Image Count : {fileInfo.length}</p>
                     <p>Total Bill :</p>
+                </div>
+                <div>
+                    <button>Checkout</button>
                 </div>
             </div>
         </div>
