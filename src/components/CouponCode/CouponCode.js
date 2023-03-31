@@ -40,6 +40,31 @@ function CouponCode() {
     }, []);
 
 
+    const getCouponFunc = (promoId) => {
+        { console.log(getToken) }
+        const promData = {
+            "promotions_settings_id": promoId
+        }
+        fetch(
+            "http://103.197.204.22:8007/api/2023-02/user-promotions",
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': 'bearer ' + getToken.token
+                },
+                body: JSON.stringify(promData),
+            }
+        ).then(res => res.json())
+            .then(data => { console.log(data) })
+    }
+
+
+
+
+
+
     return (
         <Page2>
             <div className="container mx-auto ">
@@ -67,7 +92,7 @@ function CouponCode() {
                                                 <p className="text-xs pt-2">2K Users use this today.</p>
                                                 {getUserInfo.status_code == 200 ?
                                                     <button
-
+                                                        onClick={() => getCouponFunc(data.id)}
 
                                                         className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
 
