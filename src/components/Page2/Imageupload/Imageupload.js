@@ -564,6 +564,8 @@ function Imageupload() {
     setCurrentPage(1);
     // orderInfoFunc();
     setLockMenuBool(false);
+    setTotalImage(0)
+    setProccessImgIndex(0)
   };
 
   const handleClose = () => {
@@ -928,12 +930,12 @@ function Imageupload() {
                 <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>
                 <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
-
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                     <img className="h-full" src={getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
                     <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex}</p>
                   </div>
                 </div>
+
                 {getAfterBeforeImg.length > 0 && <ServiceMenu ImageIndex={getImgIndex} />}
               </div>
 

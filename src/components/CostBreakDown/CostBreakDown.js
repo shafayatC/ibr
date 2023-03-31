@@ -46,7 +46,9 @@ const CostBreakDown = () => {
                                 <p className="font-semibold text-sm">Order Status: </p>
                                 <p className="font-semibold text-sm">Raw Image(s): </p>
                             </div>
-                            {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
+                            {Object.keys(getCostDetails).length > 0 &&
+                            typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' && 
+                            getCostDetails.results.order_master_charge_breakdown.length > 0 &&
                                 <div>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no}</p>

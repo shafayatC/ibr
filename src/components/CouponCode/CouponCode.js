@@ -10,6 +10,7 @@ import Page2 from "../Page2/Page2";
 
 function CouponCode() {
 
+
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => {
@@ -64,38 +65,47 @@ function CouponCode() {
 
                                             <div className="card-actions flex justify-between">
                                                 <p className="text-xs pt-2">2K Users use this today.</p>
-                                                <button
-                                                    onClick={openModal}
+                                                {getUserInfo.status_code == 200 ?
+                                                    <button
 
-                                                    className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
 
+                                                        className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
+
+                                                    :
+                                                    <button
+
+                                                        onClick={openModal}
+                                                        className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
+
+                                                }
                                             </div>
                                             <>
 
 
                                                 {isOpen && (
-                                                    <div className="fixed inset-0 z-50 top-28 ">
-                                                        <div className="flex  opacity-50 pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                                    <div className="fixed inset-0 z-50 top-48 ">
+                                                        <div className="flex  opacity-90 pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                                             <div
                                                                 className="fixed inset-0 "
                                                                 aria-hidden="true"
                                                                 onClick={closeModal}
                                                             >
+                                                                <div className="absolute inset-0 bg-gray-500 opacity-30"></div>
 
                                                             </div>
 
                                                             <div
-                                                                className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                                                                className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
                                                                 role="dialog"
                                                                 aria-modal="true"
                                                                 aria-labelledby="modal-headline"
                                                             >
-                                                                <div className="bg-white flex justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                                <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
                                                                     <div className="sm:flex sm:items-start">
 
-                                                                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                                        <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                                             <h3
-                                                                                className="text-lg leading-6 font-medium text-gray-900"
+                                                                                className="text-2xl leading-6 font-medium text-gray-900"
                                                                                 id="modal-headline"
                                                                             >
                                                                                 Please Login to your account
@@ -104,19 +114,19 @@ function CouponCode() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="bg-gray-50 py-4 flex justify-center ">
+                                                                <div className=" py-4 flex gap-4 justify-center ">
 
                                                                     <Link to="/log-in">
                                                                         <button
-                                                                            type="button"
-                                                                            className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-green-400 text-base font-medium text-white sm:mt-0 sm:w-auto sm:text-sm"
+
+                                                                            className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
                                                                         >
                                                                             Login
                                                                         </button>
                                                                     </Link>
                                                                     <button
 
-                                                                        className="text-white bg-red-500 font-semibold px-3  rounded-lg"
+                                                                        className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
                                                                         onClick={closeModal}
                                                                     >
                                                                         Cancel
@@ -152,7 +162,7 @@ function CouponCode() {
                     </button>
                 </Link>
             </div>
-        </Page2>
+        </Page2 >
     );
 }
 export default CouponCode;
