@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { OrderContextManager, userContextManager } from '../../App';
+import { menuContextManager, OrderContextManager, userContextManager } from '../../App';
 
 const InitialDataLoad = () => {
 
-    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId,  getModelBaseUrl, setModelBaseUrl] = useContext(OrderContextManager)
-    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+  const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
     const location = useLocation(); 
 
@@ -49,6 +51,8 @@ const InitialDataLoad = () => {
         );
       }
     
+
+
       useEffect(() => {
         defaultSettingFunc()
         menuFunc()

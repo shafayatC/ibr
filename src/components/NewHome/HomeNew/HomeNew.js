@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { OrderContextManager } from "../../../App";
+import { menuContextManager, OrderContextManager } from "../../../App";
 import Loading from "../../Loading/Loading";
 import Services from "../../NewService/Services/Services";
 import Service_2 from "../../NewService/Service_2";
@@ -16,8 +16,7 @@ import "./style.css";
 import Loading_2 from "../../Loading/Loading_2";
 
 const Home = () => {
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] =
-    useContext(OrderContextManager);
+  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
 
   return (
     <div id="home">

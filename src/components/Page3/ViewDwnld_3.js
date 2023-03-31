@@ -14,8 +14,6 @@ const ViewDwnld = ({ proccessImgIndex }) => {
   const [getServicMenu, setServiceMenu] = useState({});
   const [getCurrImage, setCurrImage] = useState({})
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl] =
-    useContext(OrderContextManager);
   const [
     getMainFile,
     setMainFile,

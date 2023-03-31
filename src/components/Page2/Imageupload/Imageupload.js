@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   FileContextManager,
+  menuContextManager,
   OrderContextManager,
   userContextManager,
 } from "../../../App";
@@ -66,7 +67,10 @@ function Imageupload() {
     setCostBreak(true);
   };
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+  
 
   const itemsPerPage = 8;
 

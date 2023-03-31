@@ -2,14 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
-import { FileContextManager, OrderContextManager, userContextManager } from "../../../App";
+import { FileContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../../App";
 import { Link } from "react-router-dom";
 
 const Leftsidebar = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-  const [id_of_menu, set_id_of_menu] = useState("");
   const [
     getMainFile,
     setMainFile,
@@ -21,19 +19,12 @@ const Leftsidebar = () => {
     setLockMenuBool,
   ] = useContext(FileContextManager);
 
-  const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const menuList = () => {
-    {/*    if (getMenuId.length > 0) {
-      set_id_of_menu(getMenuId);
-    } else {
-      getMenu.map((data) => data.type == "upload" && set_id_of_menu(data.id));
-    }
-  */}
 
-    fetch(
-      `http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
+    fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
       headers: {
         'Authorization': 'bearer ' + getToken,
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -44,7 +35,7 @@ const Leftsidebar = () => {
         (data) => {
           if (data.status_code == 200) {
             setIsLoaded(true);
-            setItems(data.results.side_bar_list);
+            setDashboardMenu(data.results.side_bar_list);
           }
         },
 
@@ -55,9 +46,10 @@ const Leftsidebar = () => {
         }
       );
   };
+
   useEffect(() => {
-    getMenuId.length > 0 && menuList();
-  }, [id_of_menu, getMenu]);
+   getDashboardMenu.length < 1 && menuList()
+  }, [getMenuId]);
 
   return (
     <>
@@ -91,8 +83,8 @@ const Leftsidebar = () => {
         >
           <div className="w-40  hfull pb-4  overflow-y-auto shadow-2xl bg-black-shade">
             <div className="leftBarMenuWrap space-y-2 mt-16">
-              {items.length > 0 &&
-                items.map((item, index) =>
+              {getDashboardMenu.length > 0 &&
+                getDashboardMenu.map((item, index) =>
                   <div key={index}>
                     {item.name == "Folder" && (
                       <div
