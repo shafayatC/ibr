@@ -279,9 +279,7 @@ const ProccessImage = () => {
                     <p>Image Count : {fileInfo.length}</p>
                     <p>Total Bill :</p>
                 </div>
-                <div>
-                    <button>Checkout</button>
-                </div>
+
             </div>
         </div>
     );
