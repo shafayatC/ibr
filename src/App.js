@@ -42,7 +42,8 @@ function App() {
   const [getOrderMasterId, setOrderMasterId] = useState("");
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
   const [actionStatus, setActionStatus] = useState("");
-  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  const [getTotalImage, setTotalImage] = useState(0);
+  const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
 
 
@@ -62,7 +63,9 @@ function App() {
         actionStatus,
         setActionStatus,
         getProccessImgIndex,
-        setProccessImgIndex
+        setProccessImgIndex,
+        getTotalImage,
+        setTotalImage
       ]}
     >
       <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails]}>

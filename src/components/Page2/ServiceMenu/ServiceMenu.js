@@ -126,7 +126,6 @@ const ServiceMenu = ({ ImageIndex }) => {
             <div id="rightMenuBarWrap" className="  w-64 flex flex-col justify-center  bg-white">
 
                 {console.log(getServicMenu)}
-                {console.log(getNotes)}
                 <ul className="space-y-2">
                     {Object.keys(getServicMenu).length > 0 &&
                         getServicMenu.results.order_image_service_list.map((data, index) => (
@@ -134,13 +133,13 @@ const ServiceMenu = ({ ImageIndex }) => {
                                 <div
                                     className="flex items-center border border-teal-600 px-4 py-2 text-xs font-normal rounded-lg  bg-white  text-black mb-2 cursor-pointer"
                                 >
-
                                     <input
                                         type="checkbox"
+                                        disabled={data.is_locked}
                                         defaultChecked={data.is_checked}
                                         id={"check_" + index}
                                         onChange={(e) => updateImagerServiceFunc(e, data.service_item_id)}
-                                        className=" checked:bg-teal-500 rounded-full  "
+                                        className=" checked:bg-teal-500 rounded-full disabled:bg-red-400 "
                                     />
                                     <label
                                         htmlFor={"check_" + index}

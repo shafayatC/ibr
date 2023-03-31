@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { OrderContextManager, userContextManager } from "../../App";
+import { menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
 // import { Steps } from 'antd';
@@ -8,7 +8,8 @@ import Page2 from "../Page2/Page2";
 const Cart = () => {
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
 
     // const [getCostDetails, setCostDetails] = useState({})
 
@@ -102,7 +103,6 @@ const Cart = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {console.log(getCostDetails)}
                                                 {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_detail_charge_breakdown !== 'undefined' &&
                                                     getCostDetails.results.order_detail_charge_breakdown.map((data, index) => (
 

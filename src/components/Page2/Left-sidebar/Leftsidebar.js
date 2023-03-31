@@ -24,6 +24,7 @@ const Leftsidebar = () => {
 
   const menuList = () => {
 
+    getMenuId.length > 0 &&
     fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
       headers: {
         'Authorization': 'bearer ' + getToken,
