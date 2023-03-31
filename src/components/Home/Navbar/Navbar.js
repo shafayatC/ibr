@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import imgTrain from "./img/train.svg";
 import logo from "../../../images/logo_2.png";
 import "./navbar.css";
-import { OrderContextManager, userContextManager } from "../../../App";
+import { menuContextManager, OrderContextManager, userContextManager } from "../../../App";
 
 const Navbar = ({ items }) => {
   //const [error, setError] = useState(null);
   // const [isLoaded, setIsLoaded] = useState(false);
   // const [items, setItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [getMenuId, setMenuId] = useContext(OrderContextManager);
+  const [getMenuId, setMenuId] = useContext(menuContextManager)
   const [getUserInfo, setUserInfo] = useContext(userContextManager);
 
   const handleToggle = () => {

@@ -19,10 +19,12 @@ import CouponCode from "./components/CouponCode/CouponCode";
 import CompareImage from "./components/CompareImage/CompareImage";
 import CostBreakDown from "./components/CostBreakDown/CostBreakDown";
 import Imageupload from "./components/Page2/Imageupload/Imageupload";
+import Cart from "./components/Cart/Cart";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
 export const userContextManager = createContext();
+export const menuContextManager = createContext();
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
@@ -33,13 +35,15 @@ function App() {
   const [getLockMenuBool, setLockMenuBool] = useState(false);
   const [getServiceTypeId, setServiceTypeId] = useState("")
   const [getMenu, setMenu] = useState([]);
+  const [getDashboardMenu, setDashboardMenu] = useState([])
   const [getUserInfo, setUserInfo] = useState({});
   const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou");
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getOrderMasterId, setOrderMasterId] = useState("");
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
   const [actionStatus, setActionStatus] = useState("");
-  const [getProccessImgIndex, setProccessImgIndex] = useState(0)
+  const [getTotalImage, setTotalImage] = useState(0);
+  const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
 
 
@@ -59,31 +63,36 @@ function App() {
         actionStatus,
         setActionStatus,
         getProccessImgIndex,
-        setProccessImgIndex
+        setProccessImgIndex,
+        getTotalImage,
+        setTotalImage
       ]}
     >
-      <OrderContextManager.Provider value={[getMenuId, setMenuId, getServiceTypeId, setServiceTypeId, getMenu, setMenu, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails]}>
+      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
-          <div className="App">
-            <InitialDataLoad />
-            <Navbar items={getMenu}></Navbar>
-            <Routes>
-              {/* <Route path="/" element={<Navigation />} /> */}
-              <Route path="/" element={<Home />} />
-              <Route path="/price" element={<PriceCard />} />
-              <Route path="/file-uploads" element={<Imageupload />} />
-              <Route path="/processed-img" element={<Page3 />} />
-              <Route path="/log-in" element={<SignIn />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
-              <Route path="/resetpassword/:token" element={<ResetPassword />} />
-              <Route path="/confirm-password/:token" element={<SetPassword />} />
-              <Route path="/question-answer" element={<QuestionAnswer />} />
-              <Route path="/upgrade-account" element={<UpgradeAccount />} />
-              <Route path="/coupon-code" element={<CouponCode />} />
-              <Route path="/cost-breakdown" element={<CostBreakDown />} />
-            </Routes>
-          </div>
+          <menuContextManager.Provider value={[getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu]}>
+            <div className="App">
+              <InitialDataLoad />
+              <Navbar items={getMenu}></Navbar>
+              <Routes>
+                {/* <Route path="/" element={<Navigation />} /> */}
+                <Route path="/" element={<Home />} />
+                <Route path="/price" element={<PriceCard />} />
+                <Route path="/file-uploads" element={<Imageupload />} />
+                <Route path="/processed-img" element={<Page3 />} />
+                <Route path="/log-in" element={<SignIn />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
+                <Route path="/resetpassword/:token" element={<ResetPassword />} />
+                <Route path="/confirm-password/:token" element={<SetPassword />} />
+                <Route path="/question-answer" element={<QuestionAnswer />} />
+                <Route path="/upgrade-account" element={<UpgradeAccount />} />
+                <Route path="/coupon-code" element={<CouponCode />} />
+                <Route path="/cost-breakdown" element={<CostBreakDown />} />
+              <Route path="/cart" element={<Cart />} />
+              </Routes>
+            </div>
+          </menuContextManager.Provider>
         </userContextManager.Provider>
       </OrderContextManager.Provider>
     </FileContextManager.Provider>

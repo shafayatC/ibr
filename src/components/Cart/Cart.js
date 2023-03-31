@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
+// import { Steps } from 'antd';
 
-const CostBreakDown = () => {
+const Cart = () => {
 
-    // const HandleClose = () => {
-    //     costCallBack(false);
-    // };
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
     const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+
     // const [getCostDetails, setCostDetails] = useState({})
 
     const constDetailFunc = () => {
@@ -22,59 +21,73 @@ const CostBreakDown = () => {
             }
         })
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setCostDetails(data)})
+            .then(data => setCostDetails(data))
     }
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
     }, [getOrderMasterId]);
 
 
+
+
+
     return (
-
         <Page2>
-            <div className="container mx-auto ">
-                <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
-                    <div className="bg-white flex flex-col items-center mt-2">  <img className="h-6 w-32 " src={logo} alt="" />
-                        <p className="text-xl font-bold">COST BREAKDOWN</p>
-                    </div>
-                    <div className="flex justify-center mx-auto mt-2 gap-36 border-black border py-1 w-[700px] ">
-                        <div className="flex justify-between gap-5">
-                            <div><p className="font-semibold text-sm">Date:</p>
-                                <p className="font-semibold text-sm">Order No: </p>
-                                <p className="font-semibold text-sm">Order Status: </p>
-                                <p className="font-semibold text-sm">Raw Image(s): </p>
-                            </div>
-                            {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
-                                <div>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_status}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no_of_images}</p>
-
-                                </div>
-                            }
-
-                        </div>
-                        <div className="flex justify-between gap-5">
-                            <div>
-                                <p className="font-semibold text-sm">Service Type: </p>
-                                <p className="font-semibold text-sm">Subscription: </p>
-                                <p className="font-semibold text-sm">Payment Status: </p>
-                            </div>
-                            {Object.keys(getCostDetails).length > 0 &&
-                                <div>
-
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_service_type}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_subcription_plan_type}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_payment_status}</p>
-                                </div>
-                            }
-                        </div>
+            <div className="container mx-auto">
+                <div className="bg-white absolute top-0 left-0  w-full h-full">
+                    {/* <div className="bg-white flex flex-col items-center mt-2">  <img className="h-8 w-44 mb-2" src={logo} alt="" />
+                        <p className="text-3xl font-bold">CART</p>
+                    </div> */}
+                    <div className="flex justify-center mb-5">
+                        <h2 className="text-4xl mt-4 text-green-700 font-semibold">CART |</h2>
+                        <img className="h-12 w-60 mt-3" src={logo} alt="" />
                     </div>
 
-                    <div className=" w-[700px] mx-auto mt-2 ">
+                    <div className="w-[600px] mx-auto mt-5">
+                        <div>
+                            <h2 className="sr-only">Steps</h2>
+
+                            <div
+                                className="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg after:bg-gray-100"
+                            >
+                                <ol
+                                    className="relative z-10 flex justify-between text-sm font-medium text-gray-500"
+                                >
+                                    <li className="flex items-center gap-2 bg-white p-2">
+                                        <span
+                                            className="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px] font-bold leading-6"
+                                        >
+                                            1
+                                        </span>
+
+                                        <span className="hidden sm:block"> Details </span>
+                                    </li>
+
+                                    <li className="flex items-center gap-2 bg-white p-2">
+                                        <span
+                                            className="h-6 w-6 rounded-full bg-green-400 text-center text-[10px] font-bold leading-6 text-white"
+                                        >
+                                            2
+                                        </span>
+
+                                        <span className="hidden sm:block"> Address </span>
+                                    </li>
+
+                                    <li className="flex items-center gap-2 bg-white p-2">
+                                        <span
+                                            className="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px] font-bold leading-6"
+                                        >
+                                            3
+                                        </span>
+
+                                        <span className="hidden sm:block"> Payment </span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className=" w-[600px] mx-auto mt-12 ">
                         <div className="flex flex-col">
                             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div className="inline-block min-w-full py-0 sm:px-6 lg:px-8">
@@ -111,14 +124,14 @@ const CostBreakDown = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end w-[700px]  mt-3 mx-auto gap-5">
+                    <div className="flex justify-end w-[600px]  mt-3 mx-auto gap-5">
                         <div>
                             <p className="font-semibold text-sm">Total Charge: </p> <hr></hr>
                             <p className="font-semibold text-sm">Discount: </p><hr></hr>
                             <p className="font-semibold text-sm">Net Charge: </p><hr></hr>
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
-                            <div className="mr-8">
+                            <div className="mr-4">
 
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
@@ -127,21 +140,30 @@ const CostBreakDown = () => {
                         }
                     </div>
 
-                    <div className="w-[700px] bg-white fixed bottom-0 left-[55%]" style={{ transform: 'translateX(-50%)' }} >
-                        <hr className="mb-3"></hr>
-                        <p className="text-xs text-center  mb-5"> <span className="font-bold">Address:</span> 2nd Floor, Navana DH Tower, Plot:06, Panthapath, Dhaka, Bangladesh   <span className="font-bold">Phone:</span> 02-55013583   <span className="font-bold">Email:</span> info@retouched.ai</p>
-                    </div>
+
+
+
+                    <button className="bg-teal-500 text-white mx-auto rounded-md absolute bottom-5 hover:bg-green-400 left-10 p-2 w-[160px]">
+                        <p className="flex items-center gap-3"><i class="text-xl fa-solid fa-gift"></i>
+                            <span className="text-sm  font-semibold"> Apply a voucher</span></p>
+                    </button>
+
+
+
+
+
                     <Link to="/file-uploads">
                         <button
                             className=" w-10 h-10 border border-theme-shade rounded-full"
                             style={{
                                 position: "absolute",
-                                top: 10,
+                                top: 20,
                                 right: 20,
                                 backgroundColor: "white",
+
                                 padding: "8px 15px",
                             }}
-                        // onClick={HandleClose}
+                        // onClick={handleCloseClick}
                         >
                             <i className="fa-solid fa-xmark"></i>
                         </button>
@@ -149,8 +171,8 @@ const CostBreakDown = () => {
 
                 </div>
 
-            </div >
+            </div>
         </Page2>
     )
 }
-export default CostBreakDown;
+export default Cart;
