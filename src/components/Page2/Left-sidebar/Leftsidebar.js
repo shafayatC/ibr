@@ -218,7 +218,7 @@ const Leftsidebar = () => {
                       </div>
                     )}
 
-                    {item.name == "Cost Breakdown" && (
+                    {item.name == "Cost Breakdown" && getAfterBeforeImg.length > 0 &&(
                       <Link
                         to={"/cost-breakdown"}
 

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FileContextManager, userContextManager } from '../../../App';
 import './service.css';
 
-const ServiceMenu = ({ ImageIndex }) => {
+const ServiceMenu = ({ imageFile }) => {
 
     const [getServicMenu, setServiceMenu] = useState({});
     const [getImageDetail, setImageDetail] = useState({});
@@ -41,6 +41,7 @@ const ServiceMenu = ({ ImageIndex }) => {
     const onChangeNotes = (e) => {
         setNotes(e.target.value);
     }
+
     const updateImagerServiceFunc = (e, data) => {
 
         /*
@@ -79,11 +80,11 @@ const ServiceMenu = ({ ImageIndex }) => {
 
     const orderImageDetail = () => {
 
-        if (typeof getAfterBeforeImg[ImageIndex] !== 'undefined') {
+        if (typeof imageFile !== 'undefined') {
 
-            setImageDetail(getAfterBeforeImg[ImageIndex].output_urls[0])
+            setImageDetail(imageFile.output_urls[0])
 
-            fetch(`http://103.197.204.22:8007/api/2023-02/order-detail-info-by-id?order_image_detail_id=${getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id}`, {
+            fetch(`http://103.197.204.22:8007/api/2023-02/order-detail-info-by-id?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
                 headers: {
                     'Authorization': 'bearer ' + getToken,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -99,7 +100,7 @@ const ServiceMenu = ({ ImageIndex }) => {
                 })
 
 
-            fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id}`, {
+            fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
                 headers: {
                     'Authorization': 'bearer ' + getToken,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -118,7 +119,8 @@ const ServiceMenu = ({ ImageIndex }) => {
         setServiceMenu({})
         setOrderImageInfo({})
         orderImageDetail()
-    }, [ImageIndex])
+    }, [imageFile])
+    
     return (
         <>
             <p className="bg-red-500 text-white text-xs  absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
