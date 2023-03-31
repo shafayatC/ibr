@@ -1,8 +1,11 @@
 #rightMenuBarWrap {
   /* padding: 0px; */
-  top:8%;
   right: 0;
   position: absolute;
   padding-right: 10px;
+  top: 10%;
+  height: 80%;
+  
+  
 
 }
