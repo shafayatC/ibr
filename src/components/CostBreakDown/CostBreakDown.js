@@ -22,7 +22,9 @@ const CostBreakDown = () => {
             }
         })
             .then(res => res.json())
-            .then(data => setCostDetails(data))
+            .then(data => {
+                console.log(data)
+                setCostDetails(data)})
     }
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
@@ -33,7 +35,6 @@ const CostBreakDown = () => {
 
         <Page2>
             <div className="container mx-auto ">
-                {console.log("getOrderMasterId : " + getOrderMasterId)}
                 <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
                     <div className="bg-white flex flex-col items-center mt-2">  <img className="h-6 w-32 " src={logo} alt="" />
                         <p className="text-xl font-bold">COST BREAKDOWN</p>
@@ -45,7 +46,6 @@ const CostBreakDown = () => {
                                 <p className="font-semibold text-sm">Order Status: </p>
                                 <p className="font-semibold text-sm">Raw Image(s): </p>
                             </div>
-                            {console.log(getCostDetails)}
                             {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                                 <div>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
@@ -90,7 +90,6 @@ const CostBreakDown = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {console.log(getCostDetails)}
                                                 {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_detail_charge_breakdown !== 'undefined' &&
                                                     getCostDetails.results.order_detail_charge_breakdown.map((data, index) => (
 

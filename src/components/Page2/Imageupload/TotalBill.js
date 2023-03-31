@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { OrderContextManager, userContextManager } from '../../../App';
+import { menuContextManager, OrderContextManager, userContextManager } from '../../../App';
 
 
 
-const TotalBill = ({totalPrice}) => {
+const TotalBill = ({actionSwitch}) => {
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getTotalPrice, setTotalPrice] = useState(); 
 
-    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
 
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+  
     const TotalPrice = () => {
 
         fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
@@ -28,9 +30,9 @@ const TotalBill = ({totalPrice}) => {
     
     useEffect(()=>{
         TotalPrice()
-    },[totalPrice])
+    },[actionSwitch])
 
-    return totalPrice ? totalPrice : getTotalPrice;
+    return getTotalPrice;
 };
 
 export default TotalBill;

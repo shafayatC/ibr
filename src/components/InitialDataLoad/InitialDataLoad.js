@@ -40,9 +40,12 @@ const InitialDataLoad = () => {
             setMenu(data.results.menu_list);
             data.results.menu_list.map(menuData => {
                 console.log(location.pathname  == menuData.url); 
+                menuData.url == '/file-uploads' && setMenuId(menuData.id)
+                /*
                 if(location.pathname == menuData.url){
                     setMenuId(menuData.id)
                 }
+                */
             })
           },
           (error) => {
