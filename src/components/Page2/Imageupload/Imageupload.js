@@ -71,16 +71,16 @@ function Imageupload() {
 
 
   const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
-  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
-  
+  const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+
 
   const itemsPerPage = 8;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
- // const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.length > getProccessImgIndex ? fileInfo.slice(indexOfFirstItem, indexOfLastItem) : getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem) ;
-  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) :  getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem) ;
+  // const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : fileInfo.length > getProccessImgIndex ? fileInfo.slice(indexOfFirstItem, indexOfLastItem) : getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem) ;
+  const currentImages = actionStatus == "filter" ? getSuggest.slice(indexOfFirstItem, indexOfLastItem) : getAfterBeforeImg.slice(indexOfFirstItem, indexOfLastItem);
 
   const api_url = "http://27.147.191.97:8008/upload";
   const api_url_py = "http://127.0.0.1:5000/api/upload";
@@ -111,7 +111,7 @@ function Imageupload() {
   };
 */
   }
-  
+
   const uploadFile = (e) => {
     const newFile = e.target.files;
 
@@ -147,21 +147,21 @@ function Imageupload() {
           // setLoadProgress(Math.round((100 / newFile.length) * i));
 
           if (file.type == "image/jpeg" || file.type == "image/png") {
-           // const imageUrl = URL.createObjectURL(file);
-           // const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
+            // const imageUrl = URL.createObjectURL(file);
+            // const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
             //setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             i++;
             setTotalImage(i)
             console.log(file)
             const filePath = file.webkitRelativePath.split("/");;
-            filePath.pop(); 
+            filePath.pop();
             let data = new FormData();
             data.append("order_master_id", order_id);
             data.append("service_type_id", getServiceTypeId);
             data.append("file", file);
             data.append("file_relative_path", filePath.toString());
             data.append("subscription_plan_type_id", getSubscriptionPlanId);
-           // data.append("sequence_no", fileInfo.length + i);
+            // data.append("sequence_no", fileInfo.length + i);
             dataTransfer(data);
             /*
             if (fileInfo.length > 0) {
@@ -398,10 +398,10 @@ function Imageupload() {
 
       setProccessImgIndex(getProccessImgIndex => getProccessImgIndex + 1);
       console.log(getProccessImgIndex)
-      if(data.status_code == 200){
-       // getAfterBeforeImg[dlImage].output_urls[0].order_image_detail_id
+      if (data.status_code == 200) {
+        // getAfterBeforeImg[dlImage].output_urls[0].order_image_detail_id
         const found = getAfterBeforeImg.some(el => el.output_urls[0].compressed_raw_image_public_url === data.results.output_urls[0].compressed_raw_image_public_url);
-       // console.log( getAfterBeforeImg.output_urls[0].compressed_raw_image_public_url + " => "+ data.results.output_urls[0].compressed_raw_image_public_url); 
+        // console.log( getAfterBeforeImg.output_urls[0].compressed_raw_image_public_url + " => "+ data.results.output_urls[0].compressed_raw_image_public_url); 
         found == false && setAfterBeforeImg((getAfterBeforeImg) => [
           ...getAfterBeforeImg,
           data.results,
@@ -484,8 +484,8 @@ function Imageupload() {
     e.preventDefault();
 
     Promise.all(getAfterBeforeImg).then((data) => {
-     // const imagePath = data.output_urls[0].compressed_raw_image_public_url.split('CompressedRaw'); 
-      console.log(data); 
+      // const imagePath = data.output_urls[0].compressed_raw_image_public_url.split('CompressedRaw'); 
+      console.log(data);
       const suggestList = matchSorter(data, e.target.value, {
         keys: [(data) => data.output_urls[0].compressed_raw_image_public_url],
       });
@@ -502,49 +502,49 @@ function Imageupload() {
       setSuggestBool(false);
     }
   };
-/*
-
-  const filterFunc = (e) => {
-    e.preventDefault();
-
-    Promise.all(fileInfo).then((data) => {
-      const suggestList = matchSorter(data, e.target.value, {
-        keys: [(data) => data.file.webkitRelativePath],
+  /*
+  
+    const filterFunc = (e) => {
+      e.preventDefault();
+  
+      Promise.all(fileInfo).then((data) => {
+        const suggestList = matchSorter(data, e.target.value, {
+          keys: [(data) => data.file.webkitRelativePath],
+        });
+        setSuggest(suggestList);
       });
-      setSuggest(suggestList);
-    });
-
-    setFilterText(e.target.value);
-    if (e.target.value.length > 0) {
+  
+      setFilterText(e.target.value);
+      if (e.target.value.length > 0) {
+        setActionStatus("filter");
+        setSuggestBool(true);
+        setCurrentPage(1);
+      } else {
+        setActionStatus("");
+        setSuggestBool(false);
+      }
+    };
+  */
+  const filterBysuggest = (txt) => {
+    setFilterText(txt);
+    setSuggestBool(false);
+    if (txt.length > -1) {
       setActionStatus("filter");
-      setSuggestBool(true);
-      setCurrentPage(1);
     } else {
       setActionStatus("");
+    }
+  };
+  /*
+    const filterBysuggest = (txt) => {
+      setFilterText(txt);
       setSuggestBool(false);
-    }
-  };
-*/
-  const filterBysuggest = (txt) => {
-    setFilterText(txt);
-    setSuggestBool(false);
-    if (txt.length > -1) {
-      setActionStatus("filter");
-    } else {
-      setActionStatus("");
-    }
-  };
-/*
-  const filterBysuggest = (txt) => {
-    setFilterText(txt);
-    setSuggestBool(false);
-    if (txt.length > -1) {
-      setActionStatus("filter");
-    } else {
-      setActionStatus("");
-    }
-  };
-*/
+      if (txt.length > -1) {
+        setActionStatus("filter");
+      } else {
+        setActionStatus("");
+      }
+    };
+  */
   const clearFilterText = () => {
     setFilterText("");
     setSuggestBool(false);
@@ -590,31 +590,31 @@ function Imageupload() {
   const deletImage = (dlImage) => {
     //console.log(dlImage);
 
-   // const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(fileInfo[getImgIndex].sequence_no);
+    // const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(fileInfo[getImgIndex].sequence_no);
 
-   // console.log(getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id)
-   
+    // console.log(getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id)
+
     const delateInfo = {
       "id": getAfterBeforeImg[dlImage].output_urls[0].order_image_detail_id,
       "is_deleted": true
     }
 
-      fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'bearer ' + getToken
-        },
-        body: JSON.stringify(delateInfo),
+    fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'bearer ' + getToken
+      },
+      body: JSON.stringify(delateInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
+        setAfterBeforeImg(getAfterBeforeImg.filter((f, index) => index !== dlImage))
+        // setProccessImgIndex(getProccessImgIndex - 1)
+        handleClose();
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-         // setFileInfo(fileInfo.filter((f, index) => index !== dlImage));
-          setAfterBeforeImg(getAfterBeforeImg.filter((f, index) => index !== dlImage))
-         // setProccessImgIndex(getProccessImgIndex - 1)
-          handleClose();
-        })
 
     //setFileInfo(fileInfo.filter((f) => f.imageUrl !== dlImage));
   };
@@ -628,7 +628,7 @@ function Imageupload() {
 
   const switchLoopFunc = () => {
 
-   setSwitchLoop(!getSwitchLoop)
+    setSwitchLoop(!getSwitchLoop)
   }
 
 
@@ -643,9 +643,9 @@ function Imageupload() {
   return (
     <Page2>
       {
-      console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
-    }
-    { console.log(getAfterBeforeImg)}
+        console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
+      }
+      {console.log(getAfterBeforeImg)}
       {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
@@ -675,14 +675,14 @@ function Imageupload() {
                   index < 2 && (
                     <button
                       key={index}
-                      
+
                       onClick={() =>
                         filterBysuggest(data.output_urls[0].compressed_raw_image_public_url)
                       }
-                      
+
                       className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
                     >
-                      { data.output_urls[0].compressed_raw_image_public_url.split("CompressedRaw")[1]}
+                      {data.output_urls[0].compressed_raw_image_public_url.split("CompressedRaw")[1]}
                     </button>
                   )
               )}
@@ -730,10 +730,10 @@ function Imageupload() {
               </div>
             */}
 
-           {/* 
+            {/* 
            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > getProccessImgIndex ? fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${fileInfo.length > getProccessImgIndex ?  fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length } gap-4 pt-5 ml-2  pr-3`}>
-           */} 
-            <div className={`grid sm:grid-cols-1 md:grid-cols-${ getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${ getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length } gap-4 pt-5 ml-2  pr-3`}>
+           */}
+            <div className={`grid sm:grid-cols-1 md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-5 ml-2  pr-3`}>
               {currentImages.map((image, index) => (
                 <div
                   key={index}
@@ -741,7 +741,7 @@ function Imageupload() {
                     currentImages.length === 1 && "flex justify-center"
                   }
                 >
-                  { getTotalImage > getProccessImgIndex ?
+                  {getTotalImage > getProccessImgIndex ?
                     <div
                       className={`img-container  bg-no-repeat img-bag
                      ${currentImages.length === 1
@@ -749,7 +749,7 @@ function Imageupload() {
                           : "img-bag"
                         }
                      `}
-                      style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`}}
+                      style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
                     /> :
                     <div
                       className={`img-container  bg-no-repeat  cursor-pointer img-bag
@@ -762,7 +762,7 @@ function Imageupload() {
                       style={{
                         backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
                       }}
-                    /> }
+                    />}
 
 
                 </div>
@@ -803,40 +803,40 @@ function Imageupload() {
                 (image, index) =>
                   image.output_urls[0].compressed_raw_image_public_url.indexOf(getFilterText) > -1 && (
                     <div key={index}
-                    className={
-                      currentImages.length === 1 && "flex justify-center"
-                    }
-                  >
-                    { getTotalImage > getProccessImgIndex ?
-                      <div
-                        className={`img-container  bg-no-repeat img-bag
+                      className={
+                        currentImages.length === 1 && "flex justify-center"
+                      }
+                    >
+                      {getTotalImage > getProccessImgIndex ?
+                        <div
+                          className={`img-container  bg-no-repeat img-bag
                        ${currentImages.length === 1
-                            ? "h-[400px] justify-center"
-                            : "img-bag"
-                          }
+                              ? "h-[400px] justify-center"
+                              : "img-bag"
+                            }
                        `}
-                        style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`}}
-                      /> :
-                      <div
-                        className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                          style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
+                        /> :
+                        <div
+                          className={`img-container  bg-no-repeat  cursor-pointer img-bag
                         ${currentImages.length === 1
-                            ? "h-[400px] justify-center"
-                            : "img-bag"
-                          }
+                              ? "h-[400px] justify-center"
+                              : "img-bag"
+                            }
                      `}
-                        onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
-                        style={{
-                          backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
-                        }}
-                      /> }
-  
-                  </div>
+                          onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                          style={{
+                            backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
+                          }}
+                        />}
+
+                    </div>
                   )
               )}
             </div>
           </>
         )}
-{/*
+        {/*
 
         {fileInfo.length > 0 && actionStatus == "filter" && (
           <>
@@ -868,15 +868,15 @@ function Imageupload() {
         {getAfterBeforeImg.length > 0 && actionStatus !== "process" && (
           <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
             {/* Previous button */}
-            {/* <button
+        {/* <button
               disabled={currentPage === 1}
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={previousPage}
             >
               <i className="fa-solid fa-arrow-left mr-4"></i>
             </button> */}
-            {/* Process */}
-            {/* <div className="">
+        {/* Process */}
+        {/* <div className="">
               <button
                 disabled={getAfterBeforeImg.length > getProccessImgIndex}
                 onClick={processImagesAi}
@@ -885,7 +885,7 @@ function Imageupload() {
                   className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${getAfterBeforeImg.length > getProccessImgIndex ? 'text-gray-600' : 'text-white'}`}></i>
               </button>
             </div> */}
-            {/* Next Button
+        {/* Next Button
             <button
               disabled={currentPage === Math.ceil(getAfterBeforeImg.length / itemsPerPage)}
               className="cursor-pointer text-white disabled:text-gray-600"
@@ -893,9 +893,9 @@ function Imageupload() {
             >
               <i className="fa-solid fa-arrow-right ml-4"></i>
             </button> */}
-            {/* Image/total count */}
+        {/* Image/total count */}
 
-{
+        {
 /*
             <div className="text-white ml-60 text-sm mt-2">
               <p>Image Count : {getAfterBeforeImg.length}</p>
@@ -910,6 +910,26 @@ function Imageupload() {
           </div>
         )}
 */}
+        {getAfterBeforeImg.length > 0 &&
+        
+        <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
+          <div className="text-white ml-60 text-sm mt-2">
+            <p>Image Count : {getAfterBeforeImg.length}</p>
+
+            <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+          </div>
+          {getTotalImage == getProccessImgIndex && 
+          
+          <div className="self-center">
+            <Link to="/cart">
+              <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+            </Link>
+          </div>
+          }
+        </div>
+        
+        }
+
         {showImage &&
           <div>
             <div
@@ -931,12 +951,12 @@ function Imageupload() {
                 <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                    <img className="h-full" src={getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
+                    <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
                     <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex}</p>
                   </div>
                 </div>
 
-                {getAfterBeforeImg.length > 0 && <ServiceMenu ImageIndex={getImgIndex} />}
+                {getAfterBeforeImg.length > 0 && <ServiceMenu imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
               </div>
 
               <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
