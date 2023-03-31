@@ -893,8 +893,8 @@ function Imageupload() {
             </button> */}
             {/* Image/total count */}
 
-
-
+{
+/*
             <div className="text-white ml-60 text-sm mt-2">
               <p>Image Count : {getAfterBeforeImg.length}</p>
 
@@ -907,7 +907,7 @@ function Imageupload() {
             </div>
           </div>
         )}
-
+*/}
         {showImage &&
           <div>
             <div
