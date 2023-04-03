@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FileContextManager, userContextManager } from '../../../App';
 import './service.css';
 
-const ServiceMenu = ({ imageFile }) => {
+const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
 
     const [getServicMenu, setServiceMenu] = useState({});
     const [getImageDetail, setImageDetail] = useState({});
@@ -108,7 +108,10 @@ const ServiceMenu = ({ imageFile }) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    data.status_code == 200 && setServiceMenu(data)
+                    if(data.status_code == 200){
+                        callBackIsAiProccess(data.results.order_image_detail_list[0].is_ai_processed)
+                        setServiceMenu(data)
+                    }
                 })
         }
 
@@ -149,7 +152,6 @@ const ServiceMenu = ({ imageFile }) => {
                                     >
                                         {data.name}
                                         <p className='text-xs text-teal-600 font-normal'>{data.message}</p>
-
                                     </label>
                                 </div>
                             </li>

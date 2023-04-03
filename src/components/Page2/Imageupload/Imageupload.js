@@ -24,6 +24,7 @@ import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
 import { Link } from "react-router-dom";
+import CompareImage from "../../CompareImage/CompareImage";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +39,7 @@ function Imageupload() {
   const [getSuggestBool, setSuggestBool] = useState(false);
   const [getSwitchLoop, setSwitchLoop] = useState(false);
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
-
+  const [getCallbackAiBool, setCallbackAiBool] = useState(false);
   const [
     getMainFile,
     setMainFile,
@@ -165,13 +166,14 @@ function Imageupload() {
             i++;
             setTotalImage(i)
             console.log(file)
-            const filePath = file.webkitRelativePath.split("/");;
+            const filePath = file.webkitRelativePath.split("/");
             filePath.pop();
+            console.log(filePath.join("/"))
             let data = new FormData();
             data.append("order_master_id", order_id);
             data.append("service_type_id", getServiceTypeId);
             data.append("file", file);
-            data.append("file_relative_path", filePath.toString());
+            data.append("file_relative_path", filePath.join("/"));
             data.append("subscription_plan_type_id", getSubscriptionPlanId);
             // data.append("sequence_no", fileInfo.length + i);
             dataTransfer(data);
@@ -643,7 +645,9 @@ function Imageupload() {
     setSwitchLoop(!getSwitchLoop)
   }
 
-
+  const callBackIsAiProccess = (bl) => {
+    setCallbackAiBool(bl)
+  }
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -662,7 +666,7 @@ function Imageupload() {
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
-        <div className="relative w-[395px]">
+        <div className="relative w-[395px] z-40">
           <input
             value={getFilterText}
             onChange={filterFunc}
@@ -680,21 +684,20 @@ function Imageupload() {
               <i className="fa-sharp fa-solid fa-xmark"></i>
             </button>
           )}
-          <div id="matchsort" className="absolute bg-white z-10">
+
+          <div id="matchsort" className="absolute bg-white z-40 left-[-50%]">
             {getSuggestBool == true &&
               getSuggest.map(
                 (data, index) =>
                   index < 2 && (
                     <button
                       key={index}
-
                       onClick={() =>
-                        filterBysuggest(data.output_urls[0].compressed_raw_image_public_url)
+                        filterBysuggest(data.output_urls[0].filter_image_file_path)
                       }
-
                       className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
                     >
-                      {data.output_urls[0].compressed_raw_image_public_url.split("CompressedRaw")[1]}
+                      {data.output_urls[0].filter_image_file_path}
                     </button>
                   )
               )}
@@ -813,7 +816,7 @@ function Imageupload() {
             >
               {currentImages.map(
                 (image, index) =>
-                  image.output_urls[0].compressed_raw_image_public_url.indexOf(getFilterText) > -1 && (
+                  image.output_urls[0].compressed_raw_image_public_url.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && (
                     <div key={index}
                       className={
                         currentImages.length === 1 && "flex justify-center"
@@ -969,12 +972,18 @@ function Imageupload() {
                 <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                    <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
-                    <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex}</p>
+                    {getCallbackAiBool ?
+                      <CompareImage
+                        topImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
+                        bottomImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].default_compressed_output_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
+                      /> :
+                      <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
+                    }
+                    <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].order_image_detail_sequence_no : getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
                   </div>
                 </div>
 
-                {getAfterBeforeImg.length > 0 && <ServiceMenu imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
+                {getAfterBeforeImg.length > 0 && <ServiceMenu callBackIsAiProccess={callBackIsAiProccess} imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
               </div>
 
               <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
@@ -1081,7 +1090,6 @@ function Imageupload() {
         </div> */}
       </div>
       <ToastContainer />
-
       {/* --------------------Login Modal Start------------------- */}
       <>
         {isOpen && (
@@ -1141,6 +1149,7 @@ function Imageupload() {
       </>
       {/* -------------Login Modal End------------------- */}
 
+      {getSuggestBool == true &&  <div onClick={()=>setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div> }
     </Page2>
   );
 }
