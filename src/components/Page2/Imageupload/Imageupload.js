@@ -911,23 +911,23 @@ function Imageupload() {
         )}
 */}
         {getAfterBeforeImg.length > 0 &&
-        
-        <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
-          <div className="text-white ml-60 text-sm mt-2">
-            <p>Image Count : {getAfterBeforeImg.length}</p>
 
-            <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+          <div className="flex fixed bg-light-black  justify-center rounded-md px-8 gap-5 right-4  bottom-2">
+            <div className="text-white self-center font-semibold text-sm py-1">
+              <p>Image Count : {getAfterBeforeImg.length}</p>
+
+              <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+            </div>
+            {getTotalImage == getProccessImgIndex &&
+
+              <div className="self-center text-sm">
+                <Link to="/cart">
+                  <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+                </Link>
+              </div>
+            }
           </div>
-          {getTotalImage == getProccessImgIndex && 
-          
-          <div className="self-center">
-            <Link to="/cart">
-              <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-            </Link>
-          </div>
-          }
-        </div>
-        
+
         }
 
         {showImage &&
