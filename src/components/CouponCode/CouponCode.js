@@ -31,6 +31,7 @@ function CouponCode() {
 
     const getOfferFunc = () => {
 
+        console.log(getToken)
         fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -39,13 +40,13 @@ function CouponCode() {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data); 
                 setCouponDetails(data)
             })
     }
 
 
     const getCouponFunc = (promoId) => {
-        console.log("data 0")
 
         const promData = {
             "promotions_settings_id": promoId
@@ -57,13 +58,14 @@ function CouponCode() {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
-                    'Authorization': 'bearer ' + getToken.token
+                    'Authorization': 'bearer ' + getToken
                 },
                 body: JSON.stringify(promData),
             }
         ).then(res => res.json())
             .then(data => {
                 if(data.status_code == 200){
+                    console.log(data)
                     document.getElementById(promoId).innerText = 'Redeemed'; 
                     document.getElementById(promoId).disabled = true 
                 }
