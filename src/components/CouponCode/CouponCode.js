@@ -10,6 +10,8 @@ import Page2 from "../Page2/Page2";
 
 function CouponCode() {
 
+    const [getStatus, setStatus] = useState("")
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +29,7 @@ function CouponCode() {
 
     const [getCouponDetails, setCouponDetails] = useState([])
 
-    useEffect(() => {
+    const getOfferFunc = () => {
 
         fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
             headers: {
@@ -36,12 +38,15 @@ function CouponCode() {
             }
         })
             .then(res => res.json())
-            .then(data => setCouponDetails(data))
-    }, []);
+            .then(data => {
+                setCouponDetails(data)
+            })
+    }
 
 
     const getCouponFunc = (promoId) => {
-        { console.log(getToken) }
+        console.log("data 0")
+
         const promData = {
             "promotions_settings_id": promoId
         }
@@ -57,16 +62,24 @@ function CouponCode() {
                 body: JSON.stringify(promData),
             }
         ).then(res => res.json())
-            .then(data => { console.log(data) })
+            .then(data => {
+                if(data.status_code == 200){
+                    document.getElementById(promoId).innerText = 'Redeemed'; 
+                    document.getElementById(promoId).disabled = true 
+                }
+            })
     }
 
 
+    useEffect(() => {
+        getOfferFunc()
 
-
+    }, []);
 
 
     return (
         <Page2>
+            {console.log(getStatus)}
             <div className="container mx-auto ">
 
                 <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
@@ -91,17 +104,13 @@ function CouponCode() {
                                             <div className="card-actions flex justify-between">
                                                 <p className="text-xs pt-2">2K Users use this today.</p>
                                                 {getUserInfo.status_code == 200 ?
-                                                    <button
-                                                        onClick={() => getCouponFunc(data.id)}
-
-                                                        className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
-
+                                                    <button id={data.id} onClick={() => getCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md disabled:bg-green-800">
+                                                        {data.status}
+                                                    </button>
                                                     :
-                                                    <button
-
-                                                        onClick={openModal}
-                                                        className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md">{data.status}</button>
-
+                                                    <button onClick={openModal} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-font-semibold rounded-md">
+                                                        {data.status}
+                                                    </button>
                                                 }
                                             </div>
                                             <>

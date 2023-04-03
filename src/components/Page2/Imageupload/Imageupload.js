@@ -783,28 +783,28 @@ function Imageupload() {
                 </div>
               ))}
             </div>
-            
-            <div className="flex justify-between w-[85%] ">
-                {/* Previous button */}
-                <div>
-                  <button
-                    disabled={currentPage === 1}
-                    className="cursor-pointer text-white disabled:text-gray-500"
-                    onClick={previousPage}
-                  >
-                    <i className="fa-solid text-2xl ml-3 fa-circle-chevron-left "></i>
-                  </button></div>
-                {/* Next Button */}
-                <div>
-                  <button
-                    disabled={currentPage === Math.ceil(actionStatus == "filter" ?getSuggest.length / itemsPerPage :  getAfterBeforeImg.length / itemsPerPage)}
-                    className="cursor-pointer text-white disabled:text-gray-500"
-                    onClick={nextPage}
-                  >
-                    <i className="fa-solid text-2xl fa-circle-chevron-right "></i>
-                  </button>
-                </div>
+
+            <div className="flex fixed justify-between w-[86%] bottom-12  ">
+              {/* Previous button */}
+              <div>
+                <button
+                  disabled={currentPage === 1}
+                  className="cursor-pointer text-white disabled:text-gray-500"
+                  onClick={previousPage}
+                >
+                  <i className="fa-solid text-2xl ml-3 fa-circle-chevron-left "></i>
+                </button></div>
+              {/* Next Button */}
+              <div>
+                <button
+                  disabled={currentPage === Math.ceil(actionStatus == "filter" ? getSuggest.length / itemsPerPage : getAfterBeforeImg.length / itemsPerPage)}
+                  className="cursor-pointer text-white disabled:text-gray-500"
+                  onClick={nextPage}
+                >
+                  <i className="fa-solid text-2xl fa-circle-chevron-right "></i>
+                </button>
               </div>
+            </div>
           </div>
         }
 
@@ -928,7 +928,7 @@ function Imageupload() {
 */}
         {getAfterBeforeImg.length > 0 &&
 
-          <div className="flex fixed bg-light-black  justify-center rounded-md px-8 gap-5 right-4  bottom-2">
+          <div className="flex fixed bg-light-black  justify-center rounded-md px-4 gap-5 right-16  bottom-2">
             <div className="text-white self-center font-semibold text-sm py-1">
               <p>Image Count : {getAfterBeforeImg.length}</p>
 
@@ -947,7 +947,7 @@ function Imageupload() {
                 <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
 
               </div>
-              :""
+              : ""
             }
           </div>
 
@@ -1151,7 +1151,7 @@ function Imageupload() {
       </>
       {/* -------------Login Modal End------------------- */}
 
-      {getSuggestBool == true &&  <div onClick={()=>setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div> }
+      {getSuggestBool == true && <div onClick={() => setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div>}
     </Page2>
   );
 }
