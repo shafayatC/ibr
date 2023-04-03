@@ -46,7 +46,6 @@ function App() {
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
 
-
   return (
     <FileContextManager.Provider
       value={[

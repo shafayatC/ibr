@@ -24,6 +24,7 @@ import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
 import { Link } from "react-router-dom";
+import CompareImage from "../../CompareImage/CompareImage";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +39,7 @@ function Imageupload() {
   const [getSuggestBool, setSuggestBool] = useState(false);
   const [getSwitchLoop, setSwitchLoop] = useState(false);
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
-
+  const [getCallbackAiBool, setCallbackAiBool] = useState(false);
   const [
     getMainFile,
     setMainFile,
@@ -68,6 +69,18 @@ function Imageupload() {
   const CostPlan = () => {
     setCostBreak(true);
   };
+
+  //  -----------Login Modal ----------------------
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
 
 
   const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
@@ -153,13 +166,14 @@ function Imageupload() {
             i++;
             setTotalImage(i)
             console.log(file)
-            const filePath = file.webkitRelativePath.split("/");;
+            const filePath = file.webkitRelativePath.split("/");
             filePath.pop();
+            console.log(filePath.join("/"))
             let data = new FormData();
             data.append("order_master_id", order_id);
             data.append("service_type_id", getServiceTypeId);
             data.append("file", file);
-            data.append("file_relative_path", filePath.toString());
+            data.append("file_relative_path", filePath.join("/"));
             data.append("subscription_plan_type_id", getSubscriptionPlanId);
             // data.append("sequence_no", fileInfo.length + i);
             dataTransfer(data);
@@ -631,7 +645,9 @@ function Imageupload() {
     setSwitchLoop(!getSwitchLoop)
   }
 
-
+  const callBackIsAiProccess = (bl) => {
+    setCallbackAiBool(bl)
+  }
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -650,7 +666,7 @@ function Imageupload() {
       <div className="flex items-center justify-center mt-3">
         <i className="fa-solid fa-filter text-white mr-1"></i>
         <p className="text-white mr-4">Filter</p>
-        <div className="relative w-[395px]">
+        <div className="relative w-[395px] z-40">
           <input
             value={getFilterText}
             onChange={filterFunc}
@@ -668,21 +684,20 @@ function Imageupload() {
               <i className="fa-sharp fa-solid fa-xmark"></i>
             </button>
           )}
-          <div id="matchsort" className="absolute bg-white z-10">
+
+          <div id="matchsort" className="absolute bg-white z-40 left-[50%] min-w-full">
             {getSuggestBool == true &&
               getSuggest.map(
                 (data, index) =>
                   index < 2 && (
                     <button
                       key={index}
-
                       onClick={() =>
-                        filterBysuggest(data.output_urls[0].compressed_raw_image_public_url)
+                        filterBysuggest(data.output_urls[0].filter_image_file_path)
                       }
-
                       className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
                     >
-                      {data.output_urls[0].compressed_raw_image_public_url.split("CompressedRaw")[1]}
+                      {data.output_urls[0].filter_image_file_path}
                     </button>
                   )
               )}
@@ -738,13 +753,13 @@ function Imageupload() {
                 <div
                   key={index}
                   className={
-                    currentImages.length === 1 && "flex justify-center"
+                    getAfterBeforeImg.length === 1 && "flex justify-center"
                   }
                 >
                   {getTotalImage > getProccessImgIndex ?
                     <div
                       className={`img-container  bg-no-repeat img-bag
-                     ${currentImages.length === 1
+                     ${getAfterBeforeImg.length === 1
                           ? "h-[400px] justify-center"
                           : "img-bag"
                         }
@@ -753,7 +768,7 @@ function Imageupload() {
                     /> :
                     <div
                       className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                      ${currentImages.length === 1
+                      ${getAfterBeforeImg.length === 1
                           ? "h-[400px] justify-center"
                           : "img-bag"
                         }
@@ -767,7 +782,9 @@ function Imageupload() {
 
                 </div>
               ))}
-              <div className="fixed bottom-16 flex justify-between w-[85%] ">
+            </div>
+            
+            <div className="flex justify-between w-[85%] ">
                 {/* Previous button */}
                 <div>
                   <button
@@ -780,7 +797,7 @@ function Imageupload() {
                 {/* Next Button */}
                 <div>
                   <button
-                    disabled={currentPage === Math.ceil(fileInfo.length / itemsPerPage)}
+                    disabled={currentPage === Math.ceil(actionStatus == "filter" ?getSuggest.length / itemsPerPage :  getAfterBeforeImg.length / itemsPerPage)}
                     className="cursor-pointer text-white disabled:text-gray-500"
                     onClick={nextPage}
                   >
@@ -788,7 +805,6 @@ function Imageupload() {
                   </button>
                 </div>
               </div>
-            </div>
           </div>
         }
 
@@ -801,16 +817,16 @@ function Imageupload() {
             >
               {currentImages.map(
                 (image, index) =>
-                  image.output_urls[0].compressed_raw_image_public_url.indexOf(getFilterText) > -1 && (
+                  image.output_urls[0].compressed_raw_image_public_url.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && (
                     <div key={index}
                       className={
-                        currentImages.length === 1 && "flex justify-center"
+                        getSuggest.length === 1 && "flex justify-center"
                       }
                     >
                       {getTotalImage > getProccessImgIndex ?
                         <div
                           className={`img-container  bg-no-repeat img-bag
-                       ${currentImages.length === 1
+                       ${getSuggest.length === 1
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
@@ -819,7 +835,7 @@ function Imageupload() {
                         /> :
                         <div
                           className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                        ${currentImages.length === 1
+                        ${getSuggest.length === 1
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
@@ -918,13 +934,20 @@ function Imageupload() {
 
               <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
             </div>
-            {getTotalImage == getProccessImgIndex &&
+            {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
 
               <div className="self-center text-sm">
                 <Link to="/cart">
                   <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
                 </Link>
               </div>
+              :
+              <div className="self-center text-sm">
+
+                <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+
+              </div>
+              :""
             }
           </div>
 
@@ -951,12 +974,18 @@ function Imageupload() {
                 <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
                 <div className="  pt-20 pl-16 absolute ">
                   <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                    <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
-                    <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex}</p>
+                    {getCallbackAiBool ?
+                      <CompareImage
+                        topImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
+                        bottomImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].default_compressed_output_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
+                      /> :
+                      <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
+                    }
+                    <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].order_image_detail_sequence_no : getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
                   </div>
                 </div>
 
-                {getAfterBeforeImg.length > 0 && <ServiceMenu imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
+                {getAfterBeforeImg.length > 0 && <ServiceMenu callBackIsAiProccess={callBackIsAiProccess} imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
               </div>
 
               <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
@@ -1048,7 +1077,7 @@ function Imageupload() {
         }
 
         {getUpdatePlan && (
-          <div className=" absolute top-0 left-60 z-50 ">
+          <div className=" absolute top-0 left-60  z-50 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
@@ -1063,6 +1092,66 @@ function Imageupload() {
         </div> */}
       </div>
       <ToastContainer />
+      {/* --------------------Login Modal Start------------------- */}
+      <>
+        {isOpen && (
+          <div className="fixed inset-0 z-50 top-48 ">
+            <div className="flex  bg-white w-[400px] mx-auto pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 "
+                aria-hidden="true"
+                onClick={closeModal}
+              >
+                <div className="absolute inset-0 bg-gray-600 opacity-80"></div>
+
+              </div>
+
+              <div
+                className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
+              >
+                <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+
+                    <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3
+                        className="text-2xl leading-6 font-medium text-gray-900"
+                        id="modal-headline"
+                      >
+                        Please Login to your account
+                      </h3>
+
+                    </div>
+                  </div>
+                </div>
+                <div className=" py-4 flex gap-4 justify-center ">
+
+                  <Link to="/log-in">
+                    <button
+
+                      className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
+                    >
+                      Login
+                    </button>
+                  </Link>
+                  <button
+
+                    className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+      {/* -------------Login Modal End------------------- */}
+
+      {getSuggestBool == true &&  <div onClick={()=>setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div> }
     </Page2>
   );
 }
