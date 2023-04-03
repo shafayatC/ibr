@@ -54,29 +54,11 @@ const SignIn = () => {
         ).then(res => res.json())
           .then(data => {
             if (data.status_code == 200) {
-
-              fetch(`http://103.197.204.22:8007/api/2023-02/token-validation?token=${data.results.token}`,
-                {
-                  method: "POST",
-                  headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': 'bearer '+ getToken
-                  }
-                }
-              ).then(res => res.json())
-                .then(result => {
-                  console.log(result)
-                  if (result.status_code == 200) {
-                    setUserInfo(result);
-                    setToken(result.results.token)
-                    showToastMessage(result.results.message)
-                    console.log("redirect working")
-                  } else {
-                    showToastMessageWarning(result.results.message)
-                  }
-
-                })
+              console.log("data")
+              console.log(data)
+              setUserInfo(data);
+              setToken(data.results.token)
+              showToastMessage(data.message)
             } else {
               showToastMessageWarning(data.message)
             }
