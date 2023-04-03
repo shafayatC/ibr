@@ -70,6 +70,18 @@ function Imageupload() {
     setCostBreak(true);
   };
 
+  //  -----------Login Modal ----------------------
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+
 
   const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
   const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
@@ -921,12 +933,18 @@ function Imageupload() {
 
               <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
             </div>
-            {getTotalImage == getProccessImgIndex &&
+            {getTotalImage == getProccessImgIndex && getUserInfo.status_code == 200 ?
 
               <div className="self-center text-sm">
                 <Link to="/cart">
                   <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
                 </Link>
+              </div>
+              :
+              <div className="self-center text-sm">
+
+                <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+
               </div>
             }
           </div>
@@ -1057,7 +1075,7 @@ function Imageupload() {
         }
 
         {getUpdatePlan && (
-          <div className=" absolute top-0 left-60 z-50 ">
+          <div className=" absolute top-0 left-60  z-50 ">
             <UpgradeAccount upgradCallBack={upgradCallBack} />
           </div>
         )}
@@ -1072,6 +1090,65 @@ function Imageupload() {
         </div> */}
       </div>
       <ToastContainer />
+      {/* --------------------Login Modal Start------------------- */}
+      <>
+        {isOpen && (
+          <div className="fixed inset-0 z-50 top-48 ">
+            <div className="flex  bg-white w-[400px] mx-auto pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 "
+                aria-hidden="true"
+                onClick={closeModal}
+              >
+                <div className="absolute inset-0 bg-gray-600 opacity-80"></div>
+
+              </div>
+
+              <div
+                className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
+              >
+                <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+
+                    <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3
+                        className="text-2xl leading-6 font-medium text-gray-900"
+                        id="modal-headline"
+                      >
+                        Please Login to your account
+                      </h3>
+
+                    </div>
+                  </div>
+                </div>
+                <div className=" py-4 flex gap-4 justify-center ">
+
+                  <Link to="/log-in">
+                    <button
+
+                      className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
+                    >
+                      Login
+                    </button>
+                  </Link>
+                  <button
+
+                    className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+      {/* -------------Login Modal End------------------- */}
+
       {getSuggestBool == true &&  <div onClick={()=>setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div> }
     </Page2>
   );
