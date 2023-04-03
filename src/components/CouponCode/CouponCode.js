@@ -10,6 +10,8 @@ import Page2 from "../Page2/Page2";
 
 function CouponCode() {
 
+    const [getStatus, setStatus] = useState()
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +29,7 @@ function CouponCode() {
 
     const [getCouponDetails, setCouponDetails] = useState([])
 
-    useEffect(() => {
+    const getOfferFunc = () => {
 
         fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
             headers: {
@@ -36,7 +38,15 @@ function CouponCode() {
             }
         })
             .then(res => res.json())
-            .then(data => setCouponDetails(data))
+            .then(data => {
+                setCouponDetails(data)
+                setStatus(data.status)
+            })
+    }
+
+    useEffect(() => {
+        getOfferFunc()
+
     }, []);
 
 
@@ -57,7 +67,9 @@ function CouponCode() {
                 body: JSON.stringify(promData),
             }
         ).then(res => res.json())
-            .then(data => { console.log(data) })
+            .then(data => {
+                data.status_code == 200 && setStatus("Redeemed")
+            })
     }
 
 
