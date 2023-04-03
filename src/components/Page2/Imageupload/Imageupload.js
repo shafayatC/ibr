@@ -685,7 +685,7 @@ function Imageupload() {
             </button>
           )}
 
-          <div id="matchsort" className="absolute bg-white z-40 left-[-50%]">
+          <div id="matchsort" className="absolute bg-white z-40 left-[50%] min-w-full">
             {getSuggestBool == true &&
               getSuggest.map(
                 (data, index) =>
@@ -753,13 +753,13 @@ function Imageupload() {
                 <div
                   key={index}
                   className={
-                    currentImages.length === 1 && "flex justify-center"
+                    getAfterBeforeImg.length === 1 && "flex justify-center"
                   }
                 >
                   {getTotalImage > getProccessImgIndex ?
                     <div
                       className={`img-container  bg-no-repeat img-bag
-                     ${currentImages.length === 1
+                     ${getAfterBeforeImg.length === 1
                           ? "h-[400px] justify-center"
                           : "img-bag"
                         }
@@ -768,7 +768,7 @@ function Imageupload() {
                     /> :
                     <div
                       className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                      ${currentImages.length === 1
+                      ${getAfterBeforeImg.length === 1
                           ? "h-[400px] justify-center"
                           : "img-bag"
                         }
@@ -782,7 +782,9 @@ function Imageupload() {
 
                 </div>
               ))}
-              <div className="fixed bottom-16 flex justify-between w-[85%] ">
+            </div>
+            
+            <div className="flex justify-between w-[85%] ">
                 {/* Previous button */}
                 <div>
                   <button
@@ -795,7 +797,7 @@ function Imageupload() {
                 {/* Next Button */}
                 <div>
                   <button
-                    disabled={currentPage === Math.ceil(fileInfo.length / itemsPerPage)}
+                    disabled={currentPage === Math.ceil(actionStatus == "filter" ?getSuggest.length / itemsPerPage :  getAfterBeforeImg.length / itemsPerPage)}
                     className="cursor-pointer text-white disabled:text-gray-500"
                     onClick={nextPage}
                   >
@@ -803,7 +805,6 @@ function Imageupload() {
                   </button>
                 </div>
               </div>
-            </div>
           </div>
         }
 
@@ -819,13 +820,13 @@ function Imageupload() {
                   image.output_urls[0].compressed_raw_image_public_url.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && (
                     <div key={index}
                       className={
-                        currentImages.length === 1 && "flex justify-center"
+                        getSuggest.length === 1 && "flex justify-center"
                       }
                     >
                       {getTotalImage > getProccessImgIndex ?
                         <div
                           className={`img-container  bg-no-repeat img-bag
-                       ${currentImages.length === 1
+                       ${getSuggest.length === 1
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
@@ -834,7 +835,7 @@ function Imageupload() {
                         /> :
                         <div
                           className={`img-container  bg-no-repeat  cursor-pointer img-bag
-                        ${currentImages.length === 1
+                        ${getSuggest.length === 1
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
@@ -933,7 +934,7 @@ function Imageupload() {
 
               <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
             </div>
-            {getTotalImage == getProccessImgIndex && getUserInfo.status_code == 200 ?
+            {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
 
               <div className="self-center text-sm">
                 <Link to="/cart">
@@ -946,6 +947,7 @@ function Imageupload() {
                 <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
 
               </div>
+              :""
             }
           </div>
 
