@@ -9,7 +9,7 @@ const Cart = () => {
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
-    const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+    const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
 
     // const [getCostDetails, setCostDetails] = useState({})
 
@@ -146,6 +146,14 @@ const Cart = () => {
                         <button className="bg-teal-500 text-white mx-auto rounded-md absolute bottom-5 hover:bg-green-400 left-10 p-2 w-[160px]">
                             <p className="flex items-center gap-3"><i class="text-xl fa-solid fa-gift"></i>
                                 <span className="text-sm  font-semibold"> Apply a voucher</span></p>
+                        </button>
+
+                    </Link>
+
+                    <Link to="/">
+                        <button className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
+                            <p >
+                                Payment Method</p>
                         </button>
                     </Link>
 
