@@ -40,7 +40,7 @@ function CouponCode() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data); 
+                console.log(data);
                 setCouponDetails(data)
             })
     }
@@ -64,10 +64,10 @@ function CouponCode() {
             }
         ).then(res => res.json())
             .then(data => {
-                if(data.status_code == 200){
+                if (data.status_code == 200) {
                     console.log(data)
-                    document.getElementById(promoId).innerText = 'Redeemed'; 
-                    document.getElementById(promoId).disabled = true 
+                    document.getElementById(promoId).innerText = 'Redeemed';
+                    document.getElementById(promoId).disabled = true
                 }
             })
     }
@@ -106,11 +106,11 @@ function CouponCode() {
                                             <div className="card-actions flex justify-between">
                                                 <p className="text-xs pt-2">2K Users use this today.</p>
                                                 {getUserInfo.status_code == 200 ?
-                                                    <button id={data.id} onClick={() => getCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-white font-semibold rounded-md disabled:bg-green-800">
+                                                    <button id={data.id} onClick={() => getCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
                                                         {data.status}
                                                     </button>
                                                     :
-                                                    <button onClick={openModal} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-300 text-font-semibold rounded-md">
+                                                    <button onClick={openModal} className="bg-green-400 text-sm px-4 text-white font-semibold py-1 mr-3 hover:bg-teal-400 text-font-semibold rounded-md">
                                                         {data.status}
                                                     </button>
                                                 }
