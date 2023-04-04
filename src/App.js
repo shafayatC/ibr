@@ -20,6 +20,7 @@ import CompareImage from "./components/CompareImage/CompareImage";
 import CostBreakDown from "./components/CostBreakDown/CostBreakDown";
 import Imageupload from "./components/Page2/Imageupload/Imageupload";
 import Cart from "./components/Cart/Cart";
+import ApplyVoucher from "./components/ApplyVoucher/ApplyVoucher";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -88,7 +89,8 @@ function App() {
                 <Route path="/upgrade-account" element={<UpgradeAccount />} />
                 <Route path="/coupon-code" element={<CouponCode />} />
                 <Route path="/cost-breakdown" element={<CostBreakDown />} />
-              <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/apply-voucher" element={<ApplyVoucher />} />
               </Routes>
             </div>
           </menuContextManager.Provider>
