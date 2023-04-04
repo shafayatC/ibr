@@ -14,6 +14,8 @@ const Cart = () => {
     // const [getCostDetails, setCostDetails] = useState({})
 
     const constDetailFunc = () => {
+
+        console.log("hello")
         fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -21,7 +23,7 @@ const Cart = () => {
             }
         })
             .then(res => res.json())
-            .then(data => setCostDetails(data))
+            .then(data => { setCostDetails(data); console.log(data) })
     }
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import offer from "../CouponCode/img/coupon_2.jpg"
 import logo from "../../images/logo.png"
-import { userContextManager } from "../../App";
+import { OrderContextManager, userContextManager } from "../../App";
 import { Link } from "react-router-dom";
 import Page2 from "../Page2/Page2";
 
@@ -23,6 +23,8 @@ function ApplyVoucher() {
         setIsOpen(false);
     };
 
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager)
+
 
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
@@ -31,7 +33,7 @@ function ApplyVoucher() {
 
     const getOfferFunc = () => {
 
-        console.log(getToken)
+        console.log("hello")
         fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -46,13 +48,15 @@ function ApplyVoucher() {
     }
 
 
-    const getCouponFunc = (promoId) => {
+    const getApplyCouponFunc = (promoId) => {
 
         const promData = {
-            "promotions_settings_id": promoId
+            "order_master_image_id": promoId,
+            "user_promotions_settings_id": getOrderMasterId,
+            "is_used": true
         }
         fetch(
-            "http://103.197.204.22:8007/api/2023-02/user-promotions",
+            "http://103.197.204.22:8007/api/2023-02/apply-voucher",
             {
                 method: "POST",
                 headers: {
@@ -66,7 +70,7 @@ function ApplyVoucher() {
             .then(data => {
                 if (data.status_code == 200) {
                     console.log(data)
-                    document.getElementById(promoId).innerText = 'Redeemed';
+                    document.getElementById(promoId).innerText = 'Apply';
                     document.getElementById(promoId).disabled = true
                 }
             })
@@ -81,19 +85,19 @@ function ApplyVoucher() {
 
     return (
         <Page2>
-            {console.log(getStatus)}
+
             <div className="container mx-auto ">
 
                 <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
                     <div className="flex justify-center mb-10">
-                        <h2 className="text-4xl mt-4 text-green-700 font-semibold">PROMO CODE |</h2>
+                        <h2 className="text-4xl mt-4 text-green-700 font-semibold">Apply Voucher |</h2>
                         <img className="h-12 w-60 mt-3" src={logo} alt="" />
                     </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 mx-10 justify-items-center mt-10">
                         {console.log(getCouponDetails)}
                         {Object.keys(getCouponDetails).length > 0 && typeof getCouponDetails.results.promotions_list !== 'undefined' &&
                             getCouponDetails.results.promotions_list.map((data, index) => (
-
+                                data.status == "Redeemed" &&
                                 <div className="">
                                     <div className=" card p-2 border border-green-400  bg-white shadow-xl">
                                         <img className="" src={offer} alt="" />
@@ -104,18 +108,15 @@ function ApplyVoucher() {
                                             <p className="text-sm">{data.description}</p>
 
                                             <div className="card-actions flex justify-between">
-                                                <p className="text-xs pt-2">2K Users use this today.</p>
-                                                {getUserInfo.status_code == 200 ?
-                                                    <button id={data.id} onClick={() => getCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
-                                                        {data.status}
-                                                    </button>
-                                                    :
-                                                    <button onClick={openModal} className="bg-green-400 text-sm px-4 text-white font-semibold py-1 mr-3 hover:bg-teal-400 text-font-semibold rounded-md">
-                                                        {data.status}
-                                                    </button>
-                                                }
+                                                <p className="text-xs pt-2">2K Users use this today</p>
+
+                                                <button id={data.id} onClick={() => getApplyCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
+                                                    {data.status}
+                                                </button>
+
+
                                             </div>
-                                            <>
+                                            {/* <>
 
 
                                                 {isOpen && (
@@ -172,7 +173,7 @@ function ApplyVoucher() {
                                                         </div>
                                                     </div>
                                                 )}
-                                            </>
+                                            </> */}
                                         </div>
                                     </div>
                                 </div>
