@@ -14,6 +14,8 @@ const Cart = () => {
     // const [getCostDetails, setCostDetails] = useState({})
 
     const constDetailFunc = () => {
+
+        console.log("hello")
         fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -21,7 +23,7 @@ const Cart = () => {
             }
         })
             .then(res => res.json())
-            .then(data => setCostDetails(data))
+            .then(data => { setCostDetails(data); console.log(data) })
     }
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
@@ -126,16 +128,16 @@ const Cart = () => {
 
                     <div className="flex justify-end w-[600px]  mt-3 mx-auto gap-5">
                         <div>
-                            <p className="font-semibold text-sm">Total Charge: </p> <hr></hr>
+                            <p className="font-semibold text-sm">Net Charge:</p> <hr></hr>
                             <p className="font-semibold text-sm">Discount: </p><hr></hr>
-                            <p className="font-semibold text-sm">Net Charge: </p><hr></hr>
+                            <p className="font-semibold text-sm">Total Charge: </p><hr></hr>
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
 
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             </div>
                         }
                     </div>
