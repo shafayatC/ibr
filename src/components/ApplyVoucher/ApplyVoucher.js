@@ -47,7 +47,6 @@ function ApplyVoucher() {
             })
     }
 
-
     const getApplyCouponFunc = (promoId) => {
 
         const promData = {
@@ -112,7 +111,7 @@ function ApplyVoucher() {
 
                                                 <Link to="/cart">
                                                     <button id={data.id} onClick={() => getApplyCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
-                                                        {data.status}
+                                                        Apply
                                                     </button>
                                                 </Link>
 

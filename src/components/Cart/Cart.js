@@ -152,17 +152,12 @@ const Cart = () => {
 
                     </Link>
 
-                    <Link to="/">
+                    <Link to="/checkout">
                         <button className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
                             <p >
                                 Payment Method</p>
                         </button>
                     </Link>
-
-
-
-
-
                     <Link to="/file-uploads">
                         <button
                             className=" w-10 h-10 border border-theme-shade rounded-full"
