@@ -48,6 +48,7 @@ function App() {
   const [getTotalImage, setTotalImage] = useState(0);
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
+  const [getSrvPopBool, setSrvPopBool] = useState(true); 
 
   return (
     <FileContextManager.Provider
@@ -70,7 +71,7 @@ function App() {
         setTotalImage
       ]}
     >
-      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails]}>
+      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <menuContextManager.Provider value={[getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu]}>
             <div className="App">

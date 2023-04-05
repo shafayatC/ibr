@@ -17,6 +17,7 @@ function UpgradeAccount({upgradCallBack}) {
               ></i>
             </div>
             <hr></hr>
+            
             <div className="flex">
               <div className="w-full px-4 py-4  border-r-2 border-r-white">
                 <p className="text-xl font-semibold">Free Plan (AI)</p>

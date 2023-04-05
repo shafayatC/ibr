@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
 import "./style.css";
+import { useLocation } from "react-router-dom";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -15,6 +16,9 @@ const stripePromise = loadStripe("pk_test_51MhYL2B2l7RkdP70xKB6OCtOkZyPm8kKV7Wlt
 
 export default function CheckOutPage() {
   const [clientSecret, setClientSecret] = useState("");
+
+  const location = useLocation()
+  const { totalPrice } = location.state
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -40,7 +44,7 @@ export default function CheckOutPage() {
       <div className="col-span-4 self-center text-center font-bold text-6xl">
         <div className="priceCircle">
           <h2>Total</h2>
-          <h5>$1.87</h5>
+          <h5>{totalPrice}</h5>
         </div>
       </div>
       <div className="col-span-3">

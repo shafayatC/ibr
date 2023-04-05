@@ -107,8 +107,6 @@ const Cart = () => {
                                             <tbody>
                                                 {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_detail_charge_breakdown !== 'undefined' &&
                                                     getCostDetails.results.order_detail_charge_breakdown.map((data, index) => (
-
-
                                                         < tr className="border-b dark:border-neutral-500" >
                                                             <td className="whitespace-nowrap px-6 py-0 font-medium">{index + 1}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.name}</td>
@@ -152,7 +150,7 @@ const Cart = () => {
 
                     </Link>
 
-                    <Link to="/checkout">
+                    <Link to="/checkout" state={{ totalPrice: getCostDetails.results.order_master_charge_breakdown[0].total_charge }}>
                         <button className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
                             <p >
                                 Payment Method</p>
