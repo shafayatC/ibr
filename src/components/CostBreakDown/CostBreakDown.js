@@ -11,7 +11,7 @@ const CostBreakDown = () => {
     // };
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
-    const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+    const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
     // const [getCostDetails, setCostDetails] = useState({})
 
     const constDetailFunc = () => {
@@ -24,7 +24,8 @@ const CostBreakDown = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                setCostDetails(data)})
+                setCostDetails(data)
+            })
     }
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
@@ -47,8 +48,8 @@ const CostBreakDown = () => {
                                 <p className="font-semibold text-sm">Raw Image(s): </p>
                             </div>
                             {Object.keys(getCostDetails).length > 0 &&
-                            typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' && 
-                            getCostDetails.results.order_master_charge_breakdown.length > 0 &&
+                                typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
+                                getCostDetails.results.order_master_charge_breakdown.length > 0 &&
                                 <div>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_time}</p>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_no}</p>
@@ -100,7 +101,7 @@ const CostBreakDown = () => {
                                                             <td className="whitespace-nowrap px-6 py-0 font-medium">{index + 1}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.name}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.no_of_services_in_images}</td>
-                                                            <td className="whitespace-nowrap px-6 py-0">{data.charge_per_images}</td>
+                                                            <td className="whitespace-nowrap px-6 py-0">{data.charge_per_image}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.total}</td>
                                                         </tr>
                                                     ))}
@@ -115,16 +116,16 @@ const CostBreakDown = () => {
 
                     <div className="flex justify-end w-[700px]  mt-3 mx-auto gap-5">
                         <div>
-                            <p className="font-semibold text-sm">Total Charge: </p> <hr></hr>
+                            <p className="font-semibold text-sm">Net Charge: </p> <hr></hr>
                             <p className="font-semibold text-sm">Discount: </p><hr></hr>
-                            <p className="font-semibold text-sm">Net Charge: </p><hr></hr>
+                            <p className="font-semibold text-sm">Total Charge: </p><hr></hr>
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-8">
 
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             </div>
                         }
                     </div>

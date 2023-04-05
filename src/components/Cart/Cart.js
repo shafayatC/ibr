@@ -113,7 +113,7 @@ const Cart = () => {
                                                             <td className="whitespace-nowrap px-6 py-0 font-medium">{index + 1}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.name}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.no_of_services_in_images}</td>
-                                                            <td className="whitespace-nowrap px-6 py-0">{data.charge_per_images}</td>
+                                                            <td className="whitespace-nowrap px-6 py-0">{data.charge_per_image}</td>
                                                             <td className="whitespace-nowrap px-6 py-0">{data.total}</td>
                                                         </tr>
                                                     ))}
