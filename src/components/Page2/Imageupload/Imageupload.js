@@ -666,7 +666,7 @@ function Imageupload() {
     <>
     
     <Page2>
-      <div className="container mx-auto">
+      <div className="container  mx-auto">
         {
           console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
         }
@@ -793,53 +793,56 @@ function Imageupload() {
                 ))}
               </div>
 
-              <div className="flex fixed bottom-12 justify-between lg:w-[85%]    ">
-                {/* Previous button */}
-                <div>
-                  <button
-                    disabled={currentPage === 1}
-                    className="cursor-pointer text-white disabled:text-gray-500"
-                    onClick={previousPage}
-                  >
-                    <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
-                  </button></div>
-                {/* Next Button */}
-                <div>
-                  <button
-                    disabled={currentPage === Math.ceil(actionStatus == "filter" ? getSuggest.length / itemsPerPage : getAfterBeforeImg.length / itemsPerPage)}
-                    className="cursor-pointer text-white disabled:text-gray-500"
-                    onClick={nextPage}
-                  >
-                    <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
-                  </button>
-                </div>
-              </div>
-              {getAfterBeforeImg.length > 0 &&
+              <div className="absolute bottom-0 w-full ">
 
-                <div className="flex fixed bottom-0 bg-light-black  justify-center rounded-md px-4 gap-5 w-[350px] right-5">
-                  <div className="text-white self-center font-semibold text-sm py-1">
-                    <p>Image Count : {getAfterBeforeImg.length}</p>
-
-                    <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+                <div className="flex  justify-between w-full    ">
+                  {/* Previous button */}
+                  <div>
+                    <button
+                      disabled={currentPage === 1}
+                      className="cursor-pointer text-white disabled:text-gray-500"
+                      onClick={previousPage}
+                    >
+                      <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
+                    </button></div>
+                  {/* Next Button */}
+                  <div>
+                    <button
+                      disabled={currentPage === Math.ceil(actionStatus == "filter" ? getSuggest.length / itemsPerPage : getAfterBeforeImg.length / itemsPerPage)}
+                      className="cursor-pointer text-white disabled:text-gray-500"
+                      onClick={nextPage}
+                    >
+                      <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
+                    </button>
                   </div>
-                  {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
-
-                    <div className="self-center text-sm">
-                      <Link to="/cart">
-                        <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-                      </Link>
-                    </div>
-                    :
-                    <div className="self-center text-sm">
-
-                      <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-
-                    </div>
-                    : ""
-                  }
                 </div>
+                {getAfterBeforeImg.length > 0 &&
 
-              }
+                  <div className="flex bg-light-black  justify-center w-full rounded-md px-4 gap-5  right-5">
+                    <div className="text-white self-center font-semibold text-sm py-1">
+                      <p>Image Count : {getAfterBeforeImg.length}</p>
+
+                      <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+                    </div>
+                    {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
+
+                      <div className="self-center text-sm">
+                        <Link to="/cart">
+                          <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+                        </Link>
+                      </div>
+                      :
+                      <div className="self-center text-sm">
+
+                        <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+
+                      </div>
+                      : ""
+                    }
+                  </div>
+
+                }
+              </div>
             </div>
           }
 

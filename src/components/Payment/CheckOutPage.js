@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
 import "./style.css";
+import stripe from '../../images/stripe.png'
 import { useLocation } from "react-router-dom";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -40,21 +41,25 @@ export default function CheckOutPage() {
   };
 
   return (
-    <div className="checkoutPageWrap grid grid-cols-7 p-10">
-      <div className="col-span-4 self-center text-center font-bold text-6xl">
-        <div className="priceCircle">
+    <div className="container mx-auto">
+      <div className="checkoutPageWrap grid grid-cols-7 relative p-10">
+        <div className="col-span-4 self-center text-center font-bold text-6xl">
+          <div className="absolute bottom-0 right-0"><p className="text-xs text-teal-500">Powered By Stripe</p></div>
+          <div className="priceCircle">
           <h2>Total</h2>
           <h5>{totalPrice}</h5>
+          </div>
         </div>
-      </div>
-      <div className="col-span-3">
-        {clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm />
-          </Elements>
-        )}
-      </div>
+        <div className="col-span-3">
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          )}
 
+        </div>
+
+      </div>
     </div>
   );
 }

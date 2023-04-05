@@ -69,6 +69,7 @@ function ApplyVoucher() {
             .then(data => {
                 if (data.status_code == 200) {
                     console.log(promData)
+
                     document.getElementById(promoId).innerText = 'Apply';
                     document.getElementById(promoId).disabled = true
                 }
