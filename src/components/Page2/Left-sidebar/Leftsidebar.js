@@ -19,37 +19,37 @@ const Leftsidebar = () => {
     setLockMenuBool,
   ] = useContext(FileContextManager);
 
-  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+  const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
   const menuList = () => {
 
     getMenuId.length > 0 &&
-    fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
-      headers: {
-        'Authorization': 'bearer ' + getToken,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          if (data.status_code == 200) {
-            setIsLoaded(true);
-            setDashboardMenu(data.results.side_bar_list);
-          }
-        },
-
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-          console.log(error);
+      fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
+        headers: {
+          'Authorization': 'bearer ' + getToken,
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-      );
+      })
+        .then((res) => res.json())
+        .then(
+          (data) => {
+            if (data.status_code == 200) {
+              setIsLoaded(true);
+              setDashboardMenu(data.results.side_bar_list);
+            }
+          },
+
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            console.log(error);
+          }
+        );
   };
 
   useEffect(() => {
-   getDashboardMenu.length < 1 && menuList()
+    getDashboardMenu.length < 1 && menuList()
   }, [getMenuId]);
 
   return (
@@ -82,18 +82,18 @@ const Leftsidebar = () => {
           className="hfull  text-white top-0 left-0 z-40 transition-transform -translate-x-full  border-gray-200 sm:translate-x-0 border-opacity-0"
           aria-label="Sidebar"
         >
-          <div className="w-40  hfull pb-4  overflow-y-auto shadow-2xl bg-black-shade">
+          <div className="w-full h-full pb-4  overflow-y-auto shadow-2xl bg-black-shade">
             <div className="leftBarMenuWrap space-y-2 mt-16">
               {getDashboardMenu.length > 0 &&
                 getDashboardMenu.map((item, index) =>
-                  <div key={index}>
+                  <div className="" key={index}>
                     {item.name == "Folder" && (
                       <div
                         key={index}
                         onClick={() =>
                           document.querySelector("#filepicker").click()
                         }
-                        className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
+                        className={`leftBarMenu  items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
@@ -218,7 +218,7 @@ const Leftsidebar = () => {
                       </div>
                     )}
 
-                    {item.name == "Cost Breakdown" && getAfterBeforeImg.length > 0 &&(
+                    {item.name == "Cost Breakdown" && getAfterBeforeImg.length > 0 && (
                       <Link
                         to={"/cost-breakdown"}
 
