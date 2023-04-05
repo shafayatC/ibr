@@ -51,8 +51,8 @@ function ApplyVoucher() {
     const getApplyCouponFunc = (promoId) => {
 
         const promData = {
-            "order_master_image_id": promoId,
-            "user_promotions_settings_id": getOrderMasterId,
+            "order_master_image_id": getOrderMasterId,
+            "user_promotions_settings_id": promoId,
             "is_used": true
         }
         fetch(
@@ -69,7 +69,7 @@ function ApplyVoucher() {
         ).then(res => res.json())
             .then(data => {
                 if (data.status_code == 200) {
-                    console.log(data)
+                    console.log(promData)
                     document.getElementById(promoId).innerText = 'Apply';
                     document.getElementById(promoId).disabled = true
                 }
@@ -110,9 +110,11 @@ function ApplyVoucher() {
                                             <div className="card-actions flex justify-between">
                                                 <p className="text-xs pt-2">2K Users use this today</p>
 
-                                                <button id={data.id} onClick={() => getApplyCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
-                                                    {data.status}
-                                                </button>
+                                                <Link to="/cart">
+                                                    <button id={data.id} onClick={() => getApplyCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-green-800">
+                                                        {data.status}
+                                                    </button>
+                                                </Link>
 
 
                                             </div>
