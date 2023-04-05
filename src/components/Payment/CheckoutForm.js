@@ -82,11 +82,14 @@ export default function CheckoutForm() {
     layout: "tabs"
   }
 
+  const onChangeMail = (e)=>{
+    setEmail(e.value)
+  }
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id="link-authentication-element"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={onChangeMail}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
