@@ -25,6 +25,7 @@ import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
 import { Link } from "react-router-dom";
 import CompareImage from "../../CompareImage/CompareImage";
+import ServiceTypePop from "../../ServiceTypePop/ServiceTypePop";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -83,7 +84,7 @@ function Imageupload() {
 
 
 
-  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool] = useContext(OrderContextManager);
   const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
 
 
@@ -648,6 +649,11 @@ function Imageupload() {
   const callBackIsAiProccess = (bl) => {
     setCallbackAiBool(bl)
   }
+  const callbackSrvTyepPop = (bl)=>{
+    console.log(bl)
+    setSrvPopBool(bl)
+  }
+
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -657,6 +663,8 @@ function Imageupload() {
   }, [getAfterBeforeImg]);
 
   return (
+    <>
+    
     <Page2>
       <div className="container  mx-auto">
         {
@@ -1184,7 +1192,9 @@ function Imageupload() {
         {getSuggestBool == true && <div onClick={() => setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div>}
       </div>
     </Page2>
-
+    {console.log("getSrvPopBool : " + getSrvPopBool)}
+    {getSrvPopBool == true && <ServiceTypePop callbackSrvTyepPop={callbackSrvTyepPop}/>}
+</>
   );
 }
 
