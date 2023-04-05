@@ -22,6 +22,7 @@ import Imageupload from "./components/Page2/Imageupload/Imageupload";
 import Cart from "./components/Cart/Cart";
 import ApplyVoucher from "./components/ApplyVoucher/ApplyVoucher";
 import CheckOutPage from "./components/Payment/CheckOutPage";
+import ThankYouPage from "./components/Payment/ThankYouPage";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -93,6 +94,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/apply-voucher" element={<ApplyVoucher />} />
                 <Route path="/checkout" element={<CheckOutPage />} />
+                <Route path="/thank-you-page" element={<ThankYouPage />} />
               </Routes>
             </div>
           </menuContextManager.Provider>

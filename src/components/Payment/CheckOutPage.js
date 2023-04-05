@@ -21,7 +21,7 @@ export default function CheckOutPage() {
     fetch("http://103.197.204.22:8008/v.03.13.23/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({"net_charge": 458}),
+      body: JSON.stringify({ "net_charge": 458 }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -36,12 +36,21 @@ export default function CheckOutPage() {
   };
 
   return (
-    <div className="App">
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
-      )}
+    <div className="checkoutPageWrap grid grid-cols-7 p-10">
+      <div className="col-span-4 self-center text-center font-bold text-6xl">
+        <div className="priceCircle">
+          <h2>Total</h2>
+          <h5>$1.87</h5>
+        </div>
+      </div>
+      <div className="col-span-3">
+        {clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        )}
+      </div>
+
     </div>
   );
 }
