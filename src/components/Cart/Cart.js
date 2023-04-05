@@ -62,22 +62,22 @@ const Cart = () => {
                                             1
                                         </span>
 
-                                        <span className="hidden sm:block"> Details </span>
+                                        <span className="hidden sm:block"> Upload </span>
                                     </li>
 
                                     <li className="flex items-center gap-2 bg-white p-2">
                                         <span
-                                            className="h-6 w-6 rounded-full bg-green-400 text-center text-[10px] font-bold leading-6 text-white"
+                                            className="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px] font-bold leading-6 "
                                         >
                                             2
                                         </span>
 
-                                        <span className="hidden sm:block"> Address </span>
+                                        <span className="hidden sm:block"> Process </span>
                                     </li>
 
                                     <li className="flex items-center gap-2 bg-white p-2">
                                         <span
-                                            className="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px] font-bold leading-6"
+                                            className="h-6 w-6 rounded-full  bg-green-400 text-center text-white text-[10px] font-bold leading-6"
                                         >
                                             3
                                         </span>
@@ -89,7 +89,7 @@ const Cart = () => {
                         </div>
 
                     </div>
-                    <div className=" w-[600px] mx-auto mt-12 ">
+                    <div className=" w-[650px] mx-auto mt-12 ">
                         <div className="flex flex-col">
                             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div className="inline-block min-w-full py-0 sm:px-6 lg:px-8">
@@ -126,7 +126,7 @@ const Cart = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end w-[600px]  mt-3 mx-auto gap-5">
+                    <div className="flex justify-end w-[690px] mt-4 mx-auto gap-5">
                         <div>
                             <p className="font-semibold text-sm">Net Charge:</p> <hr></hr>
                             <p className="font-semibold text-sm">Discount: </p><hr></hr>
@@ -135,8 +135,8 @@ const Cart = () => {
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
 
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount} <span className="pl-3 cursor-pointer"><i class="fa-regular text-red-600 fa-circle-xmark"></i></span></p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             </div>
                         }
