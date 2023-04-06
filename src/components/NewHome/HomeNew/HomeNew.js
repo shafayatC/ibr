@@ -16,13 +16,15 @@ import "./style.css";
 import Loading_2 from "../../Loading/Loading_2";
 
 const Home = () => {
-  const [getMenuId, setMenuId,  getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+  const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
 
   return (
     <div id="home">
       <div className=" container m-auto ">
         <div className="home_right flex">
           <div>
+            <p className="text-white font-bold text-7xl text-left ml-10 mb-4">IMAGE EDITING <br></br>SERVICES</p>
+            {/* <h2>Services</h2> */}
             <video
               className="mt-0 ml-10 mb-10"
               width="65%"
@@ -40,7 +42,8 @@ const Home = () => {
             </div>
           </div>
           <div>
-            <h2>AI-Professionals Collaboration</h2>
+            <p className="text-white font-bold text-3xl text-left mt-28  mb-4">AI-PROFESSIONALS COLLABORATION </p>
+
             {getMenu.map(
               (data, index) =>
                 data.type == "upload" && (

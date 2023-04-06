@@ -23,6 +23,7 @@ import Cart from "./components/Cart/Cart";
 import ApplyVoucher from "./components/ApplyVoucher/ApplyVoucher";
 import CheckOutPage from "./components/Payment/CheckOutPage";
 import ThankYouPage from "./components/Payment/ThankYouPage";
+import MyOrder from "./components/MyOrder/MyOrder";
 import localforage from "localforage";
 import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
 
@@ -50,6 +51,7 @@ function App() {
   const [getTotalImage, setTotalImage] = useState(0);
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
+
   const [getSrvPopBool, setSrvPopBool] = useState(true); 
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getApiBasicUrl, setApiBasicUrl] = useState("http://103.197.204.22:8007/api/2023-02");
@@ -101,6 +103,7 @@ function App() {
                 <Route path="/apply-voucher" element={<ApplyVoucher />} />
                 <Route path="/checkout" element={<CheckOutPage />} />
                 <Route path="/thank-you-page" element={<ThankYouPage />} />
+                <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/editing-package" element={<ServiceTypePage />} />
               </Routes>
             </div>
