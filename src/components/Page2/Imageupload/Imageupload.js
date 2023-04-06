@@ -649,7 +649,7 @@ function Imageupload() {
   const callBackIsAiProccess = (bl) => {
     setCallbackAiBool(bl)
   }
-  const callbackSrvTyepPop = (bl)=>{
+  const callbackSrvTyepPop = (bl) => {
     console.log(bl)
     setSrvPopBool(bl)
   }
@@ -664,233 +664,183 @@ function Imageupload() {
 
   return (
     <>
-    
-    <Page2>
-      <div className="container  mx-auto">
-        {
-          console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
-        }
-        {console.log(getAfterBeforeImg)}
-        {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
-        <div className="flex items-center justify-center mt-3">
-          <i className="fa-solid fa-filter text-white mr-1"></i>
-          <p className="text-white mr-4">Filter</p>
-          <div className="relative w-[395px] z-40">
-            <input
-              value={getFilterText}
-              onChange={filterFunc}
-              maxLength={200}
-              type="text"
-              className="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-10 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Filter File or Folder"
-            />
 
-            {getFilterText.length > 0 && (
-              <button
-                onClick={clearFilterText}
-                className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer"
-              >
-                <i className="fa-sharp fa-solid fa-xmark"></i>
-              </button>
-            )}
+      <Page2>
+        <div className="container  mx-auto">
+          {
+            console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
+          }
+          {console.log(getAfterBeforeImg)}
+          {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
+          <div className="flex items-center justify-center mt-3">
+            <i className="fa-solid fa-filter text-white mr-1"></i>
+            <p className="text-white mr-4">Filter</p>
+            <div className="relative w-[395px] z-40">
+              <input
+                value={getFilterText}
+                onChange={filterFunc}
+                maxLength={200}
+                type="text"
+                className="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-10 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Filter File or Folder"
+              />
 
-            <div id="matchsort" className="absolute bg-white z-40 left-[50%] min-w-full">
-              {getSuggestBool == true &&
-                getSuggest.map(
-                  (data, index) =>
-                    index < 2 && (
-                      <button
-                        key={index}
-                        onClick={() =>
-                          filterBysuggest(data.output_urls[0].filter_image_file_path)
-                        }
-                        className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
-                      >
-                        {data.output_urls[0].filter_image_file_path}
-                      </button>
-                    )
-                )}
+              {getFilterText.length > 0 && (
+                <button
+                  onClick={clearFilterText}
+                  className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer"
+                >
+                  <i className="fa-sharp fa-solid fa-xmark"></i>
+                </button>
+              )}
+
+              <div id="matchsort" className="absolute bg-white z-40 left-[50%] min-w-full">
+                {getSuggestBool == true &&
+                  getSuggest.map(
+                    (data, index) =>
+                      index < 2 && (
+                        <button
+                          key={index}
+                          onClick={() =>
+                            filterBysuggest(data.output_urls[0].filter_image_file_path)
+                          }
+                          className="w-full text-left px-[10px] py-[7px] text-gray-900 border-gray-200 border-solid border-b-[1px]"
+                        >
+                          {data.output_urls[0].filter_image_file_path}
+                        </button>
+                      )
+                  )}
+              </div>
             </div>
           </div>
-        </div>
-        <div id="middleImageWrap " className="mt-1">
-          <input
-            onChange={uploadFile}
-            type="file"
-            id="filepicker"
-            name="fileList"
-            directory=""
-            webkitdirectory=""
-          />
+          <div id="middleImageWrap " className="mt-1">
+            <input
+              onChange={uploadFile}
+              type="file"
+              id="filepicker"
+              name="fileList"
+              directory=""
+              webkitdirectory=""
+            />
 
-          <input
-            onChange={uploadFile}
-            type="file"
-            id="singleImagePick"
-            name="imageFile"
-            className="hidden"
-            accept="image/jpeg, image/png"
-            multiple
-          />
-          <button
-            className="hidden"
-            id="updatePlan"
-            onClick={UpdatePlan}
-          ></button>
-          <button
-            className="hidden"
-            id="costPlan"
-            onClick={CostPlan}
-          ></button>
+            <input
+              onChange={uploadFile}
+              type="file"
+              id="singleImagePick"
+              name="imageFile"
+              className="hidden"
+              accept="image/jpeg, image/png"
+              multiple
+            />
+            <button
+              className="hidden"
+              id="updatePlan"
+              onClick={UpdatePlan}
+            ></button>
+            <button
+              className="hidden"
+              id="costPlan"
+              onClick={CostPlan}
+            ></button>
 
-          <button className="hidden" id="clearData" onClick={clearData}></button>
+            <button className="hidden" id="clearData" onClick={clearData}></button>
 
-          {getTotalImage > getProccessImgIndex && <Loading_2 />}
+            {getTotalImage > getProccessImgIndex && <Loading_2 />}
 
-          {getAfterBeforeImg.length > 0 && actionStatus == "" &&
-            <div>
-              {/*fileInfo.length !== getAfterBeforeImg.length &&
+            {getAfterBeforeImg.length > 0 && actionStatus == "" &&
+              <div>
+                {/*fileInfo.length !== getAfterBeforeImg.length &&
               <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
               </div>
             */}
 
-              {/* 
+                {/* 
            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > getProccessImgIndex ? fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${fileInfo.length > getProccessImgIndex ?  fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length } gap-4 pt-5 ml-2  pr-3`}>
            */}
-              <div className={`grid sm:grid-cols-1 md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-2 ml-2  pr-3`}>
-                {currentImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className={
-                      getAfterBeforeImg.length === 1 && "flex justify-center"
-                    }
-                  >
-                    {getTotalImage > getProccessImgIndex ?
-                      <div
-                        className={`img-container  bg-no-repeat img-bag
+                <div className={`grid sm:grid-cols-1 md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-2 ml-2  pr-3`}>
+                  {currentImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className={
+                        getAfterBeforeImg.length === 1 && "flex justify-center"
+                      }
+                    >
+                      {getTotalImage > getProccessImgIndex ?
+                        <div
+                          className={`img-container  bg-no-repeat img-bag
                      ${getAfterBeforeImg.length === 1
-                            ? "h-[400px] justify-center"
-                            : "img-bag"
-                          }
+                              ? "h-[400px] justify-center"
+                              : "img-bag"
+                            }
                      `}
-                        style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
-                      /> :
-                      <div
-                        className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                          style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
+                        /> :
+                        <div
+                          className={`img-container  bg-no-repeat  cursor-pointer img-bag
                       ${getAfterBeforeImg.length === 1
-                            ? "h-[400px] justify-center"
-                            : "img-bag"
-                          }
+                              ? "h-[400px] justify-center"
+                              : "img-bag"
+                            }
                    `}
-                        onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
-                        style={{
-                          backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
-                        }}
-                      />}
+                          onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                          style={{
+                            backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
+                          }}
+                        />}
 
 
-                  </div>
-                ))}
-              </div>
-
-              <div className="absolute bottom-0 w-full ">
-
-                <div className="flex  justify-between w-full    ">
-                  {/* Previous button */}
-                  <div>
-                    <button
-                      disabled={currentPage === 1}
-                      className="cursor-pointer text-white disabled:text-gray-500"
-                      onClick={previousPage}
-                    >
-                      <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
-                    </button></div>
-                  {/* Next Button */}
-                  <div>
-                    <button
-                      disabled={currentPage === Math.ceil(actionStatus == "filter" ? getSuggest.length / itemsPerPage : getAfterBeforeImg.length / itemsPerPage)}
-                      className="cursor-pointer text-white disabled:text-gray-500"
-                      onClick={nextPage}
-                    >
-                      <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
-                    </button>
-                  </div>
-                </div>
-                {getAfterBeforeImg.length > 0 &&
-
-                  <div className="flex bg-light-black  justify-center w-full rounded-md px-4 gap-5  right-5">
-                    <div className="text-white self-center font-semibold text-sm py-1">
-                      <p>Image Count : {getAfterBeforeImg.length}</p>
-
-                      <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
                     </div>
-                    {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
+                  ))}
+                </div>
 
-                      <div className="self-center text-sm">
-                        <Link to="/cart">
-                          <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-                        </Link>
-                      </div>
-                      :
-                      <div className="self-center text-sm">
-
-                        <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-
-                      </div>
-                      : ""
-                    }
-                  </div>
-
-                }
               </div>
-            </div>
-          }
+            }
 
-          {getAfterBeforeImg.length > 0 && actionStatus == "filter" && (
-            <>
-              <div
-                className={`grid sm:grid-cols-1 md:grid-cols-${getSuggest.length > 3 ? "4" : getSuggest.length
-                  } lg:grid-cols-${getSuggest.length > 3 ? "4" : getSuggest.length
-                  } gap-4 pt-5 pr-3`}
-              >
-                {currentImages.map(
-                  (image, index) =>
-                    image.output_urls[0].compressed_raw_image_public_url.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && (
-                      <div key={index}
-                        className={
-                          getSuggest.length === 1 && "flex justify-center"
-                        }
-                      >
-                        {getTotalImage > getProccessImgIndex ?
-                          <div
-                            className={`img-container  bg-no-repeat img-bag
+            {getAfterBeforeImg.length > 0 && actionStatus == "filter" && (
+              <>
+                <div
+                  className={`grid sm:grid-cols-1 md:grid-cols-${getSuggest.length > 3 ? "4" : getSuggest.length
+                    } lg:grid-cols-${getSuggest.length > 3 ? "4" : getSuggest.length
+                    } gap-4 pt-5 pr-3`}
+                >
+                  {currentImages.map(
+                    (image, index) =>
+                      image.output_urls[0].compressed_raw_image_public_url.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && (
+                        <div key={index}
+                          className={
+                            getSuggest.length === 1 && "flex justify-center"
+                          }
+                        >
+                          {getTotalImage > getProccessImgIndex ?
+                            <div
+                              className={`img-container  bg-no-repeat img-bag
                        ${getSuggest.length === 1
-                                ? "h-[400px] justify-center"
-                                : "img-bag"
-                              }
+                                  ? "h-[400px] justify-center"
+                                  : "img-bag"
+                                }
                        `}
-                            style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
-                          /> :
-                          <div
-                            className={`img-container  bg-no-repeat  cursor-pointer img-bag
+                              style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
+                            /> :
+                            <div
+                              className={`img-container  bg-no-repeat  cursor-pointer img-bag
                         ${getSuggest.length === 1
-                                ? "h-[400px] justify-center"
-                                : "img-bag"
-                              }
+                                  ? "h-[400px] justify-center"
+                                  : "img-bag"
+                                }
                      `}
-                            onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
-                            style={{
-                              backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
-                            }}
-                          />}
+                              onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
+                              style={{
+                                backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
+                              }}
+                            />}
 
-                      </div>
-                    )
-                )}
-              </div>
-            </>
-          )}
-          {/*
+                        </div>
+                      )
+                  )}
+                </div>
+              </>
+            )}
+            {/*
 
         {fileInfo.length > 0 && actionStatus == "filter" && (
           <>
@@ -922,15 +872,15 @@ function Imageupload() {
         {getAfterBeforeImg.length > 0 && actionStatus !== "process" && (
           <div className="flex fixed bg-light-black w-full justify-center  bottom-0">
             {/* Previous button */}
-          {/* <button
+            {/* <button
               disabled={currentPage === 1}
               className="cursor-pointer text-white disabled:text-gray-600"
               onClick={previousPage}
             >
               <i className="fa-solid fa-arrow-left mr-4"></i>
             </button> */}
-          {/* Process */}
-          {/* <div className="">
+            {/* Process */}
+            {/* <div className="">
               <button
                 disabled={getAfterBeforeImg.length > getProccessImgIndex}
                 onClick={processImagesAi}
@@ -939,7 +889,7 @@ function Imageupload() {
                   className={`fa-solid fa-arrows-spin pt-1 text-center text-4xl cursor-pointer font-bold ${getAfterBeforeImg.length > getProccessImgIndex ? 'text-gray-600' : 'text-white'}`}></i>
               </button>
             </div> */}
-          {/* Next Button
+            {/* Next Button
             <button
               disabled={currentPage === Math.ceil(getAfterBeforeImg.length / itemsPerPage)}
               className="cursor-pointer text-white disabled:text-gray-600"
@@ -947,9 +897,9 @@ function Imageupload() {
             >
               <i className="fa-solid fa-arrow-right ml-4"></i>
             </button> */}
-          {/* Image/total count */}
+            {/* Image/total count */}
 
-          {
+            {
 /*
             <div className="text-white ml-60 text-sm mt-2">
               <p>Image Count : {getAfterBeforeImg.length}</p>
@@ -964,7 +914,7 @@ function Imageupload() {
           </div>
         )}
 */}
-          {/* {getAfterBeforeImg.length > 0 &&
+            {/* {getAfterBeforeImg.length > 0 &&
 
             <div className="flex fixed bg-light-black  justify-center rounded-md px-4 gap-5 right-16  bottom-2">
               <div className="text-white self-center font-semibold text-sm py-1">
@@ -991,69 +941,69 @@ function Imageupload() {
 
           } */}
 
-          {showImage &&
-            <div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: -10,
-                  right: 0,
-                  bottom: 0,
-                  zIndex: 99,
-                  display: "flex",
-                  justifyContent: "center",
-                  backgroundImage: `url(${bg})`
-                }}
-              >
-                <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50">
+            {showImage &&
+              <div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: -10,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 99,
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundImage: `url(${bg})`
+                  }}
+                >
+                  <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50">
 
-                  <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>
-                  <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
-                  <div className="  pt-20 pl-16 absolute ">
-                    <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                      {getCallbackAiBool ?
-                        <CompareImage
-                          topImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
-                          bottomImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].default_compressed_output_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
-                        /> :
-                        <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
-                      }
-                      <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].order_image_detail_sequence_no : getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
+                    <p className=" text-white px-2 py-1 rounded-lg absolute top-1 bg-teal-500 left-20  font-semibold">Beautify imagery with Ad-on Professional Services</p>
+                    <p className="bg-teal-500 text-white absolute top-1 right-0 mb-10 font-semibold py-1 px-4 w-60 rounded-l-3xl">Choose Your Services</p>
+                    <div className="  pt-20 pl-16 absolute ">
+                      <div className="w-[400px] h-[400px] border border-theme-shade  relative">
+                        {getCallbackAiBool ?
+                          <CompareImage
+                            topImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url}
+                            bottomImage={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].default_compressed_output_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].default_compressed_output_public_url}
+                          /> :
+                          <img className="h-full" src={actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].compressed_raw_image_public_url : getAfterBeforeImg[getImgIndex].output_urls[0].compressed_raw_image_public_url} />
+                        }
+                        <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{actionStatus == "filter" ? getSuggest[getImgIndex].output_urls[0].order_image_detail_sequence_no : getAfterBeforeImg[getImgIndex].output_urls[0].order_image_detail_sequence_no}</p>
+                      </div>
                     </div>
+
+                    {getAfterBeforeImg.length > 0 && <ServiceMenu callBackIsAiProccess={callBackIsAiProccess} imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
                   </div>
 
-                  {getAfterBeforeImg.length > 0 && <ServiceMenu callBackIsAiProccess={callBackIsAiProccess} imageFile={actionStatus == "filter" ? getSuggest[getImgIndex] : getAfterBeforeImg[getImgIndex]} />}
-                </div>
-
-                <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
-                  <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
-                    <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
-                    {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
-                  </button>
-                  <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
-                    <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
-                    {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
-                  </button>
-                </div>
-                <div className="absolute right-4 top-4 flex gap-2">
-                  <button
-                    onClick={() => deletImage(getImgIndex)}
-                    className="bg-white w-10 h-10 rounded-full border border-theme-shade"
-                  >
-                    <i className="fa-regular fa-trash-can"></i>
-                  </button>
-                  <button
-                    onClick={handleClose}
-                    className="bg-white w-10 h-10 border border-theme-shade rounded-full"
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
+                  <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
+                    <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
+                      <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
+                      {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
+                    </button>
+                    <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
+                      <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
+                      {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
+                    </button>
+                  </div>
+                  <div className="absolute right-4 top-4 flex gap-2">
+                    <button
+                      onClick={() => deletImage(getImgIndex)}
+                      className="bg-white w-10 h-10 rounded-full border border-theme-shade"
+                    >
+                      <i className="fa-regular fa-trash-can"></i>
+                    </button>
+                    <button
+                      onClick={handleClose}
+                      className="bg-white w-10 h-10 border border-theme-shade rounded-full"
+                    >
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-          {/* showImage && (
+            }
+            {/* showImage && (
           <div
             className="img-container"
             style={{
@@ -1101,7 +1051,7 @@ function Imageupload() {
           </div>
           )*/}
 
-          {/*
+            {/*
             actionStatus == "process" &&
             currentImages.map((data, index) => (
               <div key={index}>
@@ -1109,92 +1059,145 @@ function Imageupload() {
               </div>
             ))
             */}
-          {
-            actionStatus == "process" &&
-            <ProccessImage />
-          }
+            {
+              actionStatus == "process" &&
+              <ProccessImage />
+            }
 
-          {getUpdatePlan && (
-            <div className=" absolute top-0 left-[50%] z-50 " style={{ transform: 'translateX(-50%)' }}>
-              <UpgradeAccount upgradCallBack={upgradCallBack} />
-            </div>
-          )}
-          {/* {getCostBreak && (
+            {getUpdatePlan && (
+              <div className=" absolute top-0 left-[50%] z-50 " style={{ transform: 'translateX(-50%)' }}>
+                <UpgradeAccount upgradCallBack={upgradCallBack} />
+              </div>
+            )}
+            {/* {getCostBreak && (
           <div className=" bg-white absolute top-0 left-0 -ml-2 w-full h-full z-[999]">
             <CostBreakDown costCallBack={costCallBack} />
           </div>
         )} */}
 
-          {/* <div className="hidden">
+            {/* <div className="hidden">
           <CouponCode></CouponCode>
         </div> */}
-        </div>
-        <ToastContainer />
-        {/* --------------------Login Modal Start------------------- */}
-        <>
-          {isOpen && (
-            <div className="fixed inset-0 z-50 top-48 ">
-              <div className="flex  bg-white w-[400px] mx-auto pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div
-                  className="fixed inset-0 "
-                  aria-hidden="true"
-                  onClick={closeModal}
-                >
-                  <div className="absolute inset-0 bg-gray-600 opacity-80"></div>
+          </div>
+          <ToastContainer />
+          {/* --------------------Login Modal Start------------------- */}
+          <>
+            {isOpen && (
+              <div className="fixed inset-0 z-50 top-48 ">
+                <div className="flex  bg-white w-[400px] mx-auto pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                  <div
+                    className="fixed inset-0 "
+                    aria-hidden="true"
+                    onClick={closeModal}
+                  >
+                    <div className="absolute inset-0 bg-gray-600 opacity-80"></div>
 
-                </div>
+                  </div>
 
-                <div
-                  className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
-                  role="dialog"
-                  aria-modal="true"
-                  aria-labelledby="modal-headline"
-                >
-                  <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div className="sm:flex sm:items-start">
+                  <div
+                    className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-headline"
+                  >
+                    <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div className="sm:flex sm:items-start">
 
-                      <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3
-                          className="text-2xl leading-6 font-medium text-gray-900"
-                          id="modal-headline"
-                        >
-                          Please Login to your account
-                        </h3>
+                        <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                          <h3
+                            className="text-2xl leading-6 font-medium text-gray-900"
+                            id="modal-headline"
+                          >
+                            Please Login to your account
+                          </h3>
 
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className=" py-4 flex gap-4 justify-center ">
+                    <div className=" py-4 flex gap-4 justify-center ">
 
-                    <Link to="/log-in">
+                      <Link to="/log-in">
+                        <button
+
+                          className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
+                        >
+                          Login
+                        </button>
+                      </Link>
                       <button
 
-                        className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
+                        className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
+                        onClick={closeModal}
                       >
-                        Login
+                        Cancel
                       </button>
-                    </Link>
-                    <button
-
-                      className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
-                      onClick={closeModal}
-                    >
-                      Cancel
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </>
-        {/* -------------Login Modal End------------------- */}
+            )}
+          </>
+          {/* -------------Login Modal End------------------- */}
 
-        {getSuggestBool == true && <div onClick={() => setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div>}
-      </div>
-    </Page2>
-    {console.log("getSrvPopBool : " + getSrvPopBool)}
-    {getSrvPopBool == true && <ServiceTypePop callbackSrvTyepPop={callbackSrvTyepPop}/>}
-</>
+          {getSuggestBool == true && <div onClick={() => setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div>}
+        </div>
+        
+        {getAfterBeforeImg.length > 0 &&
+
+        <div className="imageBottomMenu absolute container left-[50%] bottom-0 w-full ">
+
+          <div className="flex  justify-between w-full    ">
+            {/* Previous button */}
+            <div>
+              <button
+                disabled={currentPage === 1}
+                className="cursor-pointer text-white disabled:text-gray-500"
+                onClick={previousPage}
+              >
+                <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
+              </button></div>
+            {/* Next Button */}
+            <div>
+              <button
+                disabled={currentPage === Math.ceil(actionStatus == "filter" ? getSuggest.length / itemsPerPage : getAfterBeforeImg.length / itemsPerPage)}
+                className="cursor-pointer text-white disabled:text-gray-500"
+                onClick={nextPage}
+              >
+                <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
+              </button>
+            </div>
+          </div>
+
+            <div className="flex bg-light-black  justify-center w-full rounded-md px-4 gap-5  right-5">
+              <div className="text-white self-center font-semibold text-sm py-1">
+                <p>Image Count : {getAfterBeforeImg.length}</p>
+
+                <p>Total Bill : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+              </div>
+              {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
+
+                <div className="self-center text-sm">
+                  <Link to="/cart">
+                    <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+                  </Link>
+                </div>
+                :
+                <div className="self-center text-sm">
+
+                  <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
+
+                </div>
+                : ""
+              }
+            </div>
+
+          
+        </div>
+        }
+      </Page2>
+      {console.log("getSrvPopBool : " + getSrvPopBool)}
+      {getSrvPopBool == true && <ServiceTypePop callbackSrvTyepPop={callbackSrvTyepPop} />}
+    </>
   );
 }
 
