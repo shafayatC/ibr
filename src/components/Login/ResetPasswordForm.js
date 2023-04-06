@@ -3,12 +3,13 @@ import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { userContextManager } from "../../App";
+import { apiUrlContextManager, userContextManager } from "../../App";
 
 const ResetPasswordForm = () => {
 
     const [getMail, setMail] = useState("");
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
     const showToastMessage = (msg) => {
       toast.success(msg, {
@@ -39,7 +40,7 @@ const ResetPasswordForm = () => {
         const regMail = { "email": getMail }
         try {
   
-          const rawResponse = await fetch('http://103.197.204.22:8007/api/2023-02/reset-password-form', {
+          const rawResponse = await fetch(getApiBasicUrl+'/reset-password-form', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

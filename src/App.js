@@ -23,11 +23,14 @@ import Cart from "./components/Cart/Cart";
 import ApplyVoucher from "./components/ApplyVoucher/ApplyVoucher";
 import CheckOutPage from "./components/Payment/CheckOutPage";
 import ThankYouPage from "./components/Payment/ThankYouPage";
+import localforage from "localforage";
+import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
 export const userContextManager = createContext();
 export const menuContextManager = createContext();
+export const apiUrlContextManager = createContext(); 
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
@@ -41,7 +44,6 @@ function App() {
   const [getDashboardMenu, setDashboardMenu] = useState([])
   const [getUserInfo, setUserInfo] = useState({});
   const [getToken, setToken] = useState("p_k_hKqzczG8QEAdqdy0h5OMOO0ngQ4nawou");
-  const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getOrderMasterId, setOrderMasterId] = useState("");
   const [getSubscriptionPlanId, setSubscriptionPlanId] = useState("");
   const [actionStatus, setActionStatus] = useState("");
@@ -49,6 +51,8 @@ function App() {
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
   const [getSrvPopBool, setSrvPopBool] = useState(true); 
+  const [getModelBaseUrl, setModelBaseUrl] = useState("");
+  const [getApiBasicUrl, setApiBasicUrl] = useState("http://103.197.204.22:8007/api/2023-02");
 
   return (
     <FileContextManager.Provider
@@ -71,9 +75,10 @@ function App() {
         setTotalImage
       ]}
     >
-      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool]}>
+      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <menuContextManager.Provider value={[getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu]}>
+            <apiUrlContextManager.Provider value={[getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl]}>
             <div className="App">
               <InitialDataLoad />
               <Navbar items={getMenu}></Navbar>
@@ -86,7 +91,7 @@ function App() {
                 <Route path="/log-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
-                <Route path="/resetpassword/:token" element={<ResetPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
                 <Route path="/confirm-password/:token" element={<SetPassword />} />
                 <Route path="/question-answer" element={<QuestionAnswer />} />
                 <Route path="/upgrade-account" element={<UpgradeAccount />} />
@@ -96,8 +101,10 @@ function App() {
                 <Route path="/apply-voucher" element={<ApplyVoucher />} />
                 <Route path="/checkout" element={<CheckOutPage />} />
                 <Route path="/thank-you-page" element={<ThankYouPage />} />
+                <Route path="/editing-package" element={<ServiceTypePage />} />
               </Routes>
             </div>
+            </apiUrlContextManager.Provider>
           </menuContextManager.Provider>
         </userContextManager.Provider>
       </OrderContextManager.Provider>

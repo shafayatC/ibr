@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import offer from "../CouponCode/img/coupon_2.jpg"
 import logo from "../../images/logo.png"
-import { OrderContextManager, userContextManager } from "../../App";
+import { OrderContextManager, apiUrlContextManager, userContextManager } from "../../App";
 import { Link } from "react-router-dom";
 import Page2 from "../Page2/Page2";
 
@@ -23,9 +23,8 @@ function ApplyVoucher() {
         setIsOpen(false);
     };
 
-    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager)
-
-
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager)
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -34,7 +33,7 @@ function ApplyVoucher() {
     const getOfferFunc = () => {
 
         console.log("hello")
-        fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
+        fetch(getApiBasicUrl+'/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -54,8 +53,7 @@ function ApplyVoucher() {
             "user_promotions_settings_id": promoId,
             "is_used": true
         }
-        fetch(
-            "http://103.197.204.22:8007/api/2023-02/apply-voucher",
+        fetch(getApiBasicUrl+"/apply-voucher",
             {
                 method: "POST",
                 headers: {

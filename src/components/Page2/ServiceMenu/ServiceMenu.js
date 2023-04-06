@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
-import { FileContextManager, userContextManager } from '../../../App';
+import { FileContextManager, apiUrlContextManager, userContextManager } from '../../../App';
 import './service.css';
 
 const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
@@ -26,6 +26,8 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
         setImageData
     ] = useContext(FileContextManager);
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+
     const { TextArea } = Input;
 
     const onChangeService = (e, data) => {
@@ -59,7 +61,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
             "service_item_id": data,
             "is_checked": e.target.checked
         }
-        fetch("http://103.197.204.22:8007/api/2023-02/order-image-service-update",
+        fetch(getApiBasicUrl+"/order-image-service-update",
             {
                 method: "POST",
                 headers: {
@@ -84,7 +86,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
 
             setImageDetail(imageFile.output_urls[0])
 
-            fetch(`http://103.197.204.22:8007/api/2023-02/order-detail-info-by-id?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
+            fetch(`${getApiBasicUrl}/order-detail-info-by-id?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
                 headers: {
                     'Authorization': 'bearer ' + getToken,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -100,7 +102,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
                 })
 
 
-            fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
+            fetch(`${getApiBasicUrl}/order-image-service?order_image_detail_id=${imageFile.output_urls[0].order_image_detail_id}`, {
                 headers: {
                     'Authorization': 'bearer ' + getToken,
                     'Content-Type': 'application/x-www-form-urlencoded'

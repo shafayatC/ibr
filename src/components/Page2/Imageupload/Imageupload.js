@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
+  apiUrlContextManager,
   FileContextManager,
   menuContextManager,
   OrderContextManager,
@@ -26,6 +27,7 @@ import TotalBill from "./TotalBill";
 import { Link } from "react-router-dom";
 import CompareImage from "../../CompareImage/CompareImage";
 import ServiceTypePop from "../../ServiceTypePop/ServiceTypePop";
+import localforage from "localforage";
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,9 +86,9 @@ function Imageupload() {
 
 
 
-  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool] = useContext(OrderContextManager);
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool] = useContext(OrderContextManager);
   const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
-
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
   const itemsPerPage = 8;
 
@@ -141,7 +143,7 @@ function Imageupload() {
 
     // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
-    fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
+    fetch(getApiBasicUrl+"/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -308,7 +310,7 @@ function Imageupload() {
 
     // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
-    fetch("http://103.197.204.22:8007/api/2023-02/order-master-info", {
+    fetch(getApiBasicUrl+"/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -396,8 +398,8 @@ function Imageupload() {
     //console.log(await formData);
     // Promise.all(formData).then(data => console.log(data))
     try {
-      const response = await fetch(
-        "http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing",
+     // const response = await fetch(`http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing`,
+      const response = await fetch(`${getModelBaseUrl}upload-for-ai-processing`,
         {
           method: "POST",
           body: formData /*
@@ -581,6 +583,7 @@ function Imageupload() {
     setLockMenuBool(false);
     setTotalImage(0)
     setProccessImgIndex(0)
+    setAfterBeforeImg([])
   };
 
   const handleClose = () => {
@@ -614,7 +617,7 @@ function Imageupload() {
       "is_deleted": true
     }
 
-    fetch("http://103.197.204.22:8007/api/2023-02/update-order-image-detail", {
+    fetch(getApiBasicUrl+"/update-order-image-detail", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -664,7 +667,6 @@ function Imageupload() {
 
   return (
     <>
-
       <Page2>
         <div className="container  mx-auto">
           {
@@ -1141,7 +1143,7 @@ function Imageupload() {
 
           {getSuggestBool == true && <div onClick={() => setSuggestBool(false)} className="absolute w-full h-full left-0 top-0 z-30"></div>}
         </div>
-        
+
         {getAfterBeforeImg.length > 0 &&
 
         <div className="imageBottomMenu absolute container left-[50%] bottom-0 w-full ">

@@ -4,6 +4,7 @@ import imgTrain from "./img/train.svg";
 import logo from "../../../images/logo_2.png";
 import "./navbar.css";
 import { menuContextManager, OrderContextManager, userContextManager } from "../../../App";
+import localforage from "localforage";
 
 const Navbar = ({ items }) => {
   //const [error, setError] = useState(null);
@@ -18,7 +19,9 @@ const Navbar = ({ items }) => {
   };
 
   const signOutFunc = () => {
+    localforage.removeItem("userInfo"); 
     setUserInfo({});
+
   };
 
   return (

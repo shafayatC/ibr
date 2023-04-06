@@ -2,7 +2,7 @@ import { Input } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { FileContextManager, userContextManager } from '../../../../App';
+import { FileContextManager, apiUrlContextManager, userContextManager } from '../../../../App';
 import CompareImage from '../../../CompareImage/CompareImage';
 import ViewDwnld from '../../../Page3/ViewDwnld';
 import ServiceMenu from '../../ServiceMenu/ServiceMenu';
@@ -34,6 +34,8 @@ const ProccessImage = () => {
         setImageData
     ] = useContext(FileContextManager);
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+
     const { TextArea } = Input;
 
     const itemsPerPage = 8;
@@ -60,7 +62,7 @@ const ProccessImage = () => {
         const ImageIndex = getAfterBeforeImg.map((fl) => { return parseInt(fl.output_urls[0].order_image_detail_sequence_no) }).indexOf(imgInt);
 
         ImageIndex > -1 &&
-            fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id}`, {
+            fetch(`${getApiBasicUrl}/order-image-service?order_image_detail_id=${getAfterBeforeImg[ImageIndex].output_urls[0].order_image_detail_id}`, {
                 headers: {
                     'Authorization': 'bearer ' + getToken,
                     'Content-Type': 'application/x-www-form-urlencoded'
