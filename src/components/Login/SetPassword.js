@@ -2,13 +2,14 @@ import React, { useContext, useState } from "react";
 import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { userContextManager } from "../../App";
+import { apiUrlContextManager, userContextManager } from "../../App";
 
 const SetPassword = () => {
 
   const [getPassword, setPassword] =  useState("");
   const [getConfirmPass, setConfirmPass] = useState(""); 
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
   let { token } = useParams();
 
@@ -34,7 +35,7 @@ const SetPassword = () => {
       }
       try {
   
-        const rawResponse = await fetch('http://103.197.204.22:8007/api/2023-02/set-password', {
+        const rawResponse = await fetch(getApiBasicUrl+'/set-password', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -46,7 +47,7 @@ const SetPassword = () => {
   
         const res = await rawResponse.json();
         console.log(res); 
-        res.status_code == 205 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
+        res.status_code == 200 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
   
       } catch (error) {
         showToastMessageWarning(error)

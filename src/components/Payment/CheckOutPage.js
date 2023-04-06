@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -6,6 +6,7 @@ import CheckoutForm from "./CheckoutForm";
 import "./style.css";
 import stripe from '../../images/stripe.png'
 import { useLocation } from "react-router-dom";
+import { apiUrlContextManager } from "../../App";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -17,13 +18,14 @@ const stripePromise = loadStripe("pk_test_51MhYL2B2l7RkdP70xKB6OCtOkZyPm8kKV7Wlt
 
 export default function CheckOutPage() {
   const [clientSecret, setClientSecret] = useState("");
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
-  const location = useLocation()
-  const { totalPrice } = location.state
+  const location = useLocation();
+  const { totalPrice } = location.state;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://103.197.204.22:8008/v.03.13.23/create-payment-intent", {
+    fetch(getModelBaseUrl+"create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ "net_charge": 458 }),

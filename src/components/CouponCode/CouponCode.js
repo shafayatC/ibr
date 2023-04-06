@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import offer from "../CouponCode/img/coupon_2.jpg"
 import logo from "../../images/logo.png"
-import { userContextManager } from "../../App";
+import { apiUrlContextManager, userContextManager } from "../../App";
 import { Link } from "react-router-dom";
 import Page2 from "../Page2/Page2";
 
@@ -11,9 +11,11 @@ import Page2 from "../Page2/Page2";
 function CouponCode() {
 
     const [getStatus, setStatus] = useState("")
-
-
     const [isOpen, setIsOpen] = useState(false);
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+    const [getCouponDetails, setCouponDetails] = useState([])
+
 
     const openModal = () => {
         setIsOpen(true);
@@ -25,14 +27,10 @@ function CouponCode() {
 
 
 
-    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-
-    const [getCouponDetails, setCouponDetails] = useState([])
-
     const getOfferFunc = () => {
 
         console.log(getToken)
-        fetch('http://103.197.204.22:8007/api/2023-02/promotions', {
+        fetch(getApiBasicUrl+'/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -51,8 +49,7 @@ function CouponCode() {
         const promData = {
             "promotions_settings_id": promoId
         }
-        fetch(
-            "http://103.197.204.22:8007/api/2023-02/user-promotions",
+        fetch(getApiBasicUrl+"/user-promotions",
             {
                 method: "POST",
                 headers: {

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Toggle from "../../Toggle/Toggle";
 import { Modal, Button } from "flowbite-react";
 import "./style.css";
-import { FileContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../../App";
+import { apiUrlContextManager, FileContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../../App";
 import { Link } from "react-router-dom";
 
 const Leftsidebar = () => {
@@ -21,11 +21,15 @@ const Leftsidebar = () => {
 
   const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool] = useContext(OrderContextManager);
 
   const menuList = () => {
 
+    console.log("menuid : " +  getMenuId + " token : "+ getToken); 
+    
     getMenuId.length > 0 &&
-      fetch(`http://103.197.204.22:8007/api/2023-02/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
+      fetch(`${getApiBasicUrl}/side-menu-bar?menu_id=${getMenuId}&user_id=`, {
         headers: {
           'Authorization': 'bearer ' + getToken,
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -144,25 +148,22 @@ const Leftsidebar = () => {
                     )}
 
                     {item.name == "AI/Manual" && (
-                      <div
-                        key={index}
-
-                        onClick={() =>
-                          document.querySelector("#").click()
-                        }
+                      <Link
+                      to={"/editing-package"}
+                      key={index}
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >
                         <i className={item.icon}></i> {item.name}
                         {item.highlight.length > 0 && (
                           <span>{item.highlight}</span>
                         )}
-                      </div>
+                      </Link>
                     )}
                     {item.name == "Subscription" && (
                       <div
                         key={index}
                         onClick={() =>
-                          document.querySelector("#updatePlan").click()
+                          getSrvPopBool == false && document.querySelector("#updatePlan").click()
                         }
                         className={`leftBarMenu items-center p-2 text-base font-normal text-white hover:bg-light-black hover:border-r-2 hover:border-r-white ${getLockMenuBool && item.is_default_locked == true && " pointer-events-none text-gray-500"}`}
                       >

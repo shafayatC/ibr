@@ -1,7 +1,7 @@
 import hoody from "./img/hoody.jpg";
 import { BiShow, BiDownload } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
-import { FileContextManager, OrderContextManager, userContextManager } from "../../App";
+import { FileContextManager, OrderContextManager, apiUrlContextManager, userContextManager } from "../../App";
 import ReactCompareImage from "react-compare-image";
 
 import { Input } from 'antd';
@@ -26,6 +26,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
     getImageData,
     setImageData] = useContext(FileContextManager);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
@@ -91,7 +92,7 @@ const ViewDwnld = ({ proccessImgIndex }) => {
   const ordeImageServiceFunc = () => {
 
     typeof getCurrImage.order_image_detail_id !== 'undefined' &&
-      fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${getCurrImage.order_image_detail_id}`, {
+      fetch(`${getApiBasicUrl}/order-image-service?order_image_detail_id=${getCurrImage.order_image_detail_id}`, {
         headers: {
           'Authorization': 'bearer ' + getToken,
           'Content-Type': 'application/x-www-form-urlencoded'

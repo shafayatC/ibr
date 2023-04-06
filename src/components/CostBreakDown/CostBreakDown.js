@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { menuContextManager, OrderContextManager, userContextManager } from "../../App";
+import { apiUrlContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
 
@@ -10,12 +10,13 @@ const CostBreakDown = () => {
     //     costCallBack(false);
     // };
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
     const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
     // const [getCostDetails, setCostDetails] = useState({})
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
     const constDetailFunc = () => {
-        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+        fetch(`${getApiBasicUrl}/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
