@@ -13,3 +13,11 @@
 .hfull {
   height: 100%;
 }
+
+.photo {
+  background-image: url("../../img/Background-for-RA.png");
+  min-height: calc(100vh - 44px);
+  background-size: cover;
+  background-attachment: fixed;
+ 
+}

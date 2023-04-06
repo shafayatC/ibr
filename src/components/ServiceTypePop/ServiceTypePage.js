@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { OrderContextManager, apiUrlContextManager, userContextManager } from "../../App";
+import { Link, useNavigate } from "react-router-dom";
+import Page2 from "../Page2/Page2";
 
-function ServiceTypePop({ callbackSrvTyepPop }) {
+function ServiceTypePage() {
 
     const [getServiceInfo, setServiceInfo] = useState({});
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager);
     const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
-
-    const HandleClose = () => {
-        callbackSrvTyepPop(false);
-    };
+    const naviagate = useNavigate();
 
     const serviceTypeFunc = () => {
 
@@ -29,22 +28,27 @@ function ServiceTypePop({ callbackSrvTyepPop }) {
 
     const setServiceTypeFunc = (id) => {
         setServiceTypeId(id)
-        HandleClose()
+        naviagate('/file-uploads')
     }
     useEffect(() => {
         serviceTypeFunc();
-    }, [])
+    }, [getServiceTypeId])
     return (
         <>
+        {console.log(getServiceTypeId)}
+        <Page2>
+
             {
                 Object.keys(getServiceInfo).length > 0 && getServiceInfo.results.no_of_services > 1 &&
 
                 <div className="fixed left-[50%] top-0 h-68 w-[620px] rounded-md text-white m-auto mt-40 bg-[#202123] z-50" style={{ transform: 'translateX(-50%)' }}>
                     <div className="flex justify-between ">
                         <h2 className="px-4 py-3 font-bold ">Your Account</h2>
-                        <i onClick={HandleClose}
-                            className="fa-solid fa-xmark pr-6 py-3 text-xl cursor-pointer text-[#8E8EA0]"
-                        ></i>
+                        <Link to={"/file-uploads"}>
+                                <i
+                                    className="fa-solid fa-xmark pr-6 py-3 text-xl cursor-pointer text-[#8E8EA0]"
+                                ></i>
+                        </Link>
                     </div>
                     <hr></hr>
                     <div className="flex">
@@ -64,7 +68,8 @@ function ServiceTypePop({ callbackSrvTyepPop }) {
                     </div>
                 </div>
             }
+        </Page2>
         </>
     );
 }
-export default ServiceTypePop;
+export default ServiceTypePage;

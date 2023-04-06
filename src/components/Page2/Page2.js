@@ -7,7 +7,7 @@ import "./style.css";
 
 function Page2({ children }) {
   return (
-    <div className="Page2 bg-gray-shade">
+    <div className="Page2 bg-gray-shade photo">
       {/* <Navbar /> */}
       <div className="pageContent_wrap grid grid-cols-1 md:grid-cols-5 lg:grid-cols-8 gap-1">
         <div className="leftSideBarWrap">

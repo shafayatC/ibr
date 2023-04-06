@@ -2,15 +2,16 @@ import React, { useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import { userContextManager } from "../../App";
+import { apiUrlContextManager, userContextManager } from "../../App";
 
 const SignUp = () => {
 
   const [getMail, setMail] = useState("");
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
-  const showToastMessage = () => {
-    toast.success("Successfully Signup", {
+  const showToastMessage = (msg) => {
+    toast.success(msg, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
@@ -40,7 +41,7 @@ const SignUp = () => {
       const regMail = { "email": getMail }
       try {
 
-        const rawResponse = await fetch('http://103.197.204.22:8007/api/2023-02/system-sign-up', {
+        const rawResponse = await fetch(getApiBasicUrl+'/system-sign-up', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -51,7 +52,7 @@ const SignUp = () => {
         });
 
         const res = await rawResponse.json();
-        res.status_code == 200 ? showToastMessage() : showToastMessageWarning(res.message)
+        res.status_code == 200 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
   
       } catch (error) {
         console.log(error)

@@ -15,6 +15,7 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
   const [isImageVisible, setImageVisibility] = useState(false);
 
@@ -68,7 +69,7 @@ const ViewDwnld_2 = ({ imagesBeforeAfter }) => {
 
   const ordeImageServiceFunc = () => {
 
-    fetch(`http://103.197.204.22:8007/api/2023-02/order-image-service?order_image_detail_id=${imagesBeforeAfter.order_image_service_id}`, {
+    fetch(`${getApiBasicUrl}/order-image-service?order_image_detail_id=${imagesBeforeAfter.order_image_service_id}`, {
       headers: {
         'Authorization': 'bearer ' + getToken,
         'Content-Type': 'application/x-www-form-urlencoded'

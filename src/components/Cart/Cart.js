@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { menuContextManager, OrderContextManager, userContextManager } from "../../App";
+import { apiUrlContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
 // import { Steps } from 'antd';
@@ -8,23 +8,54 @@ import Page2 from "../Page2/Page2";
 const Cart = () => {
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getModelBaseUrl, setModelBaseUrl, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
+    const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
     const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
     // const [getCostDetails, setCostDetails] = useState({})
 
     const constDetailFunc = () => {
 
-        console.log("hello")
-        fetch(`http://103.197.204.22:8007/api/2023-02/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
+        fetch(`${getApiBasicUrl}/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
             .then(res => res.json())
-            .then(data => { setCostDetails(data); console.log(data) })
+            .then(data => { 
+                setCostDetails(data)
+                console.log(data)
+            })
     }
+
+    const removeCouponOffer = () => {
+        console.log(getOrderMasterId)
+        const promData = {
+            "order_master_image_id": getOrderMasterId,
+            "user_promotions_settings_id": null,
+            "is_used": true
+        }
+        fetch(getApiBasicUrl + "/apply-voucher",{
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': 'bearer ' + getToken
+                },
+                body: JSON.stringify(promData),
+            }
+        )
+        .then(res => res.json())
+        .then(data => {
+                if (data.status_code == 200) {
+                    console.log(data)
+                    constDetailFunc()
+                    document.getElementById("cross").style.display = 'none'; 
+                }
+            })
+    }
+
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
     }, [getOrderMasterId]);
@@ -132,9 +163,12 @@ const Cart = () => {
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
-
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount} <span className="pl-3 cursor-pointer"><i class="fa-regular text-red-600 fa-circle-xmark"></i></span></p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount} 
+                                    {getCostDetails.results.order_master_charge_breakdown[0].discount !== '$ 0.00' && 
+                                    <span className="pl-3 cursor-pointer"> <i onClick={removeCouponOffer} id="cross" className="fa-regular text-red-600 fa-circle-xmark"></i></span>
+                                }
+                                </p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             </div>
                         }
