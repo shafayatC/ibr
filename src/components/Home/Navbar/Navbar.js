@@ -61,7 +61,7 @@ const Navbar = ({ items }) => {
         >
           <div className="menuWrap flex flex-col gap-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
             {typeof items !== 'undefined' && items.map((item, index) =>
-
+              !item.parent_menu_list_id &&
               <div
                 key={index}
                 className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2 " : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2" : " py-2"}
@@ -83,7 +83,7 @@ const Navbar = ({ items }) => {
                   {items.map((subItem, subIndex) =>
                     item.id === subItem.parent_menu_list_id &&
                     <div key={subIndex}
-                      className="menuItem"
+                      className={`menuItem ${getUserInfo.status_code !== 200 && 'displayNone'}`}
                       style={{
                         order: subItem.sequence_no
                       }}

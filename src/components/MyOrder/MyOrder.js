@@ -8,6 +8,8 @@ import { Input, Space } from 'antd';
 const MyOrder = () => {
 
     const { Search } = Input;
+    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
+    const [getOrderDetailsInfo, setOrderDetailsInfo] = useState([])
 
     const downloadContent = (
         // <div>
@@ -48,8 +50,6 @@ const MyOrder = () => {
 
     )
 
-    const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getOrderDetailsInfo, setOrderDetailsInfo] = useState([])
 
     const getOrderDetailFunc = () => {
 
@@ -68,9 +68,10 @@ const MyOrder = () => {
     }
 
     useEffect(() => {
-        getOrderDetailFunc()
+        
+       getUserInfo.status_code == 200 && getOrderDetailFunc()
 
-    }, []);
+    }, [getUserInfo]);
 
     return (
         <div className="container mx-auto bg-gray-100  pb-10">
@@ -107,8 +108,6 @@ const MyOrder = () => {
 
                             <p className=" mt-5">Delivery Date </p>
                             <p className="text-xs  text-gray-400">{data.delivery_date}</p>
-
-
 
                             <hr className="mt-6"></hr>
 
