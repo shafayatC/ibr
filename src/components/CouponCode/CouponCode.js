@@ -12,7 +12,7 @@ function CouponCode() {
 
     const [getStatus, setStatus] = useState("")
     const [isOpen, setIsOpen] = useState(false);
-    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getCouponDetails, setCouponDetails] = useState([])
 
@@ -30,7 +30,7 @@ function CouponCode() {
     const getOfferFunc = () => {
 
         console.log(getToken)
-        fetch(getApiBasicUrl+'/promotions', {
+        fetch(getApiBasicUrl + '/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -49,7 +49,7 @@ function CouponCode() {
         const promData = {
             "promotions_settings_id": promoId
         }
-        fetch(getApiBasicUrl+"/user-promotions",
+        fetch(getApiBasicUrl + "/user-promotions",
             {
                 method: "POST",
                 headers: {
@@ -83,7 +83,7 @@ function CouponCode() {
 
                 <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
                     <div className="flex justify-center mb-10">
-                        <h2 className="text-4xl mt-4 text-green-700 font-semibold">PROMO CODE |</h2>
+                        <h2 className="text-4xl mt-4 text-green-700 font-semibold">VOUCHER |</h2>
                         <img className="h-12 w-60 mt-3" src={logo} alt="" />
                     </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 mx-10 justify-items-center mt-10">

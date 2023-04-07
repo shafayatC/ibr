@@ -8,7 +8,7 @@ const SignUp = () => {
 
   const [getMail, setMail] = useState("");
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
   const showToastMessage = (msg) => {
     toast.success(msg, {
@@ -41,19 +41,19 @@ const SignUp = () => {
       const regMail = { "email": getMail }
       try {
 
-        const rawResponse = await fetch(getApiBasicUrl+'/system-sign-up', {
+        const rawResponse = await fetch(getApiBasicUrl + '/system-sign-up', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'bearer '+ getToken
+            'Authorization': 'bearer ' + getToken
           },
           body: JSON.stringify(regMail)
         });
 
         const res = await rawResponse.json();
         res.status_code == 200 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
-  
+
       } catch (error) {
         console.log(error)
       }

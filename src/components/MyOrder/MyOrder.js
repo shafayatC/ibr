@@ -1,7 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
 import { userContextManager } from "../../App";
+import { Popover } from 'antd';
+import { Radio } from 'antd';
+import logo from '../../images/logo.png'
 
 const MyOrder = () => {
+
+    const downloadContent = (
+        // <div>
+        //     <p>JPG</p>
+        //     <p>PNG</p>
+        //     <p>PSD</p>
+        // </div>
+        <div>
+            <Radio.Group defaultValue={1}>
+                <Radio value={1}>JPG</Radio>
+                <Radio value={2}>PNG</Radio>
+                <Radio value={3}>PSD</Radio>
+
+
+            </Radio.Group>
+            <div className="flex justify-end text-xs">
+                <button className="bg-green-400 text-white rounded-lg py-1 px-2 mt-2 font-semibold">Download</button>
+            </div>
+        </div>
+    );
+
+    const shareContent = (
+        <div className=" p-2">
+            <p className="text-xs mb-3 font-bold text-teal-800 ">Share with</p>
+            <div className="grid grid-cols-4 gap-3 justify-items-center">
+                <p className="cursor-pointer"><i class="fa-brands text-blue-400 text-2xl fa-facebook-messenger"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-facebook"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-whatsapp"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-400 fa-twitter"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-linkedin"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-google-drive"></i></p>
+                <p className="cursor-pointer"><i class="fa-brands text-2xl text-red-400 fa-instagram"></i></p>
+                <p className="cursor-pointer"><i class="fa-solid text-2xl text-green-400 fa-envelope"></i></p>
+            </div>
+
+        </div>
+
+
+    )
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getOrderDetailsInfo, setOrderDetailsInfo] = useState([])
@@ -29,7 +71,11 @@ const MyOrder = () => {
 
     return (
         <div className="container mx-auto bg-gray-100  pb-10">
-            <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2>
+            <div className="flex justify-center mb-5">
+                <h2 className="text-4xl mt-4 text-green-700 font-bold"><i class="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
+                <img className="h-12 w-60 mt-3" src={logo} alt="" />
+            </div>
+            {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
             <div className="grid lg:grid-cols-4 justify-items-center gap-y-6 mx-20">
                 {console.log(getOrderDetailsInfo)}
                 {Object.keys(getOrderDetailsInfo).length > 0 && typeof getOrderDetailsInfo.results.user_order_master_info_list !== 'undefined' &&
@@ -50,6 +96,7 @@ const MyOrder = () => {
                             <p className="text-xs  text-gray-400">{data.delivery_date}</p>
 
 
+
                             <hr className="mt-6"></hr>
 
                             <div className="flex  justify-between mt-6">
@@ -57,14 +104,18 @@ const MyOrder = () => {
                                     <p><i class="fa-regular fa-eye flex justify-center"></i></p>
                                     <p className="text-sm">View</p>
                                 </div>
-                                <div className="cursor-pointer">
-                                    <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
-                                    <p className="text-sm">Share</p>
-                                </div>
-                                <div className="cursor-pointer">
-                                    <p><i class="fa-solid fa-download flex justify-center"></i></p>
-                                    <p className="text-sm">Download</p>
-                                </div>
+                                <Popover content={shareContent} trigger="click">
+                                    <div className="cursor-pointer">
+                                        <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                                        <p className="text-sm">Share</p>
+                                    </div>
+                                </Popover>
+                                <Popover content={downloadContent} trigger="click">
+                                    <div className="cursor-pointer">
+                                        <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                                        <p className="text-sm">Download</p>
+                                    </div>
+                                </Popover>
 
                             </div>
 
