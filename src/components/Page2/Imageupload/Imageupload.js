@@ -949,29 +949,34 @@ function Imageupload() {
             </div>
 
           } */}
-            {getTotalImage > 0 && getTotalImage === getProccessImgIndex && 
+            {getTotalImage > 0 && getTotalImage === getProccessImgIndex &&
 
-            <Space
-              direction="vertical"
-              style={{
-                width: '400px',
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
+              <Space
+                direction="vertical"
+                style={{
+                  textAlign: "start",
+                  width: '400px',
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: "999"
 
 
-              }}
-            >
-              <Alert
-                message="Error Text"
-                description="Error Description Error Description Error Description Error Description Error Description Error Description"
-                type="error"
-                closable
-                onClose={onClose}
-              />
-            </Space>
-          }
+
+                }}
+              >
+                <Alert
+                  style={{ fontWeight: "500" }}
+
+                  message="Add-on Image Services"
+                  description="Please click on the image to access additional services..."
+
+                  closable
+                  onClose={onClose}
+                />
+              </Space>
+            }
             {showImage &&
               <div>
                 <div

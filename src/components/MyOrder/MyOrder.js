@@ -3,8 +3,11 @@ import { userContextManager } from "../../App";
 import { Popover } from 'antd';
 import { Radio } from 'antd';
 import logo from '../../images/logo.png'
+import { Input, Space } from 'antd';
 
 const MyOrder = () => {
+
+    const { Search } = Input;
 
     const downloadContent = (
         // <div>
@@ -71,10 +74,20 @@ const MyOrder = () => {
 
     return (
         <div className="container mx-auto bg-gray-100  pb-10">
-            <div className="flex justify-center mb-5">
+            <div className="flex justify-center ml-10 mb-5">
                 <h2 className="text-4xl mt-4 text-green-700 font-bold"><i class="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
                 <img className="h-12 w-60 mt-3" src={logo} alt="" />
+                <div className="ml-9 mt-5">
+                    <Space direction="vertical" size="middle">
+                        <Space.Compact>
+                            <Search placeholder="Search Your Order" allowClear />
+                        </Space.Compact>
+                    </Space>
+                </div>
             </div>
+
+
+
             {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
             <div className="grid lg:grid-cols-4 justify-items-center gap-y-6 mx-20">
                 {console.log(getOrderDetailsInfo)}
