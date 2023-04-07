@@ -62,15 +62,18 @@ const InitialDataLoad = () => {
   const getUserInfoFunc =()=>{
     localforage.getItem("userInfo").then(data => {
       if(data !== null && Object.keys(data).length > 0 ){
+        console.log(data)
         setUserInfo(data); 
         setToken(data.results.token); 
         defaultSettingFunc(data.results.token)
       }
     })
+    .catch((error) => {console.log(error)});
   }
+
   useEffect(() => {
-    getUserInfoFunc()
     defaultSettingFunc(getToken);
+    getUserInfoFunc()
     menuFunc()
   }, []);
 

@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { userContextManager } from "../../App";
+import { OrderContextManager, apiUrlContextManager, userContextManager } from "../../App";
 import { Popover } from 'antd';
 import { Radio } from 'antd';
 import logo from '../../images/logo.png'
 import { Input, Space } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
 
 const MyOrder = () => {
 
     const { Search } = Input;
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getOrderDetailsInfo, setOrderDetailsInfo] = useState([])
-
+    const [getOrderDetailsInfo, setOrderDetailsInfo] = useState([]); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
+    const navigation = useNavigate(); 
     const downloadContent = (
         // <div>
         //     <p>JPG</p>
@@ -46,94 +48,107 @@ const MyOrder = () => {
             </div>
 
         </div>
-
-
     )
 
 
     const getOrderDetailFunc = () => {
 
-        console.log(getToken)
-        fetch('http://103.197.204.22:8007/api/2023-02/user-order-master-info', {
+        console.log("getToken "+ getToken)
+
+        fetch(getApiBasicUrl+'/user-order-master-info', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setOrderDetailsInfo(data)
-            })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            data.status_code == 200 &&  setOrderDetailsInfo(data)
+        })
     }
+/*
+    const viewOrder = (orderMasterId) => {
 
-    useEffect(() => {
-        
-       getUserInfo.status_code == 200 && getOrderDetailFunc()
+        fetch(`http://103.197.204.22:8008/v.03.13.23/user-order-detail-info?order_image_master_id=${orderMasterId}`, {
+            headers: {
+                'Authorization': 'bearer ' + getToken,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            data.status_code && setOrderDetailInfo(data.results.user_order_detail_info_list); 
+            navigation('/order-info-page');
+            //  setOrderDetailsInfo(data)
+        })
+    }
+*/
+useEffect(() => {
 
-    }, [getUserInfo]);
+    getUserInfo.status_code == 200 && getOrderDetailFunc()
 
-    return (
-        <div className="container mx-auto bg-gray-100  pb-10">
-            <div className="flex justify-center ml-10 mb-5">
-                <h2 className="text-4xl mt-4 text-green-700 font-bold"><i class="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
-                <img className="h-12 w-60 mt-3" src={logo} alt="" />
-                <div className="ml-9 mt-5">
-                    <Space direction="vertical" size="middle">
-                        <Space.Compact>
-                            <Search placeholder="Search Your Order" allowClear />
-                        </Space.Compact>
-                    </Space>
-                </div>
+}, [getUserInfo]);
+
+return (
+    <div className="container mx-auto bg-gray-100  pb-10">
+        <div className="flex justify-center ml-10 mb-5">
+            <h2 className="text-4xl mt-4 text-green-700 font-bold"><i class="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
+            <img className="h-12 w-60 mt-3" src={logo} alt="" />
+            <div className="ml-9 mt-5">
+                <Space direction="vertical" size="middle">
+                    <Space.Compact>
+                        <Search placeholder="Search Your Order" allowClear />
+                    </Space.Compact>
+                </Space>
             </div>
-
-
-
-            {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
-            <div className="grid lg:grid-cols-4 justify-items-center gap-y-6 mx-20">
-                {console.log(getOrderDetailsInfo)}
-                {Object.keys(getOrderDetailsInfo).length > 0 && typeof getOrderDetailsInfo.results.user_order_master_info_list !== 'undefined' &&
-                    getOrderDetailsInfo.results.user_order_master_info_list.map((data, index) => (
-                        <div className="w-64 bg-white rounded-lg h-full  p-6">
-                            <div className="flex justify-between mb-4">
-                                <div>
-                                    <p className="font-semibold text-lg">{data.custom_code} </p>
-                                    <p className="text-xs  text-gray-400">Delivery Status : Pending</p>
-                                </div>
-                                <p className="h-10 w-10 rounded-full bg-teal-400 text-xs font-bold flex items-center text-white justify-center">{data.no_of_images}</p>
+        </div>
+            {Object.keys(getOrderDetailsInfo).length > 0 && console.log(getOrderDetailsInfo.results.user_order_master_info_list)}
+        {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
+        <div className="grid lg:grid-cols-4 justify-items-center gap-y-6 mx-20">
+            {Object.keys(getOrderDetailsInfo).length > 0 && typeof getOrderDetailsInfo.results.user_order_master_info_list !== 'undefined' &&
+               getOrderDetailsInfo.results.user_order_master_info_list != null && getOrderDetailsInfo.results.user_order_master_info_list.map((data, index) => (
+                    <div className="w-64 bg-white rounded-lg h-full  p-6">
+                        <div className="flex justify-between mb-4">
+                            <div>
+                                <p className="font-semibold text-lg">{data.custom_code} </p>
+                                <p className="text-xs  text-gray-400">Delivery Status : Pending</p>
                             </div>
+                            <p className="h-10 w-10 rounded-full bg-teal-400 text-xs font-bold flex items-center text-white justify-center">{data.no_of_images}</p>
+                        </div>
 
-                            <p className="">Order Date </p>
-                            <p className="text-xs  text-gray-400">{data.order_date}</p>
+                        <p className="">Order Date </p>
+                        <p className="text-xs  text-gray-400">{data.order_date}</p>
 
-                            <p className=" mt-5">Delivery Date </p>
-                            <p className="text-xs  text-gray-400">{data.delivery_date}</p>
+                        <p className=" mt-5">Delivery Date </p>
+                        <p className="text-xs  text-gray-400">{data.delivery_date}</p>
 
-                            <hr className="mt-6"></hr>
+                        <hr className="mt-6"></hr>
 
-                            <div className="flex  justify-between mt-6">
+                        <div className="flex  justify-between mt-6">
+                            <Link className="cursor-pointer" to={'/order-info-page/'+data.order_image_master_id}>
+                                <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                                <p className="text-sm">View</p>
+                            </Link>
+                            <Popover content={shareContent} trigger="click">
                                 <div className="cursor-pointer">
-                                    <p><i class="fa-regular fa-eye flex justify-center"></i></p>
-                                    <p className="text-sm">View</p>
+                                    <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                                    <p className="text-sm">Share</p>
                                 </div>
-                                <Popover content={shareContent} trigger="click">
-                                    <div className="cursor-pointer">
-                                        <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
-                                        <p className="text-sm">Share</p>
-                                    </div>
-                                </Popover>
-                                <Popover content={downloadContent} trigger="click">
-                                    <div className="cursor-pointer">
-                                        <p><i class="fa-solid fa-download flex justify-center"></i></p>
-                                        <p className="text-sm">Download</p>
-                                    </div>
-                                </Popover>
-
-                            </div>
+                            </Popover>
+                            <Popover content={downloadContent} trigger="click">
+                                <div className="cursor-pointer">
+                                    <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                                    <p className="text-sm">Download</p>
+                                </div>
+                            </Popover>
 
                         </div>
-                    ))}
-                {/* <div className="w-64 rounded-lg bg-white h-full p-6">
+
+                    </div>
+                ))}
+            {/* <div className="w-64 rounded-lg bg-white h-full p-6">
                     <div className="flex justify-between mb-4">
                         <div>
                             <p className="font-semibold text-lg">#23769850 </p>
@@ -378,11 +393,11 @@ const MyOrder = () => {
                     </div>
 
                 </div> */}
-            </div>
-
         </div>
 
-    )
+    </div>
+
+)
 }
 
 export default MyOrder

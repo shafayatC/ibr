@@ -53,8 +53,8 @@ const Leftsidebar = () => {
   };
 
   useEffect(() => {
-    getDashboardMenu.length < 1 && menuList()
-  }, [getMenuId]);
+   menuList()
+  }, [getMenuId, getToken]);
 
   return (
     <>
