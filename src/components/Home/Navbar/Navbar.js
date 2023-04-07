@@ -19,13 +19,14 @@ const Navbar = ({ items }) => {
   };
 
   const signOutFunc = () => {
-    localforage.removeItem("userInfo"); 
+    localforage.removeItem("userInfo");
     setUserInfo({});
 
   };
 
   return (
     <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900">
+      {console.log(items)}
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
@@ -58,37 +59,67 @@ const Navbar = ({ items }) => {
           className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
           id="navbar-default"
         >
-          <div className="flex flex-col gap-4  px-4  py-2 mt-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
-            {typeof items !== 'undefined' && items.map((item, index) => (
+          <div className="menuWrap flex flex-col gap-4 border border-gray-100 rounded-lg bg-black-shade md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black-shade light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
+            {typeof items !== 'undefined' && items.map((item, index) =>
 
-              <Link
+              <div
                 key={index}
-                onClick={() => setMenuId(item.id)}
+                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2 " : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2" : " py-2"}
                 style={{
                   order: item.sequence_no,
                   marginLeft: "0px",
                   marginRight: "0px",
-                }}
-                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " " : ""}
-                to={item.url}
-              >
-                <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
-                  <div key={item.id}>{item.name}</div>
-                </button>
-              </Link>
-            ))}
-            {getUserInfo.status_code == 200 && (
-              <a
-                className="bg-theme-shade rounded"
-                style={{ order: 99, marginLeft: "0px", marginRight: "0px" }}
-              >
-                <button
-                  onClick={signOutFunc}
-                  className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black"
+                  position: "relative"
+                }}>
+                <Link
+                  onClick={() => setMenuId(item.id)}
+                  to={item.url}
                 >
-                  <div>Sign out</div>
-                </button>
-              </a>
+                  <button className={`rounded-md text-white w-20 py-1 hover:bg-white hover:text-black ${item.type == 'sign_up' && 'bg-theme-shade'}`}>
+                    <div key={item.id}>{item.name}</div>
+                  </button>
+                </Link>
+                <div className="subMenu">
+                  {items.map((subItem, subIndex) =>
+                    item.id === subItem.parent_menu_list_id &&
+                    <div key={subIndex}
+                      className="menuItem"
+                      style={{
+                        order: subItem.sequence_no
+                      }}
+                    >
+                      <Link
+                        to={subItem.url}
+                      >
+                        <button>
+                          <div key={subItem.id}>{subItem.name}</div>
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {getUserInfo.status_code == 200 && (
+              <div
+                className={" px-4  py-2"}
+                style={{
+                  order: 99,
+                  marginLeft: "0px",
+                  marginRight: "0px",
+                  position: "relative"
+                }}>
+                <a
+                >
+                  <button
+                    onClick={signOutFunc}
+                    className="bg-theme-shade rounded-md text-white w-20 py-1 hover:bg-white hover:text-black"
+                  >
+                    <div>Sign out</div>
+                  </button>
+                </a>
+              </div>
             )}
           </div>
         </div>

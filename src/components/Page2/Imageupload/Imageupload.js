@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 import CompareImage from "../../CompareImage/CompareImage";
 import ServiceTypePop from "../../ServiceTypePop/ServiceTypePop";
 import localforage from "localforage";
+import { Alert, Space } from 'antd';
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,6 +72,10 @@ function Imageupload() {
   };
   const CostPlan = () => {
     setCostBreak(true);
+  };
+
+  const onClose = (e) => {
+    console.log(e, 'I was closed.');
   };
 
   //  -----------Login Modal ----------------------
@@ -143,7 +148,7 @@ function Imageupload() {
 
     // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
-    fetch(getApiBasicUrl+"/order-master-info", {
+    fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -310,7 +315,7 @@ function Imageupload() {
 
     // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
-    fetch(getApiBasicUrl+"/order-master-info", {
+    fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -342,7 +347,7 @@ function Imageupload() {
         console.error("Error:", error);
       });
   }
-  const processImagesAi = () => {
+  const toastMessage = () => {
     toast.success("Items Process Successfully!", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -398,7 +403,7 @@ function Imageupload() {
     //console.log(await formData);
     // Promise.all(formData).then(data => console.log(data))
     try {
-     // const response = await fetch(`http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing`,
+      // const response = await fetch(`http://103.197.204.22:8008/v.03.13.23/upload-for-ai-processing`,
       const response = await fetch(`${getModelBaseUrl}upload-for-ai-processing`,
         {
           method: "POST",
@@ -617,7 +622,7 @@ function Imageupload() {
       "is_deleted": true
     }
 
-    fetch(getApiBasicUrl+"/update-order-image-detail", {
+    fetch(getApiBasicUrl + "/update-order-image-detail", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -670,7 +675,7 @@ function Imageupload() {
       <Page2>
         <div className="container  mx-auto">
           {
-            console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
+            console.log("master id : " + getOrderMasterId + " token: " + getToken)
           }
           {console.log(getAfterBeforeImg)}
           {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
@@ -749,8 +754,10 @@ function Imageupload() {
 
             {getTotalImage > getProccessImgIndex && <Loading_2 />}
 
+
             {getAfterBeforeImg.length > 0 && actionStatus == "" &&
               <div>
+
                 {/*fileInfo.length !== getAfterBeforeImg.length &&
               <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
               </div>
@@ -942,7 +949,29 @@ function Imageupload() {
             </div>
 
           } */}
+            {getTotalImage > 0 && getTotalImage === getProccessImgIndex && 
 
+            <Space
+              direction="vertical"
+              style={{
+                width: '400px',
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)"
+
+
+              }}
+            >
+              <Alert
+                message="Error Text"
+                description="Error Description Error Description Error Description Error Description Error Description Error Description"
+                type="error"
+                closable
+                onClose={onClose}
+              />
+            </Space>
+          }
             {showImage &&
               <div>
                 <div
