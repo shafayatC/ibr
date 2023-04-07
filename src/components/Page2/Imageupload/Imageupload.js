@@ -670,7 +670,7 @@ function Imageupload() {
       <Page2>
         <div className="container  mx-auto">
           {
-            console.log(getTotalImage + " getprocess : " + getProccessImgIndex)
+            console.log("master id : " + getOrderMasterId + " token: " + getToken)
           }
           {console.log(getAfterBeforeImg)}
           {/* console.log("getServiceTypeId : " + getServiceTypeId + "getSubscriptionPlanId : "+ getSubscriptionPlanId) */}
