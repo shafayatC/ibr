@@ -753,7 +753,6 @@ function Imageupload() {
             <button className="hidden" id="clearData" onClick={clearData}></button>
 
             {getTotalImage > getProccessImgIndex && <Loading_2 />}
-            {getProccessImgIndex > getTotalImage && <ToastContainer />}
 
 
             {getAfterBeforeImg.length > 0 && actionStatus == "" &&
@@ -950,6 +949,7 @@ function Imageupload() {
             </div>
 
           } */}
+            {getTotalImage > 0 && getTotalImage === getProccessImgIndex && 
 
             <Space
               direction="vertical"
@@ -971,7 +971,7 @@ function Imageupload() {
                 onClose={onClose}
               />
             </Space>
-
+          }
             {showImage &&
               <div>
                 <div

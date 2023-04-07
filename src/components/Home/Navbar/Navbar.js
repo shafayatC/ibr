@@ -64,7 +64,7 @@ const Navbar = ({ items }) => {
 
               <div
                 key={index}
-                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " bg-theme-shade rounded" : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " " : " py-2"}
+                className={item.type == "sign_up" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2 " : item.type == "sign_in" ? Object.keys(getUserInfo).length > 0 ? "hidden" : " py-2" : " py-2"}
                 style={{
                   order: item.sequence_no,
                   marginLeft: "0px",
@@ -75,7 +75,7 @@ const Navbar = ({ items }) => {
                   onClick={() => setMenuId(item.id)}
                   to={item.url}
                 >
-                  <button className="rounded-md text-white w-20 py-1 hover:bg-white hover:text-black">
+                  <button className={`rounded-md text-white w-20 py-1 hover:bg-white hover:text-black ${item.type == 'sign_up' && 'bg-theme-shade'}`}>
                     <div key={item.id}>{item.name}</div>
                   </button>
                 </Link>
