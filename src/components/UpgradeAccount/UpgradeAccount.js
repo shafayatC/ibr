@@ -4,8 +4,8 @@ import { OrderContextManager, userContextManager } from "../../App";
 function UpgradeAccount({ upgradCallBack }) {
 
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-  const [getServiceTypeId, setServiceTypeId] = useContext(OrderContextManager);
-  const [getSubscriptionDetailsInfo, setSubscriptionDetailsInfo] = useState([])
+  const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool, getOrderDetailInfo, setOrderDetailInfo] = useContext(OrderContextManager);
+  const [getSubscriptionDetailsInfo, setSubscriptionDetailsInfo] = useState({})
 
   const HandleClose = () => {
     upgradCallBack(false);
@@ -48,21 +48,23 @@ function UpgradeAccount({ upgradCallBack }) {
         //   console.log(data)
 
         // }
+        setSubscriptionPlanId(subId)
         console.log(data)
       })
   }
 
-  const subFunc = () => {
-    setSubscriptionDetailsInfo()
-    sendSubscriptionFunc()
+  const subFunc = (id) => {
+  //  setSubscriptionDetailsInfo({})
+
+    sendSubscriptionFunc(id)
   }
 
 
   useEffect(() => {
-
+    
     getSubscriptionDetailFunc()
 
-  }, [getServiceTypeId]);
+  }, [getSubscriptionPlanId]);
 
 
 
@@ -139,11 +141,11 @@ function UpgradeAccount({ upgradCallBack }) {
     // </>
     <>
       {
-        Object.keys(getSubscriptionDetailsInfo).length > 0 && getSubscriptionDetailsInfo.results.subscription_plan_type > 1 &&
+        Object.keys(getSubscriptionDetailsInfo).length > 0 && 
 
         <div className="fixed left-[50%] top-0 h-68 w-[620px] rounded-md text-white m-auto mt-40 bg-[#202123] z-50" style={{ transform: 'translateX(-50%)' }}>
           <div className="flex justify-between ">
-            <h2 className="px-4 py-3 font-bold ">Your Service</h2>
+            <h2 className="px-4 py-3 font-bold ">Your Subscription Plan</h2>
             <i onClick={HandleClose}
               className="fa-solid fa-xmark pr-6 py-3 text-xl cursor-pointer text-[#8E8EA0]"
             ></i>
@@ -151,14 +153,16 @@ function UpgradeAccount({ upgradCallBack }) {
           <hr></hr>
           <div className="flex">
             {Object.keys(getSubscriptionDetailsInfo).length > 0 && getSubscriptionDetailsInfo.results.subscription_plan_type.map((data, index) =>
-              <div key={index} className={`w-full px-4 py-4  ${index == 0 && "border-r-2 border-r-white"}`}>
+             
+             <div key={index} className={`w-full px-4 py-4  ${index == 0 && "border-r-2 border-r-white"}`}>
+               {console.log(getSubscriptionPlanId + " data.id  " + data.id  + "  title :  "+ data.tit )}
                 <p className="text-xl font-semibold">{data.title}</p>
-                <button onClick={() => subFunc()} className={`${data.id == getServiceTypeId ? "bg-[#8E8EA0]  hover:bg-theme-shade" : "bg-theme-shade hover:bg-[#10A37F]"} w-full rounded-md text-center font-semibold text-gray-700 py-2 mt-2 mb-3`}>
-                  {data.is_default ? "Your Current Plan" : "Update Plan"}
+                <button onClick={() => subFunc(data.id)} className={`${data.id == getSubscriptionPlanId ? "bg-[#8E8EA0]  hover:bg-theme-shade" : "bg-theme-shade hover:bg-[#10A37F]"} w-full rounded-md text-center font-semibold text-gray-700 py-2 mt-2 mb-3`}>
+                  {data.id == getSubscriptionPlanId ? "Your Current Plan" : "Switch Plan"}
                 </button>
                 {data.subscription_plan_type_description.map((srvData, index_2) =>
                   <p key={index_2} className="text-sm leading-6">
-                    <i className={`fa-solid fa-circle-check ${data.id != getServiceTypeId && 'text-green-600'}`}></i> {srvData.description}
+                    <i className={`fa-solid fa-circle-check ${data.id != getSubscriptionPlanId && 'text-green-600'}`}></i> {srvData.description}
                   </p>
                 )}
               </div>

@@ -788,14 +788,6 @@ function Imageupload() {
             {getAfterBeforeImg.length > 0 && actionStatus == "" &&
               <div >
 
-                {/*fileInfo.length !== getAfterBeforeImg.length &&
-              <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
-              </div>
-            */}
-
-                {/* 
-           <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > getProccessImgIndex ? fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${fileInfo.length > getProccessImgIndex ?  fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length } gap-4 pt-5 ml-2  pr-3`}>
-           */}
                 <div className={`grid sm:grid-cols-1  md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-2 ml-2  pr-3`}>
 
                   {currentImages.map((image, index) => (
@@ -809,7 +801,7 @@ function Imageupload() {
                       {getTotalImage > getProccessImgIndex ?
                         <div
                           className={`img-container  bg-no-repeat img-bag
-                     ${getAfterBeforeImg.length === 1
+                          ${getAfterBeforeImg.length === 1
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
@@ -1259,7 +1251,10 @@ function Imageupload() {
               <div className="flex justify-center  items-center gap-3">
                 <p class="loader_3 "></p>
                 <div class="shadow w-40 bg-white ">
-                  <div class="bg-teal-500 text-xs leading-none  text-center text-white  w-[55%]">55%</div>
+                  <div class="bg-teal-500 text-xs leading-none  text-center text-white"
+                   style={{width: (100/getTotalImage) * getProccessImgIndex+'%'}}>
+                    {(100/getTotalImage) * getProccessImgIndex}%
+                  </div>
                 </div>
               </div>
               <div className="flex gap-5">

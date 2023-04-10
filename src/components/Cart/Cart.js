@@ -174,7 +174,7 @@ const Cart = () => {
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
+                                <p className="font-semibold text-sm">{typeof getCostDetails.results.order_master_charge_breakdown[0].net_charge !== 'undefined' && getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}
                                     {getCostDetails.results.order_master_charge_breakdown[0].discount !== '$ 0.00' &&
                                         <span className="pl-3 cursor-pointer"> <i onClick={removeCouponOffer} id="cross" className="fa-regular text-red-600 fa-circle-xmark"></i></span>
