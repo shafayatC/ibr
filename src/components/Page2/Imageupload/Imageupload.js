@@ -24,7 +24,7 @@ import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CompareImage from "../../CompareImage/CompareImage";
 import ServiceTypePop from "../../ServiceTypePop/ServiceTypePop";
 import localforage from "localforage";
@@ -66,6 +66,9 @@ function Imageupload() {
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
   const [getCostBreak, setCostBreak] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate(); 
 
   const UpdatePlan = () => {
     setUpdatePlan(true);
@@ -662,6 +665,31 @@ function Imageupload() {
     setSrvPopBool(bl)
   }
 
+  const reviewPaymentFunc =()=>{
+
+    const orderId = {
+      "id":getOrderMasterId
+    }
+
+    fetch(getApiBasicUrl + "/update-order-master-info-by-id", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'bearer ' + getToken
+      },
+      body: JSON.stringify(orderId),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if(data.status_code == 200){
+          navigate('/cart')
+        }else {
+          setIsOpen(true);
+        }
+      })
+      
+  }
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -1152,11 +1180,8 @@ function Imageupload() {
                     </div>
                     <div className=" py-4 flex gap-4 justify-center ">
 
-                      <Link to="/log-in">
-                        <button
-
-                          className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
-                        >
+                      <Link to="/log-in"  state={{ prevPath : location.pathname }}>
+                        <button className="text-white w-20 bg-green-400  px-1 py-1 rounded-md">
                           Login
                         </button>
                       </Link>
@@ -1219,9 +1244,9 @@ function Imageupload() {
                 {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
 
                   <div className="self-center text-sm">
-                    <Link to="/cart">
-                      <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-                    </Link>
+                    <button onClick={reviewPaymentFunc}>
+                      <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Review Payment</button>
+                    </button>
                   </div>
                   :
                   <div className="self-center text-sm">

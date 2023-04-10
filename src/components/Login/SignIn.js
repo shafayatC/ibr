@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
-import { Link, Navigate, redirect } from "react-router-dom";
+import { Link, Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiUrlContextManager, userContextManager } from "../../App";
@@ -12,6 +12,10 @@ const SignIn = () => {
   const [getRemember, setRemember] = useState(false)
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
   const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+
+  const location = useLocation();
+  const navigation = useNavigate()
+  const { prevPath } = location.state ? location.state : '/';
 
   const showToastMessage = (msg) => {
     toast.success(msg, {
@@ -72,7 +76,7 @@ const SignIn = () => {
               }else{
                 localforage.removeItem('remember')
               }
-
+             prevPath ? navigation(prevPath) : navigation('/')
             } else {
               showToastMessageWarning(data.message)
             }
@@ -95,13 +99,14 @@ const SignIn = () => {
       }
     })
   }
+
   useEffect(()=>{
     rememberFunc()
   },[])
   return (
     <div className="container mx-auto">
       <div>
-        {getUserInfo.status_code == 200 && <Navigate to="/" replace={true} />}
+        {/*getUserInfo.status_code == 200 && <Navigate to={prevPath} replace={true} />*/}
         <section>
           <div className="px-6 mt-20 text-gray-800">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">

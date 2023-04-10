@@ -88,9 +88,7 @@ const Navbar = ({ items }) => {
                         order: subItem.sequence_no
                       }}
                     >
-                      <Link
-                        to={subItem.url}
-                      >
+                      <Link to={subItem.url}>
                         <button>
                           <div key={subItem.id}>{subItem.name}</div>
                         </button>
