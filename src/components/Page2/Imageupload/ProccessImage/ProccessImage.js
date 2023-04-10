@@ -34,7 +34,7 @@ const ProccessImage = () => {
         setImageData
     ] = useContext(FileContextManager);
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
     const { TextArea } = Input;
 
@@ -119,6 +119,9 @@ const ProccessImage = () => {
                         </div>
                     ))
                 }
+                <div>
+                    <p className="absolute top-0 right-0">hi</p>
+                </div>
             </div>
 
             {isImageVisible &&
