@@ -65,3 +65,66 @@
 .imageBottomMenu{
   transform: translateX(-50%);
 }
+
+
+
+.loader_2 {
+  border: 2px solid;
+  border-color: transparent #14251e;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
+}
+.loader_2::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 10px solid;
+  border-color: transparent rgba(250, 11, 11, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+.loader_3 {
+  border: 2px solid;
+  border-color: transparent #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
+}
+.loader_3::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 10px solid;
+  border-color: transparent rgba(211, 205, 205, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

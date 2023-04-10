@@ -23,7 +23,7 @@ const Cart = () => {
             }
         })
             .then(res => res.json())
-            .then(data => { 
+            .then(data => {
                 setCostDetails(data)
                 console.log(data)
             })
@@ -36,33 +36,45 @@ const Cart = () => {
             "user_promotions_settings_id": null,
             "is_used": true
         }
-        fetch(getApiBasicUrl + "/apply-voucher",{
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    'Authorization': 'bearer ' + getToken
-                },
-                body: JSON.stringify(promData),
-            }
+        fetch(getApiBasicUrl + "/apply-voucher", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                'Authorization': 'bearer ' + getToken
+            },
+            body: JSON.stringify(promData),
+        }
         )
-        .then(res => res.json())
-        .then(data => {
+            .then(res => res.json())
+            .then(data => {
                 if (data.status_code == 200) {
                     console.log(data)
                     constDetailFunc()
-                    document.getElementById("cross").style.display = 'none'; 
+                    document.getElementById("cross").style.display = 'none';
                 }
             })
+    }
+
+    const checkoutFunc = () => {
+
+        fetch(`${getModelBaseUrl}checkout?order_image_master_id=${getOrderMasterId}`, {
+            headers: {
+                'Authorization': 'bearer ' + getToken,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+           // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
+            data.status_code == 200 && window.open(data.results.checkout_url);
+        })
     }
 
     useEffect(() => {
         getOrderMasterId.length > 0 && constDetailFunc()
     }, [getOrderMasterId]);
-
-
-
-
 
     return (
         <Page2>
@@ -99,8 +111,7 @@ const Cart = () => {
                                     <li className="flex items-center gap-2 bg-white p-2">
                                         <span
                                             className="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px] font-bold leading-6 "
-                                        >
-                                            2
+                                        >2
                                         </span>
 
                                         <span className="hidden sm:block"> Process </span>
@@ -164,10 +175,10 @@ const Cart = () => {
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount} 
-                                    {getCostDetails.results.order_master_charge_breakdown[0].discount !== '$ 0.00' && 
-                                    <span className="pl-3 cursor-pointer"> <i onClick={removeCouponOffer} id="cross" className="fa-regular text-red-600 fa-circle-xmark"></i></span>
-                                }
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}
+                                    {getCostDetails.results.order_master_charge_breakdown[0].discount !== '$ 0.00' &&
+                                        <span className="pl-3 cursor-pointer"> <i onClick={removeCouponOffer} id="cross" className="fa-regular text-red-600 fa-circle-xmark"></i></span>
+                                    }
                                 </p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
                             </div>
@@ -183,13 +194,16 @@ const Cart = () => {
                         </button>
 
                     </Link>
-
+                    {/*
                     <Link to="/checkout" state={{ totalPrice: typeof getCostDetails.results !== 'undefined' && getCostDetails.results.order_master_charge_breakdown[0].total_charge }}>
                         <button className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
-                            <p >
-                                Payment Method</p>
+                            <p>Checkout</p>
                         </button>
                     </Link>
+                    */}
+                        <button onClick={checkoutFunc} className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
+                            <p>Checkout</p>
+                        </button>
                     <Link to="/file-uploads">
                         <button
                             className=" w-10 h-10 border border-theme-shade rounded-full"

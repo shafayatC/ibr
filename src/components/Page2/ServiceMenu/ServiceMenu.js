@@ -26,7 +26,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
         setImageData
     ] = useContext(FileContextManager);
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
     const { TextArea } = Input;
 
@@ -61,7 +61,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
             "service_item_id": data,
             "is_checked": e.target.checked
         }
-        fetch(getApiBasicUrl+"/order-image-service-update",
+        fetch(getApiBasicUrl + "/order-image-service-update",
             {
                 method: "POST",
                 headers: {
@@ -110,7 +110,7 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(data.status_code == 200){
+                    if (data.status_code == 200) {
                         callBackIsAiProccess(data.results.order_image_detail_list[0].is_ai_processed)
                         setServiceMenu(data)
                     }
@@ -125,10 +125,10 @@ const ServiceMenu = ({ imageFile, callBackIsAiProccess }) => {
         setOrderImageInfo({})
         orderImageDetail()
     }, [imageFile])
-    
+
     return (
         <>
-            <p className="bg-red-500 text-white text-xs  absolute top-1 left-0 font-bold py-1 px-2 rounded-r-full ">{getImagePrice}</p>
+            <p className="bg-red-500 text-white text-xl  absolute bottom-0 right-0 font-bold py-2 px-5 rounded-l-3xl ">{getImagePrice}</p>
 
             <div id="rightMenuBarWrap" className="  w-64 flex flex-col justify-center  bg-white">
 

@@ -24,11 +24,13 @@ import Loading_2 from "../../Loading/Loading_2";
 import CostBreakDown from "../../CostBreakDown/CostBreakDown";
 import Page2 from "../Page2";
 import TotalBill from "./TotalBill";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CompareImage from "../../CompareImage/CompareImage";
 import ServiceTypePop from "../../ServiceTypePop/ServiceTypePop";
 import localforage from "localforage";
 import { Alert, Space } from 'antd';
+import { green, red } from '@ant-design/colors';
+import { Progress } from 'antd';
 
 function Imageupload() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,6 +68,9 @@ function Imageupload() {
 
   const [getUpdatePlan, setUpdatePlan] = useState(false);
   const [getCostBreak, setCostBreak] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate(); 
 
   const UpdatePlan = () => {
     setUpdatePlan(true);
@@ -662,6 +667,31 @@ function Imageupload() {
     setSrvPopBool(bl)
   }
 
+  const reviewPaymentFunc =()=>{
+
+    const orderId = {
+      "id":getOrderMasterId
+    }
+
+    fetch(getApiBasicUrl + "/update-order-master-info-by-id", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'bearer ' + getToken
+      },
+      body: JSON.stringify(orderId),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if(data.status_code == 200){
+          navigate('/cart')
+        }else {
+          setIsOpen(true);
+        }
+      })
+      
+  }
   useEffect(() => {
     setInterval(() => {
       //  checkAiProccesDone(getAfterBeforeImg);
@@ -756,7 +786,7 @@ function Imageupload() {
 
 
             {getAfterBeforeImg.length > 0 && actionStatus == "" &&
-              <div>
+              <div >
 
                 {/*fileInfo.length !== getAfterBeforeImg.length &&
               <div className="fixed top-[50%] left-[50%] z-50" style={{ transform: 'translate(-50%)' }} >
@@ -766,13 +796,15 @@ function Imageupload() {
                 {/* 
            <div className={`grid sm:grid-cols-1 md:grid-cols-${fileInfo.length > getProccessImgIndex ? fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${fileInfo.length > getProccessImgIndex ?  fileInfo.length > 3 ? "4" : fileInfo.length : getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length } gap-4 pt-5 ml-2  pr-3`}>
            */}
-                <div className={`grid sm:grid-cols-1 md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-2 ml-2  pr-3`}>
+                <div className={`grid sm:grid-cols-1  md:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} lg:grid-cols-${getAfterBeforeImg.length > 3 ? "4" : getAfterBeforeImg.length} gap-4 pt-2 ml-2  pr-3`}>
+
                   {currentImages.map((image, index) => (
                     <div
                       key={index}
                       className={
-                        getAfterBeforeImg.length === 1 && "flex justify-center"
+                        getAfterBeforeImg.length === 1 ? "flex relative justify-center " : "relative"
                       }
+
                     >
                       {getTotalImage > getProccessImgIndex ?
                         <div
@@ -781,9 +813,12 @@ function Imageupload() {
                               ? "h-[400px] justify-center"
                               : "img-bag"
                             }
+                            
                      `}
                           style={{ backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})` }}
-                        /> :
+                        />
+
+                        :
                         <div
                           className={`img-container  bg-no-repeat  cursor-pointer img-bag
                       ${getAfterBeforeImg.length === 1
@@ -795,12 +830,24 @@ function Imageupload() {
                           style={{
                             backgroundImage: `url(${image.output_urls[0].compressed_raw_image_public_url})`,
                           }}
-                        />}
+                        />
+
+
+                      }
+                      <div className="flex gap-1 absolute top-0 right-2 "> <p class="loader_2"></p>
+                        <p><i class="fa-solid text-green-400 fa-circle-check"></i></p></div>
 
 
                     </div>
+
+
                   ))}
+
+
+
+
                 </div>
+
 
               </div>
             }
@@ -843,9 +890,11 @@ function Imageupload() {
                               }}
                             />}
 
+
                         </div>
                       )
                   )}
+
                 </div>
               </>
             )}
@@ -949,7 +998,7 @@ function Imageupload() {
             </div>
 
           } */}
-            {getTotalImage > 0 && getTotalImage === getProccessImgIndex &&
+            {/* {getTotalImage > 0 && getTotalImage === getProccessImgIndex &&
 
               <Space
                 direction="vertical"
@@ -976,7 +1025,7 @@ function Imageupload() {
                   onClose={onClose}
                 />
               </Space>
-            }
+            } */}
             {showImage &&
               <div>
                 <div
@@ -1152,11 +1201,8 @@ function Imageupload() {
                     </div>
                     <div className=" py-4 flex gap-4 justify-center ">
 
-                      <Link to="/log-in">
-                        <button
-
-                          className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
-                        >
+                      <Link to="/log-in"  state={{ prevPath : location.pathname }}>
+                        <button className="text-white w-20 bg-green-400  px-1 py-1 rounded-md">
                           Login
                         </button>
                       </Link>
@@ -1210,18 +1256,24 @@ function Imageupload() {
                   <button className="bg-white rounded-lg px-3 py-1"><i class="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
                 </Link>
               </div>
+              <div className="flex justify-center  items-center gap-3">
+                <p class="loader_3 "></p>
+                <div class="shadow w-40 bg-white ">
+                  <div class="bg-teal-500 text-xs leading-none  text-center text-white  w-[55%]">55%</div>
+                </div>
+              </div>
               <div className="flex gap-5">
                 <div className="text-white self-end font-semibold text-sm py-1">
                   <p>Total Image(s) : {getAfterBeforeImg.length}</p>
 
-                  <p>Total Charge : {getTotalImage == getProccessImgIndex && <TotalBill actionSwitch={getSwitchLoop} />}</p>
+                  {getTotalImage == getProccessImgIndex && <p>Total Charge :  <TotalBill actionSwitch={getSwitchLoop} /></p>}
                 </div>
                 {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
 
                   <div className="self-center text-sm">
-                    <Link to="/cart">
-                      <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-                    </Link>
+                    <button onClick={reviewPaymentFunc}>
+                      <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Review Payment</button>
+                    </button>
                   </div>
                   :
                   <div className="self-center text-sm">
