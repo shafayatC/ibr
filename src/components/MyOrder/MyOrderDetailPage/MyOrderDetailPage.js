@@ -17,6 +17,7 @@ const MyOrderDetailPage = () => {
     const [actionStatus, setActionStatus] = useState("");
     const [getFilterText, setFilterText] = useState("");
     const [getSuggestBool, setSuggestBool] = useState(false);
+    const [getDownloadUrl, setDownloadUrl] = useState("");
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
     const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager)
@@ -32,6 +33,13 @@ const MyOrderDetailPage = () => {
 
     const { orderId } = useParams();
 
+    const onChangeDownloadUrl =(e)=>{
+       // e.preventdefault()
+
+        console.log(e.target.value)
+        setDownloadUrl(e.target.value)
+
+    }
     const viewOrderInfo = () => {
 
         console.log("order id : " + orderId + " token :  " + getToken)
@@ -49,19 +57,17 @@ const MyOrderDetailPage = () => {
     }
 
 
-    const downloadContent = (
+    const downloadContent = (jpg, png, psd)=>(
 
         <div>
             <Radio.Group defaultValue={1}>
-                <Radio value={1}>JPG</Radio>
-                <Radio value={2}>PNG</Radio>
-                <Radio value={3}>PSD</Radio>
-
-
+                <Radio onChange={onChangeDownloadUrl} value={jpg}>JPG</Radio>
+                <Radio onChange={onChangeDownloadUrl} value={png}>PNG</Radio>
+                <Radio onChange={onChangeDownloadUrl} value={psd}>PSD</Radio>
             </Radio.Group>
-            <div className="flex justify-end text-xs">
+            <a href={getDownloadUrl} download className="flex justify-end text-xs">
                 <button className="bg-green-400 text-white rounded-lg py-1 px-2 mt-2 font-semibold">Download</button>
-            </div>
+            </a>
         </div>
     );
 
@@ -144,7 +150,6 @@ const MyOrderDetailPage = () => {
     return (
         <>
 
-            {console.log(getFilterSuggest)}
             <div style={{ backgroundImage: `url(${bg})`, minHeight: 'calc(100vh - 44px)' }} >
                 <div className='container mx-auto relative'>
                     <div className="flex items-center justify-center py-3">
@@ -240,8 +245,8 @@ const MyOrderDetailPage = () => {
                                                 <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
                                                 <p className="text-sm">Share</p>
                                             </div>
-                                        </Popover>
-                                        <Popover content={downloadContent} trigger="click">
+                                        </Popover>jpg, png, psd
+                                        <Popover content={()=>downloadContent(getOrderDetailInfo[getImgIndex].original_output_url, getOrderDetailInfo[getImgIndex].png_image_output_url, getOrderDetailInfo[getImgIndex].psd_file_url)} trigger="click">
                                             <div className="cursor-pointer">
                                                 <p><i class="fa-solid fa-download flex justify-center"></i></p>
                                                 <p className="text-sm">Download</p>
