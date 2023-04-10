@@ -64,12 +64,12 @@ const Cart = () => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-           // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
-            data.status_code == 200 && window.open(data.results.checkout_url);
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
+                data.status_code == 200 && window.open(data.results.checkout_url);
+            })
     }
 
     useEffect(() => {
@@ -142,7 +142,7 @@ const Cart = () => {
                                                     <th scope="col" className="px-6 py-0">SL</th>
                                                     <th scope="col" className="px-6 py-0">Service</th>
                                                     <th scope="col" className="px-6 py-0">No.of Services</th>
-                                                    <th scope="col" className="px-6 py-0">Charge/Image</th>
+                                                    <th scope="col" className="px-6 py-0">Charge/Service</th>
                                                     <th scope="col" className="px-6 py-0">Total</th>
                                                 </tr>
                                             </thead>
@@ -166,7 +166,7 @@ const Cart = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end w-[690px] mt-4 mx-auto gap-5">
+                    <div className="flex justify-end w-[680px] mt-4  mx-auto gap-5">
                         <div>
                             <p className="font-semibold text-sm">Net Charge:</p> <hr></hr>
                             <p className="font-semibold text-sm">Discount: </p><hr></hr>
@@ -174,13 +174,14 @@ const Cart = () => {
                         </div>
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-4">
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge} </p>
                                 <p className="font-semibold text-sm">{typeof getCostDetails.results.order_master_charge_breakdown[0].net_charge !== 'undefined' && getCostDetails.results.order_master_charge_breakdown[0].net_charge} </p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}
                                     {getCostDetails.results.order_master_charge_breakdown[0].discount !== '$ 0.00' &&
                                         <span className="pl-3 cursor-pointer"> <i onClick={removeCouponOffer} id="cross" className="fa-regular text-red-600 fa-circle-xmark"></i></span>
                                     }
                                 </p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
                             </div>
                         }
                     </div>
@@ -201,9 +202,9 @@ const Cart = () => {
                         </button>
                     </Link>
                     */}
-                        <button onClick={checkoutFunc} className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
-                            <p>Checkout</p>
-                        </button>
+                    <button onClick={checkoutFunc} className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
+                        <p>Checkout</p>
+                    </button>
                     <Link to="/file-uploads">
                         <button
                             className=" w-10 h-10 border border-theme-shade rounded-full"

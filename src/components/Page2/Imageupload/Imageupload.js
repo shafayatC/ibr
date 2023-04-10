@@ -70,7 +70,7 @@ function Imageupload() {
   const [getCostBreak, setCostBreak] = useState(false);
 
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const UpdatePlan = () => {
     setUpdatePlan(true);
@@ -667,10 +667,10 @@ function Imageupload() {
     setSrvPopBool(bl)
   }
 
-  const reviewPaymentFunc =()=>{
+  const reviewPaymentFunc = () => {
 
     const orderId = {
-      "id":getOrderMasterId
+      "id": getOrderMasterId
     }
 
     fetch(getApiBasicUrl + "/update-order-master-info-by-id", {
@@ -684,13 +684,13 @@ function Imageupload() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if(data.status_code == 200){
+        if (data.status_code == 200) {
           navigate('/cart')
-        }else {
+        } else {
           setIsOpen(true);
         }
       })
-      
+
   }
   useEffect(() => {
     setInterval(() => {
@@ -1193,7 +1193,7 @@ function Imageupload() {
                     </div>
                     <div className=" py-4 flex gap-4 justify-center ">
 
-                      <Link to="/log-in"  state={{ prevPath : location.pathname }}>
+                      <Link to="/log-in" state={{ prevPath: location.pathname }}>
                         <button className="text-white w-20 bg-green-400  px-1 py-1 rounded-md">
                           Login
                         </button>

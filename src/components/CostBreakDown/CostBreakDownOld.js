@@ -55,7 +55,7 @@ const CostBreakDown = () => {
                                                 <th scope="col" class="px-6 py-2">SL</th>
                                                 <th scope="col" class="px-6 py-2">Service</th>
                                                 <th scope="col" class="px-6 py-2">No.of Services</th>
-                                                <th scope="col" class="px-6 py-2">Charge/Image</th>
+                                                <th scope="col" class="px-6 py-2">Charge/Service</th>
                                                 <th scope="col" class="px-6 py-2">Total</th>
                                             </tr>
                                         </thead>
