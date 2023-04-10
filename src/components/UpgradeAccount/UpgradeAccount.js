@@ -54,14 +54,14 @@ function UpgradeAccount({ upgradCallBack }) {
   }
 
   const subFunc = (id) => {
-  //  setSubscriptionDetailsInfo({})
+    //  setSubscriptionDetailsInfo({})
 
     sendSubscriptionFunc(id)
   }
 
 
   useEffect(() => {
-    
+
     getSubscriptionDetailFunc()
 
   }, [getSubscriptionPlanId]);
@@ -141,9 +141,9 @@ function UpgradeAccount({ upgradCallBack }) {
     // </>
     <>
       {
-        Object.keys(getSubscriptionDetailsInfo).length > 0 && 
+        Object.keys(getSubscriptionDetailsInfo).length > 0 &&
 
-        <div className="fixed left-[50%] top-0 h-68 w-[620px] rounded-md text-white m-auto mt-40 bg-[#202123] z-50" style={{ transform: 'translateX(-50%)' }}>
+        <div className="fixed left-[50%] top-0 h-68 w-[650px] rounded-md text-white m-auto mt-40 bg-[#202123] z-50" style={{ transform: 'translateX(-50%)' }}>
           <div className="flex justify-between ">
             <h2 className="px-4 py-3 font-bold ">Your Subscription Plan</h2>
             <i onClick={HandleClose}
@@ -151,11 +151,12 @@ function UpgradeAccount({ upgradCallBack }) {
             ></i>
           </div>
           <hr></hr>
+
           <div className="flex">
             {Object.keys(getSubscriptionDetailsInfo).length > 0 && getSubscriptionDetailsInfo.results.subscription_plan_type.map((data, index) =>
-             
-             <div key={index} className={`w-full px-4 py-4  ${index == 0 && "border-r-2 border-r-white"}`}>
-               {console.log(getSubscriptionPlanId + " data.id  " + data.id  + "  title :  "+ data.tit )}
+
+              <div key={index} className={`w-full px-4 py-4  ${index == 0 && "border-r-2 border-r-white"}`}>
+                {console.log(getSubscriptionPlanId + " data.id  " + data.id + "  title :  " + data.tit)}
                 <p className="text-xl font-semibold">{data.title}</p>
                 <button onClick={() => subFunc(data.id)} className={`${data.id == getSubscriptionPlanId ? "bg-[#8E8EA0]  hover:bg-theme-shade" : "bg-theme-shade hover:bg-[#10A37F]"} w-full rounded-md text-center font-semibold text-gray-700 py-2 mt-2 mb-3`}>
                   {data.id == getSubscriptionPlanId ? "Your Current Plan" : "Switch Plan"}
@@ -165,9 +166,13 @@ function UpgradeAccount({ upgradCallBack }) {
                     <i className={`fa-solid fa-circle-check ${data.id != getSubscriptionPlanId && 'text-green-600'}`}></i> {srvData.description}
                   </p>
                 )}
+
               </div>
+
             )}
+
           </div>
+
         </div>
       }
     </>
