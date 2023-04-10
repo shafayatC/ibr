@@ -26,6 +26,7 @@ import ThankYouPage from "./components/Payment/ThankYouPage";
 import MyOrder from "./components/MyOrder/MyOrder";
 import localforage from "localforage";
 import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
+import MyOrderDetailPage from "./components/MyOrder/MyOrderDetailPage/MyOrderDetailPage";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -51,7 +52,7 @@ function App() {
   const [getTotalImage, setTotalImage] = useState(0);
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
-
+  const [getOrderDetailInfo, setOrderDetailInfo] = useState([])
   const [getSrvPopBool, setSrvPopBool] = useState(true); 
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getApiBasicUrl, setApiBasicUrl] = useState("http://103.197.204.22:8007/api/2023-02");
@@ -77,7 +78,7 @@ function App() {
         setTotalImage
       ]}
     >
-      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool]}>
+      <OrderContextManager.Provider value={[getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails, getSrvPopBool, setSrvPopBool, getOrderDetailInfo, setOrderDetailInfo]}>
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <menuContextManager.Provider value={[getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu]}>
             <apiUrlContextManager.Provider value={[getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl]}>
@@ -105,6 +106,7 @@ function App() {
                 <Route path="/thank-you-page" element={<ThankYouPage />} />
                 <Route path="/my-order" element={<MyOrder />} />
                 <Route path="/editing-package" element={<ServiceTypePage />} />
+                <Route path="/order-info-page/:orderId" element={<MyOrderDetailPage />} />
               </Routes>
             </div>
             </apiUrlContextManager.Provider>
