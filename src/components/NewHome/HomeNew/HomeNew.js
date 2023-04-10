@@ -52,39 +52,51 @@ const Home = () => {
                   </Link>
                 )
             )}
-            <div>
+            <div className="w-[650px]">
 
-              <p className="mt-16 mb-6 text-white font-semibold text-4xl">
-                Add-On Services
+              <p className="mt-16 mb-6 text-white font-bold text-4xl">
+                SERVICES
               </p>
-              <div className="flex gap-7">
-                <div>
-                  <img className="h-12 w-12 " src={box} alt="" />
-                  <p className="text-white">Liquify</p>
+              <div className="grid grid-cols-5  justify-items-center gap-5">
+                <div  >
+                  <img className="h-12 w-12  " src={box} alt="" />
+                  <p className="text-white text-xs">Photo Retouch</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={x} alt="" />
-                  <p className="text-white">Recolor</p>
+                  <p className="text-white text-xs">Ghost Mannequin</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={o} alt="" />
-                  <p className="text-white">Clipping</p>
+                  <p className="text-white text-xs">Image Beautification</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={control} alt="" />
-                  <p className="text-white">Masking</p>
+                  <p className="text-white text-xs">Shadow Creation</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={box} alt="" />
-                  <p className="text-white">Recolor</p>
+                  <p className="text-white text-xs">Image Masking</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={o} alt="" />
-                  <p className="text-white">Recolor</p>
+                  <p className="text-white text-xs">Image Resizing</p>
                 </div>
                 <div>
                   <img className="h-12 w-12 " src={x} alt="" />
-                  <p className="text-white">Recolor</p>
+                  <p className="text-white text-xs">Photo Restoration</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={x} alt="" />
+                  <p className="text-white text-xs">Background Removal</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={x} alt="" />
+                  <p className="text-white text-xs">Objects Removal</p>
+                </div>
+                <div>
+                  <img className="h-12 w-12 " src={x} alt="" />
+                  <p className="text-white text-xs">Color Correction</p>
                 </div>
               </div>
             </div>

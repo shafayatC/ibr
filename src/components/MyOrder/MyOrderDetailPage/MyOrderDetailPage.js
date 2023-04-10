@@ -160,13 +160,13 @@ const MyOrderDetailPage = () => {
                                 className="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-5 py-2 pr-10 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Filter File or Folder"
                             />
-                            {getFilterText.length > 0 && 
-                            <button
-                                onClick={clearFilterText}
-                                className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer"
-                            >
-                                <i className="fa-sharp fa-solid fa-xmark"></i>
-                            </button>
+                            {getFilterText.length > 0 &&
+                                <button
+                                    onClick={clearFilterText}
+                                    className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700  cursor-pointer"
+                                >
+                                    <i className="fa-sharp fa-solid fa-xmark"></i>
+                                </button>
                             }
 
                             <div id="matchsort" className="absolute bg-white z-40 left-[50%] min-w-full">
@@ -223,78 +223,30 @@ const MyOrderDetailPage = () => {
                         >
                             <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50 flex flex-col">
 
-                                <p className=" text-white text-center py-1 top-1 bg-teal-500  font-semibold">Beautify imagery with Ad-on Professional Services</p>
-                                <div className="pt-10 mx-auto ">
-                                    <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                                        <CompareImage
-                                            bottomImage={getOrderDetailInfo[getImgIndex].default_compressed_output_public_url}
-                                            topImage={getOrderDetailInfo[getImgIndex].compressed_raw_url} />
-                                        <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
-                                <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
-                                    <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
-                                    {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
-                                </button>
-                                <button disabled={getImgIndex == getOrderDetailInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
-                                    <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
-                                    {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
-                                </button>
-                            </div>
-                            <div className="absolute right-4 top-4 flex gap-2">
-                                <button
-                                    onClick={handleClose}
-                                    className="bg-white w-10 h-10 border border-theme-shade rounded-full"
-                                >
-                                    <i className="fa-solid fa-xmark"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
-                
-                {showImage &&
-                    <div>
-                        <div
-                            style={{
-                                position: "absolute",
-                                top: 0,
-                                left: -10,
-                                right: 0,
-                                bottom: 0,
-                                zIndex: 99,
-                                display: "flex",
-                                justifyContent: "center",
-                                backgroundImage: `url(${bg})`
-                            }}
-                        >
-                            <div className="h-[550px] w-[800px] bg-white mt-5 relative rounded-md z-50 flex flex-col">
-
-                                <p className=" text-white text-center py-1 top-1 bg-teal-500  font-semibold">Beautify imagery with Ad-on Professional Services</p>
                                 <div className="pt-10 mx-auto ">
                                     <div className="w-[400px] h-[400px] border border-theme-shade  relative">
                                         <img className="h-full" src={getOrderDetailInfo[getImgIndex].compressed_raw_url} />
                                         <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
                                     </div>
                                 </div>
-                                <div className="flex  justify-center gap-10 mt-6">
+                                <div className='flex w-full justify-center'>
 
-                                    <Popover content={shareContent} trigger="click">
-                                        <div className="cursor-pointer">
-                                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
-                                            <p className="text-sm">Share</p>
-                                        </div>
-                                    </Popover>
-                                    <Popover content={downloadContent} trigger="click">
-                                        <div className="cursor-pointer">
-                                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
-                                            <p className="text-sm">Download</p>
-                                        </div>
-                                    </Popover>
+                                    <div className="flex border border-teal-400 rounded-lg py-2 w-[400px]   justify-between px-4 mt-6">
+                                        <Popover content={shareContent} trigger="click">
+                                            <div className="cursor-pointer">
+                                                <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                                                <p className="text-sm">Share</p>
+                                            </div>
+                                        </Popover>
+                                        <Popover content={downloadContent} trigger="click">
+                                            <div className="cursor-pointer">
+                                                <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                                                <p className="text-sm">Download</p>
+                                            </div>
+                                        </Popover>
 
+                                    </div>
                                 </div>
                             </div>
 
@@ -321,29 +273,29 @@ const MyOrderDetailPage = () => {
 
                     </div>
                 }
-                    
-                <div className='container absolute bottom-0 w-full left-[50%]' style={{transform: 'translateX(-50%)'}}>
-                        <div className="flex mb-3 justify-between w-full">
-                            {/* Previous button */}
-                            <div>
-                                <button
-                                    disabled={currentPage === 1}
-                                    className="cursor-pointer text-white disabled:text-gray-500"
-                                    onClick={previousPage}
-                                >
-                                    <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
-                                </button></div>
-                            {/* Next Button */}
-                            <div>
-                                <button
-                                    disabled={currentPage === Math.ceil(actionStatus == "filter" ? getFilterSuggest.length / itemsPerPage : getOrderDetailInfo.length / itemsPerPage)}
-                                    className="cursor-pointer text-white disabled:text-gray-500"
-                                    onClick={nextPage}
-                                >
-                                    <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
-                                </button>
-                            </div>
+
+                <div className='container absolute bottom-0 w-full left-[50%]' style={{ transform: 'translateX(-50%)' }}>
+                    <div className="flex mb-3 justify-between w-full">
+                        {/* Previous button */}
+                        <div>
+                            <button
+                                disabled={currentPage === 1}
+                                className="cursor-pointer text-white disabled:text-gray-500"
+                                onClick={previousPage}
+                            >
+                                <i className="fa-solid text-2xl ml-5 fa-circle-chevron-left "></i>
+                            </button></div>
+                        {/* Next Button */}
+                        <div>
+                            <button
+                                disabled={currentPage === Math.ceil(actionStatus == "filter" ? getFilterSuggest.length / itemsPerPage : getOrderDetailInfo.length / itemsPerPage)}
+                                className="cursor-pointer text-white disabled:text-gray-500"
+                                onClick={nextPage}
+                            >
+                                <i className="fa-solid text-2xl mr-3 fa-circle-chevron-right "></i>
+                            </button>
                         </div>
+                    </div>
                 </div>
             </div>
         </>
