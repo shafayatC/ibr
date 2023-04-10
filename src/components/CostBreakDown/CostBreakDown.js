@@ -13,7 +13,7 @@ const CostBreakDown = () => {
     const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager);
     const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
     // const [getCostDetails, setCostDetails] = useState({})
-    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
     const constDetailFunc = () => {
         fetch(`${getApiBasicUrl}/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
@@ -39,14 +39,14 @@ const CostBreakDown = () => {
             <div className="container mx-auto ">
                 <div className="bg-white absolute top-0 left-0 -ml-2 w-full h-full">
                     <div className="bg-white flex flex-col items-center mt-2">  <img className="h-6 w-32 " src={logo} alt="" />
-                        <p className="text-xl font-bold">COST BREAKDOWN</p>
+                        <p className="text-xl font-bold">CHARGE BREAKDOWN</p>
                     </div>
                     <div className="flex justify-center mx-auto mt-2 gap-36 border-black border py-1 w-[700px] ">
                         <div className="flex justify-between gap-5">
                             <div><p className="font-semibold text-sm">Date:</p>
                                 <p className="font-semibold text-sm">Order No: </p>
                                 <p className="font-semibold text-sm">Order Status: </p>
-                                <p className="font-semibold text-sm">Raw Image(s): </p>
+                                <p className="font-semibold text-sm">Total Image(s): </p>
                             </div>
                             {Object.keys(getCostDetails).length > 0 &&
                                 typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
@@ -71,7 +71,7 @@ const CostBreakDown = () => {
                                 <div>
 
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_service_type}</p>
-                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_subcription_plan_type}</p>
+                                    <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_subscription_plan_type}</p>
                                     <p className=" text-sm">{getCostDetails.results.order_master_charge_breakdown[0].order_payment_status}</p>
                                 </div>
                             }
@@ -89,7 +89,7 @@ const CostBreakDown = () => {
                                                     <th scope="col" className="px-6 py-0">SL</th>
                                                     <th scope="col" className="px-6 py-0">Service</th>
                                                     <th scope="col" className="px-6 py-0">No.of Services</th>
-                                                    <th scope="col" className="px-6 py-0">Charge/Image</th>
+                                                    <th scope="col" className="px-6 py-0">Charge/Service</th>
                                                     <th scope="col" className="px-6 py-0">Total</th>
                                                 </tr>
                                             </thead>
@@ -124,9 +124,9 @@ const CostBreakDown = () => {
                         {Object.keys(getCostDetails).length > 0 && typeof getCostDetails.results.order_master_charge_breakdown !== 'undefined' &&
                             <div className="mr-8">
 
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
-                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
                                 <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].total_charge}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].discount}</p>
+                                <p className="font-semibold text-sm">{getCostDetails.results.order_master_charge_breakdown[0].net_charge}</p>
                             </div>
                         }
                     </div>
