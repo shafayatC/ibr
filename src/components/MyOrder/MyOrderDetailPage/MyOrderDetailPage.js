@@ -145,7 +145,6 @@ const MyOrderDetailPage = () => {
         <>
 
             {console.log(getFilterSuggest)}
-            {/* console.log(getOrderDetailInfo) */}
             <div style={{ backgroundImage: `url(${bg})`, minHeight: 'calc(100vh - 44px)' }} >
                 <div className='container mx-auto relative'>
                     <div className="flex items-center justify-center py-3">
@@ -193,7 +192,7 @@ const MyOrderDetailPage = () => {
                         <div className='px-7'>
                             <div className={`grid sm:grid-cols-1 md:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} lg:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} gap-4 pt-2 ml-2  pr-3`}>
                                 {currentImages.map((data, index) => (
-                                    <div key={index} className={getOrderDetailInfo.length === 1 && "flex justify-center"}>
+                                    data.file_relative_path.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 &&  <div key={index} className={getOrderDetailInfo.length === 1 && "flex justify-center"}>
                                         <div className={`img-container  bg-no-repeat  cursor-pointer img-bag_2 ${getOrderDetailInfo.length === 1 ? "h-[400px] justify-center" : "img-bag"}`}
                                             onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                                             style={{
@@ -206,6 +205,7 @@ const MyOrderDetailPage = () => {
                         </div>
                     }
                 </div>
+
                 {showImage &&
                     <div>
                         <div
@@ -226,8 +226,10 @@ const MyOrderDetailPage = () => {
 
                                 <div className="pt-10 mx-auto ">
                                     <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                                        <img className="h-full" src={getOrderDetailInfo[getImgIndex].compressed_raw_url} />
-                                        <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
+                                    <CompareImage
+                                            bottomImage={getOrderDetailInfo[getImgIndex].default_compressed_output_public_url}
+                                            topImage={getOrderDetailInfo[getImgIndex].compressed_raw_url} />
+                                            <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
                                     </div>
                                 </div>
                                 <div className='flex w-full justify-center'>
@@ -245,6 +247,7 @@ const MyOrderDetailPage = () => {
                                                 <p className="text-sm">Download</p>
                                             </div>
                                         </Popover>
+
 
                                     </div>
                                 </div>
