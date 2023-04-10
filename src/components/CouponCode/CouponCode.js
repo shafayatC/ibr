@@ -103,7 +103,10 @@ function CouponCode() {
                                             <div className="card-actions flex justify-between">
                                                 <p className="text-xs pt-2">2K Users use this today.</p>
                                                 {getUserInfo.status_code == 200 ?
-                                                    <button id={data.id} onClick={() => getCouponFunc(data.id)} className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-red-800">
+                                                    <button id={data.id}
+                                                    disabled={data.status == 'Redeemed'}
+                                                     onClick={() => getCouponFunc(data.id)} 
+                                                     className="bg-green-400 text-sm px-4 py-1 mr-3 hover:bg-teal-400 text-white font-semibold rounded-md disabled:bg-red-800">
                                                         {data.status}
                                                     </button>
                                                     :
