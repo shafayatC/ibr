@@ -146,19 +146,19 @@ function Imageupload() {
     setLoadProgress(0);
     setActionStatus("");
 
-    if(getAfterBeforeImg.length > 0){
+    if (getAfterBeforeImg.length > 0) {
       console.log("update file")
-      updateOrderFile(newFile); 
-    }else{
+      updateOrderFile(newFile);
+    } else {
       console.log("new file")
 
-      newOrderCreate(newFile); 
+      newOrderCreate(newFile);
     }
 
   };
 
-  const newOrderCreate= (newFile)=>{
-    
+  const newOrderCreate = (newFile) => {
+
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
@@ -177,7 +177,7 @@ function Imageupload() {
       .then((res) => res.json())
       .then((data) => {
         let order_id = data.results.order_master_info.order_id;
-        console.log(data); 
+        console.log(data);
         setOrderMasterId(order_id)
         setTotalImage(0)
         setProccessImgIndex(0)
@@ -206,7 +206,7 @@ function Imageupload() {
         console.error("Error:", error);
       });
   }
-  const updateOrderFile=(newFile)=>{
+  const updateOrderFile = (newFile) => {
 
     let i = 0;
     for (const file of newFile) {
@@ -272,25 +272,25 @@ function Imageupload() {
 
   const checkAiProccesDone = (getAfterBeforeImg) => {
 
-   // console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
+    // console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
 
     if (getAfterBeforeImg.length > 0) {
-      if(getAfterBeforeImg.length > getIpm){
-      getAfterBeforeImg.map((data, index) => {
-       // console.log(data);
-        if (typeof data.output_urls[0] !== "undefined") {
-          if (data.output_urls[0].is_ai_processed == false) {
-            const myCallback = (result) => {
-              if (result == "success") {
-              //   let newArr = [...getAfterBeforeImg]; // copying the old datas array
-              //   // a deep copy is not needed as we are overriding the whole object below, and not setting a property of it. this does not mutate the state.
-              //   newArr[index].output_urls[0].is_ai_processed = true; // replace e.target.value with whatever you want to change it to
-              // console.log("true ")
-              //   setAfterBeforeImg(newArr);
-                getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
-                setIpm(getIpm+1)
-              }
-            };
+      if (getAfterBeforeImg.length > getIpm) {
+        getAfterBeforeImg.map((data, index) => {
+          // console.log(data);
+          if (typeof data.output_urls[0] !== "undefined") {
+            if (data.output_urls[0].is_ai_processed == false) {
+              const myCallback = (result) => {
+                if (result == "success") {
+                  //   let newArr = [...getAfterBeforeImg]; // copying the old datas array
+                  //   // a deep copy is not needed as we are overriding the whole object below, and not setting a property of it. this does not mutate the state.
+                  //   newArr[index].output_urls[0].is_ai_processed = true; // replace e.target.value with whatever you want to change it to
+                  // console.log("true ")
+                  //   setAfterBeforeImg(newArr);
+                  getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
+                  setIpm(getIpm + 1)
+                }
+              };
               testImage(
                 data.output_urls[0].default_compressed_output_public_url,
                 myCallback
@@ -826,21 +826,15 @@ function Imageupload() {
                           }}
                         />
 
-
                       }
-                      <div className="flex gap-1 absolute top-0 right-2 ">
+                      <div className="flex gap-1  ">
                         {image.output_urls[0].is_ai_processed ?
-                          <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>
+                          <p><i class="fa-solid text-green-400 absolute top-2 right-2 fa-circle-check"></i></p>
                           :
-                          <p class="loader_2"></p>
+                          <p class="loader_2 absolute top-[40%] left-[45%]"></p>
                         }
-
                       </div>
-
-
                     </div>
-
-
                   ))}
 
 
@@ -1064,11 +1058,11 @@ function Imageupload() {
                   <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
                     <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
                       <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
-                      {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
+                      {/* <i className="fa-solid fa-circle-chevron-left"></i> */}
                     </button>
                     <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
                       <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
-                      {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
+                      {/* <i className="fa-solid fa-circle-chevron-right"></i> */}
                     </button>
                   </div>
                   <div className="absolute right-4 top-4 flex gap-2">
@@ -1253,7 +1247,7 @@ function Imageupload() {
             <div className="flex bg-light-black justify-between float-right mb-3 w-full rounded-md px-4 gap-5 ">
               <div className="pt-2">
                 <Link to="/cost-breakdown">
-                  <button className="bg-white rounded-lg px-3 py-1"><i class="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
+                  <button className="bg-white rounded-lg px-3 py-1"><i className="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
                 </Link>
               </div>
               {/* <div className="flex justify-center items-center gap-3">
