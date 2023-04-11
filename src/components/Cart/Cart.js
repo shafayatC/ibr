@@ -71,12 +71,12 @@ const Cart = () => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
-                data.status_code == 200 && window.open(data.results.checkout_url,"_self");
-            })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
+            data.status_code == 200 && window.open(data.results.checkout_url,"_self");
+        })
     }
 
     useEffect(() => {
