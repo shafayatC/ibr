@@ -8,6 +8,7 @@ import { Popover } from 'antd';
 import { Radio } from 'antd';
 import { matchSorter } from 'match-sorter';
 import './style.css';
+import Loading_2 from '../../Loading/Loading_2';
 const MyOrderDetailPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,8 +34,8 @@ const MyOrderDetailPage = () => {
 
     const { orderId } = useParams();
 
-    const onChangeDownloadUrl =(e)=>{
-       // e.preventdefault()
+    const onChangeDownloadUrl = (e) => {
+        // e.preventdefault()
 
         console.log(e.target.value)
         setDownloadUrl(e.target.value)
@@ -57,7 +58,7 @@ const MyOrderDetailPage = () => {
     }
 
 
-    const downloadContent = (jpg, png, psd)=>(
+    const downloadContent = (jpg, png, psd) => (
 
         <div>
             <Radio.Group defaultValue={1}>
@@ -192,12 +193,14 @@ const MyOrderDetailPage = () => {
                             </div>
                         </div>
                     </div>
-
+{
+    getOrderDetailInfo.length < 1 && <Loading_2/> 
+}
                     {typeof getOrderDetailInfo !== 'undefined' && getOrderDetailInfo.length > 0 &&
                         <div className='px-7'>
                             <div className={`grid sm:grid-cols-1 md:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} lg:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} gap-4 pt-2 ml-2  pr-3`}>
                                 {currentImages.map((data, index) => (
-                                    data.file_relative_path.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 &&  <div key={index} className={getOrderDetailInfo.length === 1 && "flex justify-center"}>
+                                    data.file_relative_path.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && <div key={index} className={getOrderDetailInfo.length === 1 && "flex justify-center"}>
                                         <div className={`img-container  bg-no-repeat  cursor-pointer img-bag_2 ${getOrderDetailInfo.length === 1 ? "h-[400px] justify-center" : "img-bag"}`}
                                             onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                                             style={{
@@ -231,10 +234,10 @@ const MyOrderDetailPage = () => {
 
                                 <div className="pt-10 mx-auto ">
                                     <div className="w-[400px] h-[400px] border border-theme-shade  relative">
-                                    <CompareImage
+                                        <CompareImage
                                             bottomImage={getOrderDetailInfo[getImgIndex].default_compressed_output_public_url}
                                             topImage={getOrderDetailInfo[getImgIndex].compressed_raw_url} />
-                                            <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
+                                        <p className="absolute top-0 right-0  bg-teal-500 text-white px-3 text-xs py-1  rounded-l-3xl z-10">{getImgIndex + 1}</p>
                                     </div>
                                 </div>
                                 <div className='flex w-full justify-center'>
@@ -245,8 +248,8 @@ const MyOrderDetailPage = () => {
                                                 <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
                                                 <p className="text-sm">Share</p>
                                             </div>
-                                        </Popover>jpg, png, psd
-                                        <Popover content={()=>downloadContent(getOrderDetailInfo[getImgIndex].original_output_url, getOrderDetailInfo[getImgIndex].png_image_output_url, getOrderDetailInfo[getImgIndex].psd_file_url)} trigger="click">
+                                        </Popover>
+                                        <Popover content={() => downloadContent(getOrderDetailInfo[getImgIndex].original_output_url, getOrderDetailInfo[getImgIndex].png_image_output_url, getOrderDetailInfo[getImgIndex].psd_file_url)} trigger="click">
                                             <div className="cursor-pointer">
                                                 <p><i class="fa-solid fa-download flex justify-center"></i></p>
                                                 <p className="text-sm">Download</p>

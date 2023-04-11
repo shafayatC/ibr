@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiUrlContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
+import { Alert, Space } from 'antd';
 // import { Steps } from 'antd';
 
 const Cart = () => {
@@ -12,9 +13,15 @@ const Cart = () => {
     const [getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu] = useContext(menuContextManager)
     const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
+    const onClose = (e) => {
+        console.log(e, 'I was closed.');
+    };
+
     // const [getCostDetails, setCostDetails] = useState({})
+    const navigate = useNavigate(); 
 
     const constDetailFunc = () => {
+
 
         fetch(`${getApiBasicUrl}/cost-breakdown?order_master_image_id=${getOrderMasterId}`, {
             headers: {
@@ -68,12 +75,12 @@ const Cart = () => {
             .then(data => {
                 console.log(data)
                 // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
-                data.status_code == 200 && window.open(data.results.checkout_url);
+                data.status_code == 200 && window.open(data.results.checkout_url,"_self");
             })
     }
 
     useEffect(() => {
-        getOrderMasterId.length > 0 && constDetailFunc()
+        getOrderMasterId.length > 0 ? constDetailFunc() : navigate("/")
     }, [getOrderMasterId]);
 
     return (
@@ -223,6 +230,32 @@ const Cart = () => {
                     </Link>
 
                 </div>
+                <Space
+                    direction="vertical"
+                    style={{
+                        textAlign: "start",
+                        width: '650px',
+                        position: "absolute",
+                        bottom: "0",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        zIndex: "999"
+
+
+
+
+                    }}
+                >
+                    <Alert
+                        style={{ fontWeight: "500", fontSize: "10px" }}
+
+                        //   message="Add-on Image Services"
+                        description="Please be advised that we are committed to delivering high-quality image editing services within 24 hours, even in cases where adjustments or additional services are requested. As soon as your images are ready, we will notify you via message or email. Thank you for entrusting us with your image editing needs."
+
+                        closable
+                        onClose={onClose}
+                    />
+                </Space>
 
             </div>
         </Page2>

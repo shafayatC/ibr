@@ -27,12 +27,13 @@ import MyOrder from "./components/MyOrder/MyOrder";
 import localforage from "localforage";
 import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
 import MyOrderDetailPage from "./components/MyOrder/MyOrderDetailPage/MyOrderDetailPage";
+import ThankYouNote from "./components/Login/ThankYouNote";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
 export const userContextManager = createContext();
 export const menuContextManager = createContext();
-export const apiUrlContextManager = createContext(); 
+export const apiUrlContextManager = createContext();
 
 function App() {
   const [getMainFile, setMainFile] = useState([]);
@@ -53,7 +54,7 @@ function App() {
   const [getProccessImgIndex, setProccessImgIndex] = useState(0);
   const [getCostDetails, setCostDetails] = useState({})
   const [getOrderDetailInfo, setOrderDetailInfo] = useState([])
-  const [getSrvPopBool, setSrvPopBool] = useState(true); 
+  const [getSrvPopBool, setSrvPopBool] = useState(true);
   const [getModelBaseUrl, setModelBaseUrl] = useState("");
   const [getApiBasicUrl, setApiBasicUrl] = useState("http://103.197.204.22:8007/api/2023-02");
 
@@ -82,33 +83,34 @@ function App() {
         <userContextManager.Provider value={[getUserInfo, setUserInfo, getToken, setToken]}>
           <menuContextManager.Provider value={[getMenuId, setMenuId, getMenu, setMenu, getDashboardMenu, setDashboardMenu]}>
             <apiUrlContextManager.Provider value={[getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl]}>
-            <div className="App">
-              <InitialDataLoad />
-              <Navbar items={getMenu}></Navbar>
-              <Routes>
-                {/* <Route path="/" element={<Navigation />} /> */}
-                <Route path="/" element={<Home />} />
-                <Route path="/price" element={<PriceCard />} />
-                <Route path="/file-uploads" element={<Imageupload />} />
-                <Route path="/processed-img" element={<Page3 />} />
-                <Route path="/log-in" element={<SignIn />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
-                <Route path="/reset-password/:token" element={<ResetPassword />} />
-                <Route path="/confirm-password/:token" element={<SetPassword />} />
-                <Route path="/question-answer" element={<QuestionAnswer />} />
-                <Route path="/upgrade-account" element={<UpgradeAccount />} />
-                <Route path="/coupon-code" element={<CouponCode />} />
-                <Route path="/cost-breakdown" element={<CostBreakDown />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/apply-voucher" element={<ApplyVoucher />} />
-                <Route path="/checkout" element={<CheckOutPage />} />
-                <Route path="/thank-you-page" element={<ThankYouPage />} />
-                <Route path="/my-order" element={<MyOrder />} />
-                <Route path="/editing-package" element={<ServiceTypePage />} />
-                <Route path="/order-info-page/:orderId" element={<MyOrderDetailPage />} />
-              </Routes>
-            </div>
+              <div className="App">
+                <InitialDataLoad />
+                <Navbar items={getMenu}></Navbar>
+                <Routes>
+                  {/* <Route path="/" element={<Navigation />} /> */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/price" element={<PriceCard />} />
+                  <Route path="/file-uploads" element={<Imageupload />} />
+                  <Route path="/processed-img" element={<Page3 />} />
+                  <Route path="/log-in" element={<SignIn />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/resetpasswordform/" element={<ResetPasswordForm />} />
+                  <Route path="/reset-password/:token" element={<ResetPassword />} />
+                  <Route path="/confirm-password/:token" element={<SetPassword />} />
+                  <Route path="/question-answer" element={<QuestionAnswer />} />
+                  <Route path="/upgrade-account" element={<UpgradeAccount />} />
+                  <Route path="/coupon-code" element={<CouponCode />} />
+                  <Route path="/cost-breakdown" element={<CostBreakDown />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/apply-voucher" element={<ApplyVoucher />} />
+                  <Route path="/checkout" element={<CheckOutPage />} />
+                  <Route path="/thank-you-page" element={<ThankYouPage />} />
+                  <Route path="/my-order" element={<MyOrder />} />
+                  <Route path="/editing-package" element={<ServiceTypePage />} />
+                  <Route path="/order-info-page/:orderId" element={<MyOrderDetailPage />} />
+                  <Route path="/thank-you-note" element={<ThankYouNote />} />
+                </Routes>
+              </div>
             </apiUrlContextManager.Provider>
           </menuContextManager.Provider>
         </userContextManager.Provider>

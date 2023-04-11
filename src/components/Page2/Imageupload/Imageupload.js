@@ -46,7 +46,7 @@ function Imageupload() {
   const [getSwitchLoop, setSwitchLoop] = useState(false);
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
   const [getCallbackAiBool, setCallbackAiBool] = useState(false);
-  const [getIpm, setIpm] = useState(0); 
+  const [getIpm, setIpm] = useState(0);
   const [
     getMainFile,
     setMainFile,
@@ -146,14 +146,26 @@ function Imageupload() {
     setLoadProgress(0);
     setActionStatus("");
 
+    if(getAfterBeforeImg.length > 0){
+      console.log("update file")
+      updateOrderFile(newFile); 
+    }else{
+      console.log("new file")
+
+      newOrderCreate(newFile); 
+    }
+
+  };
+
+  const newOrderCreate= (newFile)=>{
+    
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
-
+    console.log(myOrdre)
     fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
@@ -165,18 +177,15 @@ function Imageupload() {
       .then((res) => res.json())
       .then((data) => {
         let order_id = data.results.order_master_info.order_id;
+        console.log(data); 
         setOrderMasterId(order_id)
         setTotalImage(0)
         setProccessImgIndex(0)
 
         let i = 0;
         for (const file of newFile) {
-          // setLoadProgress(Math.round((100 / newFile.length) * i));
 
           if (file.type == "image/jpeg" || file.type == "image/png") {
-            // const imageUrl = URL.createObjectURL(file);
-            // const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-            //setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             i++;
             setTotalImage(i)
             console.log(file)
@@ -189,62 +198,36 @@ function Imageupload() {
             data.append("file", file);
             data.append("file_relative_path", filePath.join("/"));
             data.append("subscription_plan_type_id", getSubscriptionPlanId);
-            // data.append("sequence_no", fileInfo.length + i);
             dataTransfer(data);
-            /*
-            if (fileInfo.length > 0) {
-              // check if the images is already exits
-              const foundFile = fileInfo.find(
-                (fl) =>
-                  fl.file.lastModified === file.lastModified &&
-                  fl.file.name === file.name &&
-                  fl.file.size === file.size &&
-                  fl.file.type === file.type
-              );
-
-              if (foundFile) {
-                // console.log("The file already exists in the array.");
-              } else {
-                const imageUrl = URL.createObjectURL(file);
-                const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-                setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-
-                let data = new FormData();
-                data.append("order_master_id", order_id);
-                data.append("service_type_id", getServiceTypeId);
-                data.append("file", file);
-                data.append("file_relative_path", "filePath/example");
-                data.append("subscription_plan_type_id", getSubscriptionPlanId);
-                //data.append("sequence_no", fileInfo.length + i);
-                dataTransfer(data);
-
-                console.log("The file does not exist in the array.");
-              }
-            } else {
-              const imageUrl = URL.createObjectURL(file);
-              const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-              setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-
-              let data = new FormData();
-              data.append("order_master_id", order_id);
-              data.append("service_type_id", getServiceTypeId);
-              data.append("file", file);
-              data.append("file_relative_path", "filePath/example");
-              data.append("subscription_plan_type_id", getSubscriptionPlanId);
-             // data.append("sequence_no", fileInfo.length + i);
-              dataTransfer(data);
-            }
-            */
           }
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+  }
+  const updateOrderFile=(newFile)=>{
 
+    let i = 0;
+    for (const file of newFile) {
 
-  };
-
+      if (file.type == "image/jpeg" || file.type == "image/png") {
+        i++;
+        setTotalImage(i)
+        console.log(file)
+        const filePath = file.webkitRelativePath.split("/");
+        filePath.pop();
+        console.log(filePath.join("/"))
+        let data = new FormData();
+        data.append("order_master_id", getOrderMasterId);
+        data.append("service_type_id", getServiceTypeId);
+        data.append("file", file);
+        data.append("file_relative_path", filePath.join("/"));
+        data.append("subscription_plan_type_id", getSubscriptionPlanId);
+        dataTransfer(data);
+      }
+    }
+  }
   const uniqueIdGenerate = (length) => {
     let result = "";
     const characters =
@@ -288,12 +271,13 @@ function Imageupload() {
   }
 
   const checkAiProccesDone = (getAfterBeforeImg) => {
-    console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
+
+   // console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
 
     if (getAfterBeforeImg.length > 0) {
       if(getAfterBeforeImg.length > getIpm){
       getAfterBeforeImg.map((data, index) => {
-        console.log(data);
+       // console.log(data);
         if (typeof data.output_urls[0] !== "undefined") {
           if (data.output_urls[0].is_ai_processed == false) {
             const myCallback = (result) => {
@@ -307,16 +291,15 @@ function Imageupload() {
                 setIpm(getIpm+1)
               }
             };
-
-            testImage(
-              data.output_urls[0].default_compressed_output_public_url,
-              myCallback
-            );
-          } else {
+              testImage(
+                data.output_urls[0].default_compressed_output_public_url,
+                myCallback
+              );
+            } else {
+            }
           }
-        }
-      });
-    }
+        });
+      }
     }
   };
 
@@ -328,7 +311,6 @@ function Imageupload() {
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
@@ -703,16 +685,16 @@ function Imageupload() {
 
   }
   useEffect(() => {
-    
+
     setInterval(() => {
-        checkAiProccesDone(getAfterBeforeImg);
-    }, 2000); 
+      checkAiProccesDone(getAfterBeforeImg);
+    }, 2000);
 
     // getAfterBeforeImg.length > 0 && setActionStatus("process")
   }, [getAfterBeforeImg, getIpm]);
 
   // useEffect(() => {
-    
+
   //   setInterval(() => {
   //       checkAiProccesDone(getAfterBeforeImg);
   //   }, 2000); 
@@ -847,13 +829,13 @@ function Imageupload() {
 
                       }
                       <div className="flex gap-1 absolute top-0 right-2 ">
-                        { image.output_urls[0].is_ai_processed ?
-                         <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>   
-                         : 
-                          <p class="loader_2"></p> 
-                          }
-                         
-                        </div>
+                        {image.output_urls[0].is_ai_processed ?
+                          <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>
+                          :
+                          <p class="loader_2"></p>
+                        }
+
+                      </div>
 
 
                     </div>
@@ -1274,15 +1256,15 @@ function Imageupload() {
                   <button className="bg-white rounded-lg px-3 py-1"><i class="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
                 </Link>
               </div>
-              <div className="flex justify-center items-center gap-3">
-               {getTotalImage > getProccessImgIndex && <p class="loader_3 "></p>} 
+              {/* <div className="flex justify-center items-center gap-3">
+                {getTotalImage > getProccessImgIndex && <p class="loader_3 "></p>}
                 <div class="shadow w-40 bg-white ">
                   <div class="bg-teal-500 text-xs leading-none text-center text-white"
                    style={{width: (100/getTotalImage) * getProccessImgIndex+'%'}}>
                     {Math.round(100/getTotalImage) * getProccessImgIndex < 100 ? Math.round(100/getTotalImage) * getProccessImgIndex : 100}%
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="flex gap-5">
                 <div className="text-white self-end font-semibold text-sm py-1">
                   <p>Total Image(s) : {getAfterBeforeImg.length}</p>
