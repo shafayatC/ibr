@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiUrlContextManager, userContextManager } from "../../App";
 
 const SignUp = () => {
@@ -29,6 +29,8 @@ const SignUp = () => {
     });
   };
 
+  const navigate = useNavigate()
+
   const onChangeMail = (e) => {
     setMail(e.target.value);
   }
@@ -52,7 +54,17 @@ const SignUp = () => {
         });
 
         const res = await rawResponse.json();
-        res.status_code == 200 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
+        if
+          (res.status_code == 200) {
+          showToastMessage(res.message)
+          navigate("/thank-you-note")
+        }
+
+        else {
+          showToastMessageWarning(res.message)
+        }
+
+
 
       } catch (error) {
         console.log(error)
@@ -103,13 +115,18 @@ const SignUp = () => {
                 data like IDs, credentials, or non-public information. Learn how
                 to edit your username. Learn how to delete your account.
               </p> */}
+
             <div className="text-center">
+
+
               <button
                 onClick={singUpFunc}
                 className=" w-full mb-5 py-3 bg-theme-shade text-white font-medium text-sm "
               >
                 Create Account
               </button>
+
+
               <ToastContainer />
               {/* <p className="mb-5 font-semibold">OR SIGN IN WITH</p>
                 <div className="flex justify-center gap-5">
