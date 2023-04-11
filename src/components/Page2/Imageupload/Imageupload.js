@@ -146,14 +146,26 @@ function Imageupload() {
     setLoadProgress(0);
     setActionStatus("");
 
+    if(getAfterBeforeImg.length > 0){
+      console.log("update file")
+      updateOrderFile(newFile); 
+    }else{
+      console.log("new file")
+
+      newOrderCreate(newFile); 
+    }
+
+  };
+
+  const newOrderCreate= (newFile)=>{
+    
     const myOrdre = {
       menu_id: getMenuId,
       service_type_id: getServiceTypeId,
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
-
+    console.log(myOrdre)
     fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
       headers: {
@@ -165,18 +177,15 @@ function Imageupload() {
       .then((res) => res.json())
       .then((data) => {
         let order_id = data.results.order_master_info.order_id;
+        console.log(data); 
         setOrderMasterId(order_id)
         setTotalImage(0)
         setProccessImgIndex(0)
 
         let i = 0;
         for (const file of newFile) {
-          // setLoadProgress(Math.round((100 / newFile.length) * i));
 
           if (file.type == "image/jpeg" || file.type == "image/png") {
-            // const imageUrl = URL.createObjectURL(file);
-            // const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-            //setFileInfo((fileInfo) => [...fileInfo, fileObject]);
             i++;
             setTotalImage(i)
             console.log(file)
@@ -189,62 +198,36 @@ function Imageupload() {
             data.append("file", file);
             data.append("file_relative_path", filePath.join("/"));
             data.append("subscription_plan_type_id", getSubscriptionPlanId);
-            // data.append("sequence_no", fileInfo.length + i);
             dataTransfer(data);
-            /*
-            if (fileInfo.length > 0) {
-              // check if the images is already exits
-              const foundFile = fileInfo.find(
-                (fl) =>
-                  fl.file.lastModified === file.lastModified &&
-                  fl.file.name === file.name &&
-                  fl.file.size === file.size &&
-                  fl.file.type === file.type
-              );
-
-              if (foundFile) {
-                // console.log("The file already exists in the array.");
-              } else {
-                const imageUrl = URL.createObjectURL(file);
-                const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-                setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-
-                let data = new FormData();
-                data.append("order_master_id", order_id);
-                data.append("service_type_id", getServiceTypeId);
-                data.append("file", file);
-                data.append("file_relative_path", "filePath/example");
-                data.append("subscription_plan_type_id", getSubscriptionPlanId);
-                //data.append("sequence_no", fileInfo.length + i);
-                dataTransfer(data);
-
-                console.log("The file does not exist in the array.");
-              }
-            } else {
-              const imageUrl = URL.createObjectURL(file);
-              const fileObject = { file: file, imageUrl: imageUrl, sequence_no: fileInfo.length + i };
-              setFileInfo((fileInfo) => [...fileInfo, fileObject]);
-
-              let data = new FormData();
-              data.append("order_master_id", order_id);
-              data.append("service_type_id", getServiceTypeId);
-              data.append("file", file);
-              data.append("file_relative_path", "filePath/example");
-              data.append("subscription_plan_type_id", getSubscriptionPlanId);
-             // data.append("sequence_no", fileInfo.length + i);
-              dataTransfer(data);
-            }
-            */
           }
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+  }
+  const updateOrderFile=(newFile)=>{
 
+    let i = 0;
+    for (const file of newFile) {
 
-  };
-
+      if (file.type == "image/jpeg" || file.type == "image/png") {
+        i++;
+        setTotalImage(i)
+        console.log(file)
+        const filePath = file.webkitRelativePath.split("/");
+        filePath.pop();
+        console.log(filePath.join("/"))
+        let data = new FormData();
+        data.append("order_master_id", getOrderMasterId);
+        data.append("service_type_id", getServiceTypeId);
+        data.append("file", file);
+        data.append("file_relative_path", filePath.join("/"));
+        data.append("subscription_plan_type_id", getSubscriptionPlanId);
+        dataTransfer(data);
+      }
+    }
+  }
   const uniqueIdGenerate = (length) => {
     let result = "";
     const characters =
@@ -288,12 +271,12 @@ function Imageupload() {
   }
 
   const checkAiProccesDone = (getAfterBeforeImg) => {
-    console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
+   // console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
 
     if (getAfterBeforeImg.length > 0) {
       if(getAfterBeforeImg.length > getIpm){
       getAfterBeforeImg.map((data, index) => {
-        console.log(data);
+       // console.log(data);
         if (typeof data.output_urls[0] !== "undefined") {
           if (data.output_urls[0].is_ai_processed == false) {
             const myCallback = (result) => {
@@ -328,7 +311,6 @@ function Imageupload() {
       subscription_plan_type_id: getSubscriptionPlanId
     };
 
-    // console.log("getMenuId " + getMenuId + " getServiceTypeId " + getServiceTypeId);
 
     fetch(getApiBasicUrl + "/order-master-info", {
       method: "POST", // or 'PUT'
