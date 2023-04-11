@@ -832,12 +832,9 @@ function Imageupload() {
                           <p><i class="fa-solid text-green-400 absolute top-2 right-2 fa-circle-check"></i></p>
                           :
                           <p class="loader_2 absolute top-[40%] left-[45%]"></p>
+                        }
                       </div>
-
-
                     </div>
-
-
                   ))}
 
 
