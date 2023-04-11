@@ -22,7 +22,17 @@ const Navbar = ({ items }) => {
     localforage.removeItem("userInfo");
     setUserInfo({});
 
+
   };
+
+  const refresh = () => {
+    window.location.reload(true)
+
+
+  }
+
+
+
 
   return (
     <nav className=" bg-black-shade border-gray-200 px-2 sm:px-4 shadow-md light:bg-gray-900">
@@ -110,12 +120,17 @@ const Navbar = ({ items }) => {
                 }}>
                 <a
                 >
+                  {/* <Link to="/"> */}
                   <button
-                    onClick={signOutFunc}
+                    onClick={() => {
+                      signOutFunc();
+                      refresh();
+                    }}
                     className="bg-theme-shade rounded-md text-white w-20 py-1 hover:bg-white hover:text-black"
                   >
                     <div>Sign out</div>
                   </button>
+                  {/* </Link> */}
                 </a>
               </div>
             )}

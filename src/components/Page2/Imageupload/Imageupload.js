@@ -46,7 +46,7 @@ function Imageupload() {
   const [getSwitchLoop, setSwitchLoop] = useState(false);
   //const [getProccessImgIndex, setProccessImgIndex] = useState(0)
   const [getCallbackAiBool, setCallbackAiBool] = useState(false);
-  const [getIpm, setIpm] = useState(0); 
+  const [getIpm, setIpm] = useState(0);
   const [
     getMainFile,
     setMainFile,
@@ -288,35 +288,35 @@ function Imageupload() {
   }
 
   const checkAiProccesDone = (getAfterBeforeImg) => {
-    console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => "+ getIpm);
+    console.log("testing ai process" + " total + " + getAfterBeforeImg.length + " => " + getIpm);
 
     if (getAfterBeforeImg.length > 0) {
-      if(getAfterBeforeImg.length > getIpm){
-      getAfterBeforeImg.map((data, index) => {
-        console.log(data);
-        if (typeof data.output_urls[0] !== "undefined") {
-          if (data.output_urls[0].is_ai_processed == false) {
-            const myCallback = (result) => {
-              if (result == "success") {
-              //   let newArr = [...getAfterBeforeImg]; // copying the old datas array
-              //   // a deep copy is not needed as we are overriding the whole object below, and not setting a property of it. this does not mutate the state.
-              //   newArr[index].output_urls[0].is_ai_processed = true; // replace e.target.value with whatever you want to change it to
-              // console.log("true ")
-              //   setAfterBeforeImg(newArr);
-                getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
-                setIpm(getIpm+1)
-              }
-            };
+      if (getAfterBeforeImg.length > getIpm) {
+        getAfterBeforeImg.map((data, index) => {
+          console.log(data);
+          if (typeof data.output_urls[0] !== "undefined") {
+            if (data.output_urls[0].is_ai_processed == false) {
+              const myCallback = (result) => {
+                if (result == "success") {
+                  //   let newArr = [...getAfterBeforeImg]; // copying the old datas array
+                  //   // a deep copy is not needed as we are overriding the whole object below, and not setting a property of it. this does not mutate the state.
+                  //   newArr[index].output_urls[0].is_ai_processed = true; // replace e.target.value with whatever you want to change it to
+                  // console.log("true ")
+                  //   setAfterBeforeImg(newArr);
+                  getAfterBeforeImg[index].output_urls[0].is_ai_processed = true;
+                  setIpm(getIpm + 1)
+                }
+              };
 
-            testImage(
-              data.output_urls[0].default_compressed_output_public_url,
-              myCallback
-            );
-          } else {
+              testImage(
+                data.output_urls[0].default_compressed_output_public_url,
+                myCallback
+              );
+            } else {
+            }
           }
-        }
-      });
-    }
+        });
+      }
     }
   };
 
@@ -703,16 +703,16 @@ function Imageupload() {
 
   }
   useEffect(() => {
-    
+
     setInterval(() => {
-        checkAiProccesDone(getAfterBeforeImg);
-    }, 2000); 
+      checkAiProccesDone(getAfterBeforeImg);
+    }, 2000);
 
     // getAfterBeforeImg.length > 0 && setActionStatus("process")
   }, [getAfterBeforeImg, getIpm]);
 
   // useEffect(() => {
-    
+
   //   setInterval(() => {
   //       checkAiProccesDone(getAfterBeforeImg);
   //   }, 2000); 
@@ -847,13 +847,13 @@ function Imageupload() {
 
                       }
                       <div className="flex gap-1 absolute top-0 right-2 ">
-                        { image.output_urls[0].is_ai_processed ?
-                         <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>   
-                         : 
-                          <p class="loader_2"></p> 
-                          }
-                         
-                        </div>
+                        {image.output_urls[0].is_ai_processed ?
+                          <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>
+                          :
+                          <p class="loader_2"></p>
+                        }
+
+                      </div>
 
 
                     </div>
@@ -1274,15 +1274,15 @@ function Imageupload() {
                   <button className="bg-white rounded-lg px-3 py-1"><i class="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
                 </Link>
               </div>
-              <div className="flex justify-center items-center gap-3">
-               {getTotalImage > getProccessImgIndex && <p class="loader_3 "></p>} 
+              {/* <div className="flex justify-center items-center gap-3">
+                {getTotalImage > getProccessImgIndex && <p class="loader_3 "></p>}
                 <div class="shadow w-40 bg-white ">
                   <div class="bg-teal-500 text-xs leading-none text-center text-white"
                    style={{width: (100/getTotalImage) * getProccessImgIndex+'%'}}>
                     {Math.round(100/getTotalImage) * getProccessImgIndex < 100 ? Math.round(100/getTotalImage) * getProccessImgIndex : 100}%
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="flex gap-5">
                 <div className="text-white self-end font-semibold text-sm py-1">
                   <p>Total Image(s) : {getAfterBeforeImg.length}</p>
