@@ -826,13 +826,12 @@ function Imageupload() {
                           }}
                         />
 
-
                       }
                       <div className="flex gap-1 absolute top-0 right-2 ">
                         {image.output_urls[0].is_ai_processed ?
-                          <p><i class="fa-solid text-green-400 fa-circle-check"></i></p>
+                          <p><i className="fa-solid text-green-400 fa-circle-check"></i></p>
                           :
-                          <p class="loader_2"></p>
+                          <p className="loader_2"></p>
                         }
 
                       </div>
@@ -1064,11 +1063,11 @@ function Imageupload() {
                   <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
                     <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
                       <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
-                      {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
+                      {/* <i className="fa-solid fa-circle-chevron-left"></i> */}
                     </button>
                     <button disabled={getImgIndex == getAfterBeforeImg.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
                       <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
-                      {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
+                      {/* <i className="fa-solid fa-circle-chevron-right"></i> */}
                     </button>
                   </div>
                   <div className="absolute right-4 top-4 flex gap-2">
@@ -1253,7 +1252,7 @@ function Imageupload() {
             <div className="flex bg-light-black justify-between float-right mb-3 w-full rounded-md px-4 gap-5 ">
               <div className="pt-2">
                 <Link to="/cost-breakdown">
-                  <button className="bg-white rounded-lg px-3 py-1"><i class="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
+                  <button className="bg-white rounded-lg px-3 py-1"><i className="fa-solid mr-3 fa-file-invoice-dollar"></i>Charge Breakdown</button>
                 </Link>
               </div>
               {/* <div className="flex justify-center items-center gap-3">
