@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiUrlContextManager, menuContextManager, OrderContextManager, userContextManager } from "../../App";
 import logo from '../../images/logo.png'
 import Page2 from "../Page2/Page2";
@@ -18,6 +18,7 @@ const Cart = () => {
     };
 
     // const [getCostDetails, setCostDetails] = useState({})
+    const navigate = useNavigate(); 
 
     const constDetailFunc = () => {
 
@@ -74,12 +75,12 @@ const Cart = () => {
             .then(data => {
                 console.log(data)
                 // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
-                data.status_code == 200 && window.open(data.results.checkout_url);
+                data.status_code == 200 && window.open(data.results.checkout_url,"_self");
             })
     }
 
     useEffect(() => {
-        getOrderMasterId.length > 0 && constDetailFunc()
+        getOrderMasterId.length > 0 ? constDetailFunc() : navigate("/")
     }, [getOrderMasterId]);
 
     return (

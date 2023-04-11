@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate} from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiUrlContextManager, userContextManager } from "../../App";
@@ -12,6 +12,7 @@ const SetPassword = () => {
   const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
 
   let { token } = useParams();
+  const navigate = useNavigate()
 
   const showToastMessage = (msg) => {
     toast.success(msg, {
@@ -47,7 +48,12 @@ const SetPassword = () => {
   
         const res = await rawResponse.json();
         console.log(res); 
-        res.status_code == 200 ? showToastMessage(res.message) : showToastMessageWarning(res.message)
+        if(res.status_code == 200){
+          showToastMessage(res.message)
+          navigate('/log-in')
+        }else{
+          showToastMessageWarning(res.message)
+        }
   
       } catch (error) {
         showToastMessageWarning(error)

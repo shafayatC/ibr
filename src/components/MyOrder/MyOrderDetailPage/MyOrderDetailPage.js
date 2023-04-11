@@ -8,6 +8,7 @@ import { Popover } from 'antd';
 import { Radio } from 'antd';
 import { matchSorter } from 'match-sorter';
 import './style.css';
+import Loading_2 from '../../Loading/Loading_2';
 const MyOrderDetailPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -192,7 +193,9 @@ const MyOrderDetailPage = () => {
                             </div>
                         </div>
                     </div>
-
+{
+    getOrderDetailInfo.length < 1 && <Loading_2/> 
+}
                     {typeof getOrderDetailInfo !== 'undefined' && getOrderDetailInfo.length > 0 &&
                         <div className='px-7'>
                             <div className={`grid sm:grid-cols-1 md:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} lg:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} gap-4 pt-2 ml-2  pr-3`}>
