@@ -660,28 +660,42 @@ function Imageupload() {
   }
 
   const reviewPaymentFunc = () => {
+    // openModal()
+    localforage.getItem("userInfo").then(data => {
+      if (data !== null && Object.keys(data).length > 0) {
+        console.log(data)
+        setUserInfo(data);
+        setToken(data.results.token);
 
-    const orderId = {
-      "id": getOrderMasterId
-    }
-
-    fetch(getApiBasicUrl + "/update-order-master-info-by-id", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'bearer ' + getToken
-      },
-      body: JSON.stringify(orderId),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status_code == 200) {
-          navigate('/cart')
-        } else {
-          setIsOpen(true);
+        const orderId = {
+          "id": getOrderMasterId
         }
-      })
+
+        fetch(getApiBasicUrl + "/update-order-master-info-by-id", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'bearer ' + getToken
+          },
+          body: JSON.stringify(orderId),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.status_code == 200) {
+              navigate('/cart')
+            } else {
+              setIsOpen(true);
+            }
+          })
+
+      } else {
+        openModal()
+      }
+    })
+      .catch((error) => { console.log(error) });
+
+
 
   }
   useEffect(() => {
@@ -836,9 +850,6 @@ function Imageupload() {
                       </div>
                     </div>
                   ))}
-
-
-
 
                 </div>
 
@@ -1265,18 +1276,12 @@ function Imageupload() {
 
                   {getTotalImage == getProccessImgIndex && <p>Total Charge :  <TotalBill actionSwitch={getSwitchLoop} /></p>}
                 </div>
-                {getTotalImage == getProccessImgIndex ? getUserInfo.status_code == 200 ?
+                {getTotalImage == getProccessImgIndex ?
 
                   <div className="self-center text-sm">
                     <button onClick={reviewPaymentFunc}>
                       <button className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Review Payment</button>
                     </button>
-                  </div>
-                  :
-                  <div className="self-center text-sm">
-
-                    <button onClick={openModal} className=" bg-white text-black hover:bg-green-400 hover:text-white px-3 rounded-lg py-1 font-semibold">Checkout</button>
-
                   </div>
                   : ""
                 }

@@ -40,7 +40,7 @@ const Navbar = ({ items }) => {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <span>
-            <img className="h-8 w-52 -ml-10" src={logo} alt="" />
+            <img className="h-8 w-52 -ml-6" src={logo} alt="" />
           </span>
 
         </Link>
