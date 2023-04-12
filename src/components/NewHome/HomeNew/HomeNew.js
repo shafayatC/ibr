@@ -37,8 +37,8 @@ const Home = () => {
               <source src={video} type="video/mp4" />
             </video>
             <div className="flex ml-10">
-              <img className="h-20 w-52 mr-2" src={applelogo} alt="" />
-              <img className="h-16 w-40 mt-2" src={googlelogo} alt="" />
+              <img className="h-16 w-40 mr-2" src={applelogo} alt="" />
+              <img className="h-12 w-28 mt-2" src={googlelogo} alt="" />
             </div>
           </div>
           <div>
@@ -58,43 +58,43 @@ const Home = () => {
                 SERVICES
               </p>
               <div className="grid grid-cols-5  justify-items-center gap-5">
-                <div  >
+                <div className="service" >
                   <img className="h-12 w-12  " src={box} alt="" />
                   <p className="text-white text-xs">Photo Retouch</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={x} alt="" />
                   <p className="text-white text-xs">Ghost Mannequin</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={o} alt="" />
                   <p className="text-white text-xs">Image Beautification</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={control} alt="" />
                   <p className="text-white text-xs">Shadow Creation</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={box} alt="" />
                   <p className="text-white text-xs">Image Masking</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={o} alt="" />
                   <p className="text-white text-xs">Image Resizing</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={x} alt="" />
                   <p className="text-white text-xs">Photo Restoration</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={x} alt="" />
                   <p className="text-white text-xs">Background Removal</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={x} alt="" />
                   <p className="text-white text-xs">Objects Removal</p>
                 </div>
-                <div>
+                <div className="service">
                   <img className="h-12 w-12 " src={x} alt="" />
                   <p className="text-white text-xs">Color Correction</p>
                 </div>

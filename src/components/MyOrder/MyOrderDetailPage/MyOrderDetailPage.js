@@ -193,15 +193,15 @@ const MyOrderDetailPage = () => {
                             </div>
                         </div>
                     </div>
-{
-    getOrderDetailInfo.length < 1 && <Loading_2/> 
-}
+                    {
+                        getOrderDetailInfo.length < 1 && <Loading_2 />
+                    }
                     {typeof getOrderDetailInfo !== 'undefined' && getOrderDetailInfo.length > 0 &&
                         <div className='px-7'>
                             <div className={`grid sm:grid-cols-1 md:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} lg:grid-cols-${getOrderDetailInfo.length > 3 ? "4" : getOrderDetailInfo.length} gap-4 pt-2 ml-2  pr-3`}>
                                 {currentImages.map((data, index) => (
                                     data.file_relative_path.toLowerCase().indexOf(getFilterText.toLowerCase()) > -1 && <div key={index} className={getOrderDetailInfo.length === 1 && "flex justify-center"}>
-                                        <div className={`img-container  bg-no-repeat  cursor-pointer img-bag_2 ${getOrderDetailInfo.length === 1 ? "h-[400px] justify-center" : "img-bag"}`}
+                                        <div className={`img-container  bg-no-repeat  cursor-pointer img-bag_2 ${getOrderDetailInfo.length === 1 ? "h-[400px] justify-center" : "img-bag_2"}`}
                                             onClick={() => viewImg((currentPage - 1) * itemsPerPage + index)}
                                             style={{
                                                 backgroundImage: `url(${data.compressed_raw_url})`,
