@@ -76,14 +76,14 @@ const MyOrderDetailPage = () => {
         <div className=" p-2">
             <p className="text-xs mb-3 font-bold text-teal-800 ">Share with</p>
             <div className="grid grid-cols-4 gap-3 justify-items-center">
-                <p className="cursor-pointer"><i class="fa-brands text-blue-400 text-2xl fa-facebook-messenger"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-facebook"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-whatsapp"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-400 fa-twitter"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-linkedin"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-google-drive"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-red-400 fa-instagram"></i></p>
-                <p className="cursor-pointer"><i class="fa-solid text-2xl text-green-400 fa-envelope"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-blue-400 text-2xl fa-facebook-messenger"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-500 fa-facebook"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-green-500 fa-whatsapp"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-400 fa-twitter"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-500 fa-linkedin"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-green-500 fa-google-drive"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-red-400 fa-instagram"></i></p>
+                <p className="cursor-pointer"><i className="fa-solid text-2xl text-green-400 fa-envelope"></i></p>
             </div>
 
         </div>
@@ -145,7 +145,7 @@ const MyOrderDetailPage = () => {
             setActionStatus("");
         }
     };
-    
+
     useEffect(() => {
         getModelBaseUrl.length > 0 && getUserInfo.status_code == 200 && viewOrderInfo();
     }, [getToken])
@@ -246,13 +246,13 @@ const MyOrderDetailPage = () => {
                                     <div className="flex border border-teal-400 rounded-lg py-2 w-[400px]   justify-between px-4 mt-6">
                                         <Popover content={shareContent} trigger="click">
                                             <div className="cursor-pointer">
-                                                <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                                                <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                                                 <p className="text-sm">Share</p>
                                             </div>
                                         </Popover>
                                         <Popover content={() => downloadContent(getOrderDetailInfo[getImgIndex].original_output_url, getOrderDetailInfo[getImgIndex].png_image_output_url, getOrderDetailInfo[getImgIndex].psd_file_url)} trigger="click">
                                             <div className="cursor-pointer">
-                                                <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                                                <p><i className="fa-solid fa-download flex justify-center"></i></p>
                                                 <p className="text-sm">Download</p>
                                             </div>
                                         </Popover>
@@ -266,11 +266,11 @@ const MyOrderDetailPage = () => {
                             <div className="absolute top-[50%] w-full" style={{ transform: 'translateY(-50%)' }}>
                                 <button disabled={getImgIndex == 0} onClick={() => { setImgIndex(getImgIndex - 1) }} className="float-left ml-36 cursor-pointer text-white disabled:text-black ">
                                     <i className="fa-solid fa-circle-chevron-left text-4xl "></i>
-                                    {/* <i class="fa-solid fa-circle-chevron-left"></i> */}
+                                    {/* <i className="fa-solid fa-circle-chevron-left"></i> */}
                                 </button>
                                 <button disabled={getImgIndex == getOrderDetailInfo.length - 1} onClick={() => { setImgIndex(getImgIndex + 1) }} className="float-right mr-36 cursor-pointer text-white  disabled:text-black ">
                                     <i className="fa-solid fa-circle-chevron-right text-4xl "></i>
-                                    {/* <i class="fa-solid fa-circle-chevron-right"></i> */}
+                                    {/* <i className="fa-solid fa-circle-chevron-right"></i> */}
                                 </button>
                             </div>
                             <div className="absolute right-4 top-4 flex gap-2">

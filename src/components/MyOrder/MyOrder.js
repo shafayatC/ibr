@@ -33,14 +33,14 @@ const MyOrder = () => {
         <div className=" p-2">
             <p className="text-xs mb-3 font-bold text-teal-800 ">Share with</p>
             <div className="grid grid-cols-4 gap-3 justify-items-center">
-                <p className="cursor-pointer"><i class="fa-brands text-blue-400 text-2xl fa-facebook-messenger"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-facebook"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-whatsapp"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-400 fa-twitter"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-blue-500 fa-linkedin"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-green-500 fa-google-drive"></i></p>
-                <p className="cursor-pointer"><i class="fa-brands text-2xl text-red-400 fa-instagram"></i></p>
-                <p className="cursor-pointer"><i class="fa-solid text-2xl text-green-400 fa-envelope"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-blue-400 text-2xl fa-facebook-messenger"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-500 fa-facebook"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-green-500 fa-whatsapp"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-400 fa-twitter"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-blue-500 fa-linkedin"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-green-500 fa-google-drive"></i></p>
+                <p className="cursor-pointer"><i className="fa-brands text-2xl text-red-400 fa-instagram"></i></p>
+                <p className="cursor-pointer"><i className="fa-solid text-2xl text-green-400 fa-envelope"></i></p>
             </div>
 
         </div>
@@ -90,7 +90,7 @@ const MyOrder = () => {
     return (
         <div className="container mx-auto bg-gray-100  pb-10">
             <div className="flex justify-center ml-10 mb-5">
-                <h2 className="text-4xl mt-4 text-green-700 font-bold"><i class="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
+                <h2 className="text-4xl mt-4 text-green-700 font-bold"><i className="fa-solid mr-5 fa-basket-shopping"></i>ORDERS |</h2>
                 <img className="h-12 w-60 mt-3" src={logo} alt="" />
                 <div className="ml-9 mt-5">
                     <Space direction="vertical" size="middle">
@@ -101,7 +101,7 @@ const MyOrder = () => {
                 </div>
             </div>
             {Object.keys(getOrderDetailsInfo).length > 0 && console.log(getOrderDetailsInfo.results.user_order_master_info_list)}
-            {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i class="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
+            {/* <h2 className="text-3xl font-bold py-5 text-teal-600 text-center"><i className="fa-solid mr-5 fa-basket-shopping"></i>My Order</h2> */}
             <div className="grid lg:grid-cols-4 justify-items-center gap-y-6 mx-20">
                 {Object.keys(getOrderDetailsInfo).length > 0 && typeof getOrderDetailsInfo.results.user_order_master_info_list !== 'undefined' &&
                     getOrderDetailsInfo.results.user_order_master_info_list != null && getOrderDetailsInfo.results.user_order_master_info_list.map((data, index) => (
@@ -124,18 +124,18 @@ const MyOrder = () => {
 
                             <div className="flex  justify-between mt-6">
                                 <Link className="cursor-pointer" to={'/order-info-page/' + data.order_image_master_id}>
-                                    <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                                    <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                                     <p className="text-sm">View</p>
                                 </Link>
                                 <Popover content={shareContent} trigger="click">
                                     <div className="cursor-pointer">
-                                        <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                                        <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                                         <p className="text-sm">Share</p>
                                     </div>
                                 </Popover>
                                 <Popover content={downloadContent} trigger="click">
                                     <div className="cursor-pointer">
-                                        <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                                        <p><i className="fa-solid fa-download flex justify-center"></i></p>
                                         <p className="text-sm">Download</p>
                                     </div>
                                 </Popover>
@@ -164,15 +164,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -199,15 +199,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -234,15 +234,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -269,15 +269,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -304,15 +304,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -339,15 +339,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
@@ -374,15 +374,15 @@ const MyOrder = () => {
 
                     <div className="flex  justify-between mt-6">
                         <div className="cursor-pointer">
-                            <p><i class="fa-regular fa-eye flex justify-center"></i></p>
+                            <p><i className="fa-regular fa-eye flex justify-center"></i></p>
                             <p className="text-sm">View</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-share-from-square flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-share-from-square flex justify-center"></i></p>
                             <p className="text-sm">Share</p>
                         </div>
                         <div className="cursor-pointer">
-                            <p><i class="fa-solid fa-download flex justify-center"></i></p>
+                            <p><i className="fa-solid fa-download flex justify-center"></i></p>
                             <p className="text-sm">Download</p>
                         </div>
 
