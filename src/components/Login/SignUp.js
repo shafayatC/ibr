@@ -96,26 +96,6 @@ const SignUp = () => {
               />
             </div>
 
-            {/* <div className="form-group form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-theme-shade  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  id="exampleCheck2"
-                />
-                <label
-                  className="form-check-label inline-block text-gray-800"
-                  for="exampleCheck2"
-                >
-                  I agree to the Terms of Use and Privacy Policy
-                </label>
-              </div>
-
-              <p className="text-xs mb-4 mt-4">
-                By creating an account, your username becomes public and can be
-                read by anyone who visits the website. Do not include sensitive
-                data like IDs, credentials, or non-public information. Learn how
-                to edit your username. Learn how to delete your account.
-              </p> */}
 
             <div className="text-center">
 
@@ -127,7 +107,7 @@ const SignUp = () => {
                 Create Account
               </button>
 
-              <LoginWithSocial/>
+              <LoginWithSocial />
 
               <p className="text-sm font-semibold mt-2 pt-1  mb-0">
                 Already have an account?
