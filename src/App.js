@@ -29,6 +29,7 @@ import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
 import MyOrderDetailPage from "./components/MyOrder/MyOrderDetailPage/MyOrderDetailPage";
 import ThankYouNote from "./components/Login/ThankYouNote";
 import LoginWithSocial from "./components/Login/LoginWithSocial";
+import { ToastContainer } from "react-toastify";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -112,6 +113,8 @@ function App() {
                   <Route path="/thank-you-note" element={<ThankYouNote />} />
                   <Route path="/login-social" element={<LoginWithSocial />} />
                 </Routes>
+                <ToastContainer />
+
               </div>
             </apiUrlContextManager.Provider>
           </menuContextManager.Provider>
