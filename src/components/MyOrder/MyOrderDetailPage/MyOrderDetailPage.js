@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Page2 from '../../Page2/Page2';
 import { OrderContextManager, apiUrlContextManager, userContextManager } from '../../../App';
 import { Link, useParams } from 'react-router-dom';
@@ -145,12 +145,13 @@ const MyOrderDetailPage = () => {
             setActionStatus("");
         }
     };
-    useState(() => {
-        getUserInfo.status_code == 200 && viewOrderInfo();
+    
+    useEffect(() => {
+        getModelBaseUrl.length > 0 && getUserInfo.status_code == 200 && viewOrderInfo();
     }, [getToken])
     return (
         <>
-
+            {console.log(getModelBaseUrl)}
             <div style={{ backgroundImage: `url(${bg})`, minHeight: 'calc(100vh - 44px)' }} >
                 <div className='container mx-auto relative'>
                     <div className="flex items-center justify-center py-3">
