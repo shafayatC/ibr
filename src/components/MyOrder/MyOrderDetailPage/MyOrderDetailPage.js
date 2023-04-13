@@ -44,6 +44,7 @@ const MyOrderDetailPage = () => {
     const viewOrderInfo = () => {
 
         console.log("order id : " + orderId + " token :  " + getToken)
+        console.log("modelbase url: " + getModelBaseUrl)
         fetch(`${getModelBaseUrl}user-order-detail-info?order_image_master_id=${orderId}`, {
             headers: {
                 'Authorization': 'bearer ' + getToken,
@@ -52,6 +53,7 @@ const MyOrderDetailPage = () => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log("data");
                 console.log(data);
                 data.status_code == 200 && setOrderDetailInfo(data.results.user_order_detail_info_list);
             })
