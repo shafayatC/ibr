@@ -171,23 +171,9 @@ const SignIn = () => {
                   >
                     LOGIN WITH EMAIL
                   </button>
-                  <LoginWithSocial/>
+                  <LoginWithSocial />
 
-                  {/* <p classNameName="mb-5 font-semibold">OR LOGIN WITH</p>
-                    <div classNameName="flex justify-center gap-5">
-                      <button classNameName="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                        Facebook
-                      </button>
-                      <button classNameName="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                        Google
-                      </button>
-                      <button classNameName="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                        Twitter
-                      </button>
-                      <button classNameName="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                        Apple
-                      </button>
-                    </div> */}
+
                   <p className="text-sm font-semibold mt-2 pt-1  mb-0">
                     New to Retouched.ai?
                     <Link to="/sign-up">
