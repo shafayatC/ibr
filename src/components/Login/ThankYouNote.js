@@ -3,14 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ThankYouNote = () => {
 
-    // const naviagate = useNavigate();
-
-    // useState(() => {
-    //     setTimeout(() => {
-    //         naviagate("/log-in")
-    //     }, 4000)
-    // }, [])
-
     return (
         <>
             <div class="pt-24">
