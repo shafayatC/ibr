@@ -28,6 +28,7 @@ import localforage from "localforage";
 import ServiceTypePage from "./components/ServiceTypePop/ServiceTypePage";
 import MyOrderDetailPage from "./components/MyOrder/MyOrderDetailPage/MyOrderDetailPage";
 import ThankYouNote from "./components/Login/ThankYouNote";
+import LoginWithSocial from "./components/Login/LoginWithSocial";
 
 export const FileContextManager = createContext();
 export const OrderContextManager = createContext();
@@ -109,6 +110,7 @@ function App() {
                   <Route path="/editing-package" element={<ServiceTypePage />} />
                   <Route path="/order-info-page/:orderId" element={<MyOrderDetailPage />} />
                   <Route path="/thank-you-note" element={<ThankYouNote />} />
+                  <Route path="/login-social" element={<LoginWithSocial />} />
                 </Routes>
               </div>
             </apiUrlContextManager.Provider>

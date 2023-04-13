@@ -5,13 +5,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiUrlContextManager, userContextManager } from "../../App";
 import localforage from "localforage";
+import { FacebookAuthProvider, GoogleAuthProvider, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
+import { auth } from "../../Fire";
 
 const SignIn = () => {
   const [getPassword, setPassword] = useState("");
   const [getMail, setMail] = useState("");
   const [getRemember, setRemember] = useState(false)
   const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
-  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+  const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
   const location = useLocation();
   const navigation = useNavigate()
@@ -40,20 +42,20 @@ const SignIn = () => {
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (getMail.match(validRegex)) {
-      
+
       const signInData = {
         email: getMail,
         password: getPassword,
       };
 
       try {
-        fetch(getApiBasicUrl+ "/system-sign-in",
+        fetch(getApiBasicUrl + "/system-sign-in",
           {
             method: "POST",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              'Authorization': 'bearer '+ getToken
+              'Authorization': 'bearer ' + getToken
             },
             body: JSON.stringify(signInData),
           }
@@ -61,22 +63,22 @@ const SignIn = () => {
           .then(data => {
             if (data.status_code == 200) {
               //console.log("data")
-             // console.log(data)
+              // console.log(data)
               setUserInfo(data);
               setToken(data.results.token)
               showToastMessage(data.message)
-              localforage.setItem("userInfo", data); 
+              localforage.setItem("userInfo", data);
               const rememberInfo = {
-                'mail' : getMail, 
-                'pass' : getPassword
+                'mail': getMail,
+                'pass': getPassword
               }
 
-              if(getRemember){
+              if (getRemember) {
                 localforage.setItem('remember', rememberInfo)
-              }else{
+              } else {
                 localforage.removeItem('remember')
               }
-             prevPath ? navigation(prevPath) : navigation('/')
+              prevPath ? navigation(prevPath) : navigation('/')
             } else {
               showToastMessageWarning(data.message)
             }
@@ -90,9 +92,9 @@ const SignIn = () => {
     }
   };
 
-  const rememberFunc =() =>{
+  const rememberFunc = () => {
     localforage.getItem("remember").then(data => {
-      if(data !== null && Object.keys(data).length > 0 ){
+      if (data !== null && Object.keys(data).length > 0) {
         setMail(data.mail)
         setPassword(data.pass)
         setRemember(true)
@@ -100,12 +102,86 @@ const SignIn = () => {
     })
   }
 
-  useEffect(()=>{
+
+  const signInWithGoogle = async () => {
+
+    const googleProvider = new GoogleAuthProvider();
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+      const { isNewUser } = getAdditionalUserInfo(res);
+
+      console.log(isNewUser + " " + typeof isNewUser); // new user true and older user false 
+
+      const userInfo = {
+        third_party_unique_key: user.uid,
+        email: user.email,
+      }
+
+      fetch(getApiBasicUrl + "/third-party-sign-in",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          'Authorization': 'bearer ' + getToken
+        },
+        body: JSON.stringify(userInfo),
+      }
+    ).then(res => res.json())
+      .then(data => {
+        if (data.status_code == 200) {
+          //console.log("data")
+          setUserInfo(data);
+          setToken(data.results.token)
+          showToastMessage(data.message)
+          localforage.setItem("userInfo", data);
+         
+          prevPath ? navigation(prevPath) : navigation('/')
+        } else {
+          showToastMessageWarning(data.message)
+        }
+      })
+
+      console.log(userInfo)
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const signInWithFacebook = async () => {
+    const facebookProvider = new FacebookAuthProvider();
+    try {
+      const res = await signInWithPopup(auth, facebookProvider);
+      const user = res.user;
+      const { isNewUser } = getAdditionalUserInfo(res);
+
+      console.log(isNewUser + " " + typeof isNewUser); // new user true and older user false 
+
+      const userInfo = {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        phoneNumber: user.phoneNumber,
+        creationDate: user.metadata.createdAt
+      }
+
+      console.log(userInfo)
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
     rememberFunc()
-  },[])
-  
+  }, [])
+
   return (
     <div className="container mx-auto">
+      <button onClick={signInWithGoogle}>Google with login</button><br/>
+      <button onClick={signInWithFacebook}>Facebook with login</button><br/>
+      <button onClick={signInWithGoogle}>Apple with login</button>
       <div>
         {/*getUserInfo.status_code == 200 && <Navigate to={prevPath} replace={true} />*/}
         <section>
@@ -142,7 +218,7 @@ const SignIn = () => {
                 <div className="flex justify-between items-center mb-6">
                   <div className="form-group form-check">
                     <input
-                      onChange={()=> setRemember(!getRemember)}
+                      onChange={() => setRemember(!getRemember)}
                       checked={getRemember}
                       type="checkbox"
                       className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-orange-400 checked:border-orange-400 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
