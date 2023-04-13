@@ -659,7 +659,7 @@ function Imageupload() {
     setSrvPopBool(bl)
   }
 
-  const reviewPaymentFunc = async() => {
+  const reviewPaymentFunc = async () => {
     // openModal()
 
     try {
@@ -687,7 +687,7 @@ function Imageupload() {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            if (data.status_code == 200){
+            if (data.status_code == 200) {
               navigate('/cart')
             } else {
               setIsOpen(true);
@@ -697,10 +697,10 @@ function Imageupload() {
       } else {
         openModal()
       }
-  } catch (err) {
+    } catch (err) {
       console.log(err);
       openModal()
-  }
+    }
 
 
     // localforage.getItem("userInfo").then(data => {
@@ -882,9 +882,9 @@ function Imageupload() {
                       }
                       <div className="flex gap-1  ">
                         {image.output_urls[0].is_ai_processed ?
-                          <p><i class="fa-solid text-green-400 absolute top-2 right-2 fa-circle-check"></i></p>
+                          <p><i className="fa-solid text-green-400 absolute top-2 right-2 fa-circle-check"></i></p>
                           :
-                          <p class="loader_2 absolute top-[40%] left-[45%]"></p>
+                          <p className="loader_2 absolute top-[40%] left-[45%]"></p>
                         }
                       </div>
                     </div>
@@ -1301,9 +1301,9 @@ function Imageupload() {
                 </Link>
               </div>
               {/* <div className="flex justify-center items-center gap-3">
-                {getTotalImage > getProccessImgIndex && <p class="loader_3 "></p>}
-                <div class="shadow w-40 bg-white ">
-                  <div class="bg-teal-500 text-xs leading-none text-center text-white"
+                {getTotalImage > getProccessImgIndex && <p className="loader_3 "></p>}
+                <div className="shadow w-40 bg-white ">
+                  <div className="bg-teal-500 text-xs leading-none text-center text-white"
                    style={{width: (100/getTotalImage) * getProccessImgIndex+'%'}}>
                     {Math.round(100/getTotalImage) * getProccessImgIndex < 100 ? Math.round(100/getTotalImage) * getProccessImgIndex : 100}%
                   </div>
