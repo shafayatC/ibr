@@ -42,7 +42,7 @@ const Home = () => {
             </div>
           </div>
           <div>
-            <p className="text-white font-bold text-3xl text-left mt-28  mb-4">AI-PROFESSIONALS COLLABORATION </p>
+            <p className="text-white font-bold text-3xl text-center mt-28  mb-4">AI-PROFESSIONALS COLLABORATION </p>
 
             {getMenu.map(
               (data, index) =>
