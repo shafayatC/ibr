@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import { Link, Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiUrlContextManager, userContextManager } from "../../App";
 import localforage from "localforage";
 import { FacebookAuthProvider, GoogleAuthProvider, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { auth } from "../../Fire";
+import LoginWithSocial from "./LoginWithSocial";
 
 const SignIn = () => {
   const [getPassword, setPassword] = useState("");
@@ -103,85 +104,12 @@ const SignIn = () => {
   }
 
 
-  const signInWithGoogle = async () => {
-
-    const googleProvider = new GoogleAuthProvider();
-    try {
-      const res = await signInWithPopup(auth, googleProvider);
-      const user = res.user;
-      const { isNewUser } = getAdditionalUserInfo(res);
-
-      console.log(isNewUser + " " + typeof isNewUser); // new user true and older user false 
-
-      const userInfo = {
-        third_party_unique_key: user.uid,
-        email: user.email,
-      }
-
-      fetch(getApiBasicUrl + "/third-party-sign-in",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          'Authorization': 'bearer ' + getToken
-        },
-        body: JSON.stringify(userInfo),
-      }
-    ).then(res => res.json())
-      .then(data => {
-        if (data.status_code == 200) {
-          //console.log("data")
-          setUserInfo(data);
-          setToken(data.results.token)
-          showToastMessage(data.message)
-          localforage.setItem("userInfo", data);
-         
-          prevPath ? navigation(prevPath) : navigation('/')
-        } else {
-          showToastMessageWarning(data.message)
-        }
-      })
-
-      console.log(userInfo)
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const signInWithFacebook = async () => {
-    const facebookProvider = new FacebookAuthProvider();
-    try {
-      const res = await signInWithPopup(auth, facebookProvider);
-      const user = res.user;
-      const { isNewUser } = getAdditionalUserInfo(res);
-
-      console.log(isNewUser + " " + typeof isNewUser); // new user true and older user false 
-
-      const userInfo = {
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        phoneNumber: user.phoneNumber,
-        creationDate: user.metadata.createdAt
-      }
-
-      console.log(userInfo)
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   useEffect(() => {
     rememberFunc()
   }, [])
 
   return (
     <div className="container mx-auto">
-      <button onClick={signInWithGoogle}>Google with login</button><br/>
-      <button onClick={signInWithFacebook}>Facebook with login</button><br/>
-      <button onClick={signInWithGoogle}>Apple with login</button>
       <div>
         {/*getUserInfo.status_code == 200 && <Navigate to={prevPath} replace={true} />*/}
         <section>
@@ -243,7 +171,7 @@ const SignIn = () => {
                   >
                     LOGIN WITH EMAIL
                   </button>
-                  <ToastContainer />
+                  <LoginWithSocial/>
 
                   {/* <p classNameName="mb-5 font-semibold">OR LOGIN WITH</p>
                     <div classNameName="flex justify-center gap-5">

@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { apiUrlContextManager, userContextManager } from "../../App";
+import LoginWithSocial from "./LoginWithSocial";
 
 const SignUp = () => {
 
@@ -126,31 +127,8 @@ const SignUp = () => {
                 Create Account
               </button>
 
+              <LoginWithSocial/>
 
-              <ToastContainer />
-
-              <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-                <p class="text-center font-semibold mx-4 mb-0">Or</p>
-              </div>
-              {/* <p className="mb-5 font-semibold">OR SIGN IN WITH</p> */}
-              <div className="flex flex-col justify-center w-full  gap-5">
-                <div className="">
-                  <button className="py-1 text-xs px-2 w-60  border border-gray-500  font-medium rounded-lg  hover:bg-green-400 hover:shadow-lg "><i class="fa-brands text-xl mr-5 fa-facebook"></i>
-                    Sign in with Facebook
-                  </button>
-                </div>
-                <div>
-                  <button className="py-3 text-sm px-2 w-60  border border-gray-500  font-medium  uppercase rounded-lg  hover:bg-green-400 hover:shadow-lg ">
-                    Google
-                  </button>
-                </div>
-                {/* <button className="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                    Twitter
-                  </button>
-                  <button className="py-3 text-sm px-2 w-full border-2 border-black text-black font-medium  uppercase rounded shadow-md hover:bg-lime-400 hover:shadow-lg ">
-                    Apple
-                  </button> */}
-              </div>
               <p className="text-sm font-semibold mt-2 pt-1  mb-0">
                 Already have an account?
                 <Link to="/log-in">
