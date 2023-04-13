@@ -24,7 +24,7 @@ function ApplyVoucher() {
     };
 
     const [getServiceTypeId, setServiceTypeId, getSubscriptionPlanId, setSubscriptionPlanId, getOrderMasterId, setOrderMasterId, getCostDetails, setCostDetails] = useContext(OrderContextManager)
-    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager); 
+    const [getModelBaseUrl, setModelBaseUrl, getApiBasicUrl, setApiBasicUrl] = useContext(apiUrlContextManager);
 
     const [getUserInfo, setUserInfo, getToken, setToken] = useContext(userContextManager);
 
@@ -33,7 +33,7 @@ function ApplyVoucher() {
     const getOfferFunc = () => {
 
         console.log("hello")
-        fetch(getApiBasicUrl+'/promotions', {
+        fetch(getApiBasicUrl + '/promotions', {
             headers: {
                 'Authorization': 'bearer ' + getToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +53,7 @@ function ApplyVoucher() {
             "user_promotions_settings_id": promoId,
             "is_used": true
         }
-        fetch(getApiBasicUrl+"/apply-voucher",
+        fetch(getApiBasicUrl + "/apply-voucher",
             {
                 method: "POST",
                 headers: {
@@ -116,64 +116,7 @@ function ApplyVoucher() {
 
 
                                             </div>
-                                            {/* <>
 
-
-                                                {isOpen && (
-                                                    <div className="fixed inset-0 z-50 top-48 ">
-                                                        <div className="flex  opacity-90 pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                            <div
-                                                                className="fixed inset-0 "
-                                                                aria-hidden="true"
-                                                                onClick={closeModal}
-                                                            >
-                                                                <div className="absolute inset-0 bg-gray-500 opacity-30"></div>
-
-                                                            </div>
-
-                                                            <div
-                                                                className="inline-block w-[450px] h-[160px] align-bottom border border-teal-700 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
-                                                                role="dialog"
-                                                                aria-modal="true"
-                                                                aria-labelledby="modal-headline"
-                                                            >
-                                                                <div className="bg-white  flex justify-center pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                                    <div className="sm:flex sm:items-start">
-
-                                                                        <div className="mt-3 mb-6 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                                            <h3
-                                                                                className="text-2xl leading-6 font-medium text-gray-900"
-                                                                                id="modal-headline"
-                                                                            >
-                                                                                Please Login to your account
-                                                                            </h3>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className=" py-4 flex gap-4 justify-center ">
-
-                                                                    <Link to="/log-in">
-                                                                        <button
-
-                                                                            className="text-white w-20 bg-green-400  px-1 py-1 rounded-md"
-                                                                        >
-                                                                            Login
-                                                                        </button>
-                                                                    </Link>
-                                                                    <button
-
-                                                                        className="text-white w-20 bg-red-400  px-1 py-1 rounded-md"
-                                                                        onClick={closeModal}
-                                                                    >
-                                                                        Cancel
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </> */}
                                         </div>
                                     </div>
                                 </div>

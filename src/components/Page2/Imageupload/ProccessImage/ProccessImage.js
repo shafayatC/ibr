@@ -153,7 +153,7 @@ const ProccessImage = () => {
                                 <div className="flex gap-2 border mt-2 pb-1 border-gray-400 justify-center">
                                     <div>
                                         <button className="  w-20 py-1 hover:bg-white ">
-                                            <i class="fa-regular fa-share-from-square"></i>
+                                            <i className="fa-regular fa-share-from-square"></i>
                                         </button>
                                         <p className="text-xs text-center ">
                                             Share
@@ -161,7 +161,7 @@ const ProccessImage = () => {
                                     </div>
                                     <div>
                                         <button className=" w-20 py-1 hover:bg-white ">
-                                            <i class="fa-solid fa-download"></i>
+                                            <i className="fa-solid fa-download"></i>
                                         </button>
                                         <p className="text-xs text-center ">
                                             HD
@@ -169,7 +169,7 @@ const ProccessImage = () => {
                                     </div>
                                     <div>
                                         <button className="w-20 py-1 hover:bg-white ">
-                                            <i class="fa-solid fa-download"></i>
+                                            <i className="fa-solid fa-download"></i>
                                         </button>
                                         <p className="text-xs text-center ">
                                             HD
@@ -177,7 +177,7 @@ const ProccessImage = () => {
                                     </div>
                                     <div>
                                         <button className=" w-20 py-1 hover:bg-white">
-                                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                                            <i className="fa-solid fa-arrow-rotate-right"></i>
                                         </button>
                                         <p className="text-xs text-center ">
                                             Refresh

@@ -18,7 +18,7 @@ const Cart = () => {
     };
 
     // const [getCostDetails, setCostDetails] = useState({})
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const constDetailFunc = () => {
 
@@ -71,12 +71,12 @@ const Cart = () => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
-            data.status_code == 200 && window.open(data.results.checkout_url,"_self");
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                // data.status_code == 200 && window.open(data.results.checkout_url, "_blank");
+                data.status_code == 200 && window.open(data.results.checkout_url, "_self");
+            })
     }
 
     useEffect(() => {
@@ -197,18 +197,12 @@ const Cart = () => {
 
                     <Link to="/apply-voucher">
                         <button className="bg-teal-500 text-white mx-auto rounded-md absolute bottom-5 hover:bg-green-400 left-10 p-2 w-[160px]">
-                            <p className="flex items-center gap-3"><i class="text-xl fa-solid fa-gift"></i>
+                            <p className="flex items-center gap-3"><i className="text-xl fa-solid fa-gift"></i>
                                 <span className="text-sm  font-semibold"> Apply a voucher</span></p>
                         </button>
 
                     </Link>
-                    {/*
-                    <Link to="/checkout" state={{ totalPrice: typeof getCostDetails.results !== 'undefined' && getCostDetails.results.order_master_charge_breakdown[0].total_charge }}>
-                        <button className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
-                            <p>Checkout</p>
-                        </button>
-                    </Link>
-                    */}
+
                     <button onClick={checkoutFunc} className="bg-teal-500 text-white font-semibold mx-auto rounded-md absolute bottom-5 hover:bg-green-400 right-4 p-2 w-[160px]">
                         <p>Checkout</p>
                     </button>
@@ -223,7 +217,7 @@ const Cart = () => {
 
                                 padding: "8px 15px",
                             }}
-                        // onClick={handleCloseClick}
+
                         >
                             <i className="fa-solid fa-xmark"></i>
                         </button>
@@ -240,16 +234,11 @@ const Cart = () => {
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         zIndex: "999"
-
-
-
-
                     }}
                 >
                     <Alert
                         style={{ fontWeight: "500", fontSize: "10px" }}
 
-                        //   message="Add-on Image Services"
                         description="Please be advised that we are committed to delivering high-quality image editing services within 24 hours, even in cases where adjustments or additional services are requested. As soon as your images are ready, we will notify you via message or email. Thank you for entrusting us with your image editing needs."
 
                         closable
