@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import './style.css'
 import { FacebookAuthProvider, GoogleAuthProvider, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { apiUrlContextManager, userContextManager } from "../../App";
 import { auth } from "../../Fire";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GoogleLogin from "./GoogleLogin";
 
 const LoginWithSocial = () => {
 
@@ -123,8 +124,10 @@ const LoginWithSocial = () => {
             position: toast.POSITION.TOP_RIGHT,
         });
     };
+
     return (
         <div className="container mx-auto">
+            <GoogleLogin/>
             <div className="flex items-center justify-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                 <p className="text-center font-semibold mx-4 mb-0">Or</p>
             </div>

@@ -142,6 +142,7 @@ function Imageupload() {
   const uploadFile = (e) => {
     const newFile = e.target.files;
 
+    
     setMainFile(newFile);
     setLoadProgress(0);
     setActionStatus("");
@@ -184,11 +185,10 @@ function Imageupload() {
 
         let i = 0;
         for (const file of newFile) {
-
-          if (file.type == "image/jpeg" || file.type == "image/png") {
+          console.log("file.type " + file.type)
+          if (file.type == "image/jpeg" || file.type == "image/png"  || file.type == "image/tiff") {
             i++;
             setTotalImage(i)
-            console.log(file)
             const filePath = file.webkitRelativePath.split("/");
             filePath.pop();
             console.log(filePath.join("/"))
@@ -210,8 +210,8 @@ function Imageupload() {
 
     let i = 0;
     for (const file of newFile) {
-
-      if (file.type == "image/jpeg" || file.type == "image/png") {
+      console.log("file.type " + file.type)
+      if (file.type == "image/jpeg" || file.type == "image/png" || file.type == "image/tiff") {
         i++;
         setTotalImage(i)
         console.log(file)
@@ -813,6 +813,7 @@ function Imageupload() {
               name="fileList"
               directory=""
               webkitdirectory=""
+              accept="image/jpeg, image/png, image/tiff,.tif"
             />
 
             <input
@@ -821,7 +822,7 @@ function Imageupload() {
               id="singleImagePick"
               name="imageFile"
               className="hidden"
-              accept="image/jpeg, image/png"
+              accept="image/jpeg, image/png, image/tiff,.tif"
               multiple
             />
             <button
